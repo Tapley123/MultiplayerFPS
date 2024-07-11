@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 public class PlayfabManager : MonoBehaviour
 {
     [Foldout("UI")][SerializeField] private TMP_Text text_Error;
+    private string username;
 
     [Header("Panels")]
     [Foldout("UI")][SerializeField] private List<GameObject> mainPanels = new List<GameObject>();
@@ -235,12 +236,67 @@ public class PlayfabManager : MonoBehaviour
         {
             Debug.Log($"You logged in with {email}");
             //***** CHECK IF USERNAME IS SET ****** If yes go to logged in, if not go to set username
+            Load($"Checking username");
+            CheckUserName();
         },
         error =>
         {
             Debug.Log($"There was an error logging in: {error.GenerateErrorReport()}");
+            //swap to the login panel in case you came from autologin (loading screen)
+            SwapPanel(panel_LoginCreate);
             Error($"There was an error logging in: {error.GenerateErrorReport()}");
         });
+    }
+    #endregion
+
+    #region Username
+    void CheckUserName()
+    {
+        PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest()
+        {
+
+        },
+        result =>
+        {
+            Debug.Log($"You got the account info: {result}");
+
+            //if there is no username set
+            if (string.IsNullOrEmpty(result.AccountInfo.Username))
+            {
+                Debug.Log($"Username not set");
+                SwapPanel(panel_SetUsername);
+            }
+            else
+            {
+                Debug.Log($"Username already created");
+
+                //store the username
+                username = result.AccountInfo.Username;
+                //display the username
+                text_Username.text = username;
+                //switch to the logged in panel
+                SwapPanel(panel_LoggedIn);
+            }
+
+            //result.AccountInfo.TitleInfo.DisplayName;
+        },
+        error =>
+        {
+            Debug.Log($"There was an error getting the account info: {error.GenerateErrorReport()}");
+
+            //make sure you are at the login create panel if your request failed
+            SwapPanel(panel_LoginCreate);
+
+            //show error message on screen
+            Error(error.GenerateErrorReport());
+        });
+    }
+
+    public void Button_SetUsername()
+    {
+        Debug.Log($"Called Set Username");
+
+        //Check if possible******
     }
     #endregion
 
