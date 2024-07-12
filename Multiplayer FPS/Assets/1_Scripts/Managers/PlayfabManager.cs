@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 
 public class PlayfabManager : MonoBehaviour
 {
+    [SerializeField] private Launcher launcher;
+
     [Foldout("UI")][SerializeField] private TMP_Text text_Error;
     private string username;
     private string email;
@@ -290,6 +292,9 @@ public class PlayfabManager : MonoBehaviour
 
                 //switch to the logged in panel
                 SwapPanel(panel_LoggedIn);
+
+                //connect to photon network
+                launcher.ConnectToPhoton();
             }
 
             //result.AccountInfo.TitleInfo.DisplayName;
@@ -346,6 +351,9 @@ public class PlayfabManager : MonoBehaviour
             XMLManager.Instance.playerDB.savedLogin = true;
             //update the save data file
             XMLManager.Instance.SaveItems(SaveType.Player);
+
+            //connect to photon network
+            launcher.ConnectToPhoton();
         },
         error =>
         {
