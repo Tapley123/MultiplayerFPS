@@ -11,6 +11,8 @@ public class PlayfabManager : MonoBehaviour
 {
     [Foldout("UI")][SerializeField] private TMP_Text text_Error;
     private string username;
+    private string email;
+    private string password;
 
     [Header("Panels")]
     [Foldout("UI")][SerializeField] private List<GameObject> mainPanels = new List<GameObject>();
@@ -79,6 +81,7 @@ public class PlayfabManager : MonoBehaviour
     void Error(string errorMsg)
     {
         text_Error.text = errorMsg;
+        Debug.LogError(errorMsg);
     }
 
     void SwapPanel(GameObject panelToActivate)
@@ -237,6 +240,8 @@ public class PlayfabManager : MonoBehaviour
             Debug.Log($"You logged in with {email}");
             //***** CHECK IF USERNAME IS SET ****** If yes go to logged in, if not go to set username
             Load($"Checking username");
+            this.email = email;
+            this.password = password;
             CheckUserName();
         },
         error =>
@@ -261,7 +266,7 @@ public class PlayfabManager : MonoBehaviour
             Debug.Log($"You got the account info: {result}");
 
             //if there is no username set
-            if (string.IsNullOrEmpty(result.AccountInfo.Username))
+            if (string.IsNullOrEmpty(result.AccountInfo.TitleInfo.DisplayName))
             {
                 Debug.Log($"Username not set");
                 SwapPanel(panel_SetUsername);
@@ -271,9 +276,18 @@ public class PlayfabManager : MonoBehaviour
                 Debug.Log($"Username already created");
 
                 //store the username
-                username = result.AccountInfo.Username;
+                username = result.AccountInfo.TitleInfo.DisplayName;
                 //display the username
                 text_Username.text = username;
+
+                //Save Login info
+                XMLManager.Instance.LoadItems(SaveType.Player);
+                XMLManager.Instance.playerDB.username = username;
+                XMLManager.Instance.playerDB.email = email;
+                XMLManager.Instance.playerDB.password = password;
+                XMLManager.Instance.playerDB.savedLogin = true;
+                XMLManager.Instance.SaveItems(SaveType.Player);
+
                 //switch to the logged in panel
                 SwapPanel(panel_LoggedIn);
             }
@@ -282,8 +296,6 @@ public class PlayfabManager : MonoBehaviour
         },
         error =>
         {
-            Debug.Log($"There was an error getting the account info: {error.GenerateErrorReport()}");
-
             //make sure you are at the login create panel if your request failed
             SwapPanel(panel_LoginCreate);
 
@@ -294,9 +306,76 @@ public class PlayfabManager : MonoBehaviour
 
     public void Button_SetUsername()
     {
-        Debug.Log($"Called Set Username");
+        //try to set display name
+        Debug.Log($"Trying to update the display name to: {inputField_Username.text}...");
 
-        //Check if possible******
+        //check is username is formatted correctly
+        if (!IsValidUsername(inputField_Username.text))
+        {
+            Error($"Invalid Username");
+            return;
+        }
+
+
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest()
+        {
+            DisplayName = inputField_Username.text,
+        },
+        result =>
+        {
+            Debug.Log($"Display name is updated to: {result.DisplayName}");
+
+            //set the local username
+            username = result.DisplayName; 
+            //update the username ui
+            text_Username.text = username;
+
+            //go to the logged in panel
+            SwapPanel(panel_LoggedIn);
+
+            //load the player data
+            XMLManager.Instance.LoadItems(SaveType.Player);
+            //set the email
+            XMLManager.Instance.playerDB.email = email;
+            //set the password
+            XMLManager.Instance.playerDB.password = password;
+            //set the username
+            XMLManager.Instance.playerDB.username = username;
+            //set the displayname
+            //store that you saved your login info
+            XMLManager.Instance.playerDB.savedLogin = true;
+            //update the save data file
+            XMLManager.Instance.SaveItems(SaveType.Player);
+        },
+        error =>
+        {
+            Debug.Log($"There was an error updating the display name: {error.GenerateErrorReport()}");
+        });
+    }
+
+    public static bool IsValidUsername(string username)
+    {
+        if (string.IsNullOrEmpty(username))
+        {
+            return false;
+        }
+
+        // Length check (3 to 25 characters)
+        if (username.Length < 3 || username.Length > 25)
+        {
+            return false;
+        }
+
+        // Alphanumeric check with underscores and hyphens allowed
+        string pattern = @"^[a-zA-Z0-9_-]+$";
+        if (!Regex.IsMatch(username, pattern))
+        {
+            return false;
+        }
+
+        // Additional checks can be added here (e.g., offensive word filtering)
+
+        return true;
     }
     #endregion
 

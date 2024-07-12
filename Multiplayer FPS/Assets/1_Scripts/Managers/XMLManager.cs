@@ -173,6 +173,19 @@ public class XMLManager : MonoBehaviour
     }
 
     [Button]
+    public void ResetRplayerValues()
+    {
+        //load the data
+        LoadItems(SaveType.Player);
+
+        //reset the data
+        playerDB.RestoreDefaults();
+
+        //save to xml
+        SaveItems(SaveType.Player);
+    }
+
+    [Button]
     public void UpdateDefaultValuesFromVar()
     {
         //save to xml
@@ -225,12 +238,14 @@ public class PlayerStorage
     //Login
     public string email;
     public string password;
+    public string username;
 
     public void RestoreDefaults()
     {
         savedLogin = false;
         email = "";
         password = "";
+        username = "";
     }
 }
 #endregion

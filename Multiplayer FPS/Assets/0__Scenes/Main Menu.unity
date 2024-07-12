@@ -3478,7 +3478,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1635156041}
         m_TargetAssemblyTypeName: PlayfabManager, Assembly-CSharp
-        m_MethodName: Button_CreateAccount
+        m_MethodName: Button_SetUsername
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4295,7 +4295,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1635156041}
         m_TargetAssemblyTypeName: PlayfabManager, Assembly-CSharp
-        m_MethodName: Button_CreateAccount
+        m_MethodName: Button_Login
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
