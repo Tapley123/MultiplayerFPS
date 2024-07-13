@@ -32,7 +32,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [Foldout("UI")][SerializeField] private GameObject passwordGo;
     [Foldout("UI")][SerializeField] private bool useRandomPassword = false;
     [Foldout("UI")][ShowIf("useRandomPassword")][SerializeField] private int randomPasswordLenth = 4;
-    [Foldout("UI")] private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    [Foldout("UI")] private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; //used for creating random password
     [Foldout("UI")][SerializeField] private string defaultPassword = $"123";
     [Foldout("UI")][SerializeField] private TMP_InputField input_Password;
     //Players
@@ -279,6 +279,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         text_Error.text = errorMsg;
         Debug.LogError(errorMsg);
+    }
+
+    public void Button_QuitGame()
+    {
+        Application.Quit();
     }
     #endregion
 
