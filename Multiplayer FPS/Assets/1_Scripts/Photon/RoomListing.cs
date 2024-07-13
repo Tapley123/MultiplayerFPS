@@ -114,12 +114,17 @@ public class RoomListing : MonoBehaviour
             Debug.LogError($"No Password needed");
         }
 
+
+        //has access to the photon manager
         if (photonManager != null)
         {
             photonManager.ClearError();
+            photonManager.JoinRoom(roomInfo);
         }
-
-        Debug.Log($"Trying to join '{text_RoomName.text}' room...");
-        PhotonNetwork.JoinRoom(roomInfo.Name);
+        else
+        {
+            Debug.Log($"Trying to join '{text_RoomName.text}' room...");
+            PhotonNetwork.JoinRoom(roomInfo.Name);
+        }
     }
 }

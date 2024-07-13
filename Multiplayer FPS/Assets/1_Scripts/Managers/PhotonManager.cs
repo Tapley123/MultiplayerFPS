@@ -7,6 +7,7 @@ using TMPro;
 using Photon.Realtime;
 using System.Text;
 using UnityEngine.UIElements;
+using System.Linq;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -42,6 +43,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     [Header("Join Room")]
     [Foldout("UI")][SerializeField] private GameObject panel_JoinRoom;
+    //Room Lising
     [Foldout("UI")][SerializeField] private Transform roomListHolder;
     [Foldout("UI")][SerializeField] private RoomListing roomListing;
     [Foldout("UI")] private List<RoomInfo> roomList = new List<RoomInfo>();
@@ -49,6 +51,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [Header("In A Room")]
     [Foldout("UI")][SerializeField] private GameObject panel_InARoom;
     [Foldout("UI")][SerializeField] private TMP_Text text_RoomName;
+    //Player Listing
+    [Foldout("UI")][SerializeField] private Transform playerListHolder;
+    [Foldout("UI")][SerializeField] private PlayerListing playerListing;
+    [Foldout("UI")][SerializeField] private TMP_Text text_playerCount;
 
     void Start()
     {
@@ -200,6 +206,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Join Room
+    public void JoinRoom(RoomInfo info)
+    {
+        //join the room
+        PhotonNetwork.JoinRoom(info.Name);
+
+        //turn on loading screen
+        Load($"Joining room...");
+    }
+
     public void UpdateRoomListUI()
     {
         // Clear existing UI elements
@@ -296,6 +311,30 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log($"Joined Lobby");
+
+        XMLManager.Instance.LoadItems(SaveType.Player);
+
+        Debug.LogError($"Setting username here!!");
+
+        //set username
+        string username = XMLManager.Instance.playerDB.username;
+        //if the saved username is empty
+        if (string.IsNullOrEmpty(username))
+        {
+            //set random username
+            username = $"TestUsername{GenerateCode(4)}";
+        }
+        //if the username is stored locally
+        else
+        {
+#if UNITY_EDITOR
+            username = $"{username}(Editor)";
+#else
+            username = $"{username}(Build){GenerateCode(4)}";
+#endif
+        }
+
+        PhotonNetwork.NickName = username;
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -311,6 +350,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log($"Joined Room");
 
         EnteredRoom();
+        UpdatePlayerCount();
+
+        // Clear existing UI player list
+        foreach (Transform child in playerListHolder)
+        {
+            Destroy(child.gameObject);
+        }
+        //get all of the players
+        Player[] players = PhotonNetwork.PlayerList;
+        //loop through all of the players
+        for (int i = 0; i < players.Count(); i++)
+        {
+            //spawn the player listing item
+            PlayerListing playerListItem = Instantiate(playerListing, playerListHolder);
+            //initialize the player listing
+            playerListItem.Initialize(players[i]);
+        }
     }
 
     public override void OnLeftRoom()
@@ -347,6 +403,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         UpdateRoomListUI();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        //spawn the player listing item
+        PlayerListing playerListItem = Instantiate(playerListing, playerListHolder);
+        //initialize the player listing
+        playerListItem.Initialize(newPlayer);
+
+        UpdatePlayerCount();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdatePlayerCount();
+    }
+
+    void UpdatePlayerCount()
+    {
+        //Player Count Text update
+        text_playerCount.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
     }
     #endregion
 }
