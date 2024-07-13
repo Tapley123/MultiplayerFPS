@@ -27,6 +27,14 @@ public class UITweaker : MonoBehaviour
     [ReadOnly] public UIType uiType;
     public bool gotOnValidateValues = false;
 
+    [BoxGroup("OnStartValues")]
+    [ReadOnly] public bool _playClickSound;
+    [ReadOnly] public bool _playHoverSound;
+    [ReadOnly] public bool _changeScale;
+    [ReadOnly] public bool _useVibration;
+    [ReadOnly] public bool _changeBackgroundColor;
+    [ReadOnly] public bool _changeTextColor;
+
     [BoxGroup("Audio")] public bool playClickSound = true;
     [BoxGroup("Audio")] public bool playHoverSound = true;
     [BoxGroup("Audio")] [ShowIf("playClickSound")] public AudioClip clickSound;
@@ -93,11 +101,38 @@ public class UITweaker : MonoBehaviour
 
     void Initialize()
     {
+        _playClickSound = playClickSound;
+        _playHoverSound = playHoverSound;
+        _changeScale = changeScale;
+        _useVibration = useVibration;
+        _changeBackgroundColor = changeBackgroundColor;
+        _changeTextColor = changeTextColor;
+
         //Initialize the button scale multiplier
         scaleMultiplier = 1 + (scalePercentageIncrease / 100);
 
         //get start scale
         startScale = objectToScale.localScale;
+    }
+
+    public void TurnOff()
+    {
+        playClickSound = false;
+        playHoverSound = false;
+        changeScale = false;
+        useVibration = false;
+        changeBackgroundColor = false;
+        changeTextColor = false;
+    }
+
+    public void TurnBackOn()
+    {
+        playClickSound = _playClickSound;
+        playHoverSound = _playHoverSound;
+        changeScale = _changeScale;
+        useVibration = _useVibration;
+        changeBackgroundColor = _changeBackgroundColor;
+        changeTextColor = _changeTextColor;
     }
     #endregion
 

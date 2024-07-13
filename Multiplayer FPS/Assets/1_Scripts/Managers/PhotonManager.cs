@@ -268,7 +268,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             foreach (Button b in host_Buttons)
             {
+                //toggle if it can be used
                 b.interactable = PhotonNetwork.IsMasterClient;
+
+                //if there is a ui tweaker then toggle it
+                if (b.GetComponent<UITweaker>())
+                {
+                    ToggleUITweaker(b.GetComponent<UITweaker>());
+                }
             }
         }
         //Toggles
@@ -276,7 +283,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             foreach (Toggle t in host_Toggles)
             {
+                //toggle if it can be used
                 t.interactable = PhotonNetwork.IsMasterClient;
+
+                //if there is a ui tweaker then toggle it
+                if (t.GetComponent<UITweaker>())
+                {
+                    ToggleUITweaker(t.GetComponent<UITweaker>());
+                }
             }
         }
         //Sliders
@@ -284,8 +298,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             foreach (Slider s in host_Sliders)
             {
+                //toggle if it can be used
                 s.interactable = PhotonNetwork.IsMasterClient;
+
+                //if there is a ui tweaker then toggle it
+                if (s.GetComponent<UITweaker>())
+                {
+                    ToggleUITweaker(s.GetComponent<UITweaker>());
+                }
             }
+        }
+    }
+
+    void ToggleUITweaker(UITweaker tweaker)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            tweaker.TurnBackOn();
+        }
+        else
+        {
+            tweaker.TurnOff();
         }
     }
 
