@@ -116,7 +116,8 @@ public class PlayfabManager : MonoBehaviour
     void Load(string loadingMsg)
     {
         //opens the loading screen panel
-        SwapPanel(panel_Loading);
+        if (!panel_Loading.activeInHierarchy)
+            SwapPanel(panel_Loading);
         //changes the loading screen text to display what is happening
         text_Loading.text = loadingMsg;
     }

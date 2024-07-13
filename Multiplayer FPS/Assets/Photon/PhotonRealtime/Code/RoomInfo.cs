@@ -61,6 +61,9 @@ namespace Photon.Realtime
         /// <summary>Backing field for property.</summary>
         protected bool isVisible = true;
 
+        /// <summary>Backing field for property.</summary>
+        protected bool isPrivate = true;
+
         /// <summary>Backing field for property. False unless the GameProperty is set to true (else it's not sent).</summary>
         protected bool autoCleanUp = true;
 
@@ -148,6 +151,20 @@ namespace Photon.Realtime
             get
             {
                 return this.isVisible;
+            }
+        }
+
+        /// <summary>
+        /// Means it needs a password
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        public bool IsPrivate
+        {
+            get
+            {
+                return this.isPrivate;
             }
         }
 
