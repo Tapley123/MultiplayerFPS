@@ -496,7 +496,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         UpdatePlayerCount();
-        //the master may have left so make sure if you are the new master that you can use the host settings
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log($"Host Migrated! new host: {newMasterClient.NickName}");
         ToggleHostSettings();
     }
 

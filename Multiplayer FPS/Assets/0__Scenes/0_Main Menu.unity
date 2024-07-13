@@ -859,6 +859,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -1218,6 +1224,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -1485,6 +1497,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -2582,6 +2600,12 @@ MonoBehaviour:
   platform: 0
   uiType: 4
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -3251,6 +3275,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -4717,12 +4747,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403591176}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1740197584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &407753459
 GameObject:
@@ -5740,6 +5770,12 @@ MonoBehaviour:
   platform: 0
   uiType: 4
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -6047,6 +6083,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603811928}
   m_CullTransparentMesh: 1
+--- !u!1 &608424754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 608424755}
+  m_Layer: 0
+  m_Name: Lighting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &608424755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608424754}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 705507995}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &630567389
 GameObject:
   m_ObjectHideFlags: 0
@@ -6198,6 +6266,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -6237,6 +6311,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Delegates: []
   uiTweaker: {fileID: 630567394}
+--- !u!1 &635025147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 635025150}
+  - component: {fileID: 635025149}
+  - component: {fileID: 635025148}
+  m_Layer: 0
+  m_Name: RoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &635025148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635025147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 999
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &635025149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635025147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc028239f7cda9f4184d08fa23d540bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab_PlayerManager: {fileID: 612307448270086672, guid: 35820fd2e183e3b468a3ed733ce0135f, type: 3}
+--- !u!4 &635025150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635025147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.59712696, y: 1.030649, z: -0.21535316}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &703383015
 GameObject:
   m_ObjectHideFlags: 0
@@ -6367,7 +6509,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 608424755}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -6661,12 +6803,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 738333457}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1740197584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756854761
 GameObject:
@@ -6953,6 +7095,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -7378,6 +7526,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -8147,6 +8301,12 @@ MonoBehaviour:
   platform: 0
   uiType: 4
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -8645,6 +8805,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -8835,6 +9001,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -9025,6 +9197,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -10144,12 +10322,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1280662969}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 204.96835, y: 294.98203, z: -7.64917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1740197584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1280662972
 MonoBehaviour:
@@ -10427,6 +10605,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -12059,6 +12243,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -13424,6 +13614,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -13846,6 +14042,12 @@ MonoBehaviour:
   platform: 0
   uiType: 1
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -13910,12 +14112,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635156039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1740197584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1635156041
 MonoBehaviour:
@@ -14315,6 +14517,12 @@ MonoBehaviour:
   platform: 0
   uiType: 4
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -14644,6 +14852,12 @@ MonoBehaviour:
   platform: 0
   uiType: 4
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -14890,6 +15104,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1734334146}
   m_CullTransparentMesh: 1
+--- !u!1 &1740197583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1740197584}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1740197584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740197583}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 738333460}
+  - {fileID: 1635156040}
+  - {fileID: 1280662971}
+  - {fileID: 403591179}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1749745180
 GameObject:
   m_ObjectHideFlags: 0
@@ -15174,6 +15423,12 @@ MonoBehaviour:
   platform: 0
   uiType: 2
   gotOnValidateValues: 1
+  _playClickSound: 0
+  _playHoverSound: 0
+  _changeScale: 0
+  _useVibration: 0
+  _changeBackgroundColor: 0
+  _changeTextColor: 0
   playClickSound: 1
   playHoverSound: 1
   clickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
@@ -17272,12 +17527,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 963194228}
-  - {fileID: 705507995}
-  - {fileID: 1635156040}
-  - {fileID: 1280662971}
+  - {fileID: 608424755}
+  - {fileID: 1740197584}
   - {fileID: 187133382}
-  - {fileID: 403591179}
   - {fileID: 1419706820}
   - {fileID: 3685114226630480086}
+  - {fileID: 635025150}
   - {fileID: 182141613}
-  - {fileID: 738333460}
