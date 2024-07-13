@@ -6,7 +6,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UITweaker
+  m_Name: MainMixer
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -15,7 +15,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: ab5a155d6e2a4394ea8d172926040e50
+    name: Volume_Master
+  - guid: 8ab04b2b1f1301e43a51e1d6b633b5f2
+    name: Volume_Music
+  - guid: 08818c4dea5b2044ba4afc18fd524662
+    name: Volume_SFX
   m_AudioMixerGroupViews:
   - guids:
     - 5c578e724c189534a9b0172753301eb9

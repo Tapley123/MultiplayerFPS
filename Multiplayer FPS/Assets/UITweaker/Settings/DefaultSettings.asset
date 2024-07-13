@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f32386a667a3746a01b81c668f693d, type: 3}
   m_Name: DefaultSettings
   m_EditorClassIdentifier: 
-  managerGo: {fileID: 3324273325606800526, guid: b2656bd965e1cdd47b0882a4904f4ebb,
-    type: 3}
+  managerGo: {fileID: 3324273325606800526, guid: b2656bd965e1cdd47b0882a4904f4ebb, type: 3}
   defaultScalePercentageIncrease: 20
   defaultBackgroundHighlightColor: {r: 1, g: 0, b: 0, a: 1}
   defaultBackgroundPressedColor: {r: 1, g: 1, b: 1, a: 1}
@@ -21,8 +20,7 @@ MonoBehaviour:
   defaultTextPressedColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   defaultClickSound: {fileID: 8300000, guid: 469b566945344004fa31647900236d75, type: 3}
   defaultHoverSound: {fileID: 8300000, guid: e95c46161f8ac8144862166029657f2c, type: 3}
-  defaultSFXMixerGroup: {fileID: 2346050729044175233, guid: 9c9deb3e9419f1c4eb929c98607af87f,
-    type: 2}
+  defaultSFXMixerGroup: {fileID: 2346050729044175233, guid: c73bbd352ac1fd74aaa3e21250add5cc, type: 2}
   defaultUseVibration: 0
   vibrationFrequency: 0.3
   defaultVibrationAmplitude: 0.01
