@@ -6,55 +6,55 @@ using NaughtyAttributes;
 using TMPro;
 using Photon.Realtime;
 using System.Text;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using System.Linq;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    [Foldout("UI")] public List<GameObject> allPanels = new List<GameObject>();
+    public List<GameObject> allPanels = new List<GameObject>();
 
-    [Header("Loading")]
-    [Foldout("UI")][SerializeField] private GameObject panel_Loading;
-    [Foldout("UI")][SerializeField] private TMP_Text text_Loading;
+    [Foldout("Loading")][SerializeField] private GameObject panel_Loading;
+    [Foldout("Loading")][SerializeField] private TMP_Text text_Loading;
 
-    [Header("Error")]
-    [Foldout("UI")][SerializeField] private TMP_Text text_Error;
+    [Foldout("Error")][SerializeField] private TMP_Text text_Error;
 
-    [Header("LoggedIn")]
-    [Foldout("UI")][SerializeField] private GameObject panel_LoggedIn;
+    [Foldout("LoggedIn")][SerializeField] private GameObject panel_LoggedIn;
 
     [Header("Create Room")]
-    [Foldout("UI")][SerializeField] private GameObject panel_CreateRoom;
-    //Name
-    [Foldout("UI")][SerializeField] private TMP_InputField input_RoomName;
-    //Private/Password
-    [Foldout("UI")][SerializeField] private CustomToggle toggle_Private;
-    [Foldout("UI")][SerializeField] private GameObject passwordGo;
-    [Foldout("UI")][SerializeField] private bool useRandomPassword = false;
-    [Foldout("UI")][ShowIf("useRandomPassword")][SerializeField] private int randomPasswordLenth = 4;
-    [Foldout("UI")] private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; //used for creating random password
-    [Foldout("UI")][SerializeField] private string defaultPassword = $"123";
-    [Foldout("UI")][SerializeField] private TMP_InputField input_Password;
-    //Players
-    [Foldout("UI")][SerializeField] private TMP_Text text_AmtOfPlayers;
-    [Foldout("UI")][SerializeField] private int maxAmtOfPlayers = 4;
-    [Foldout("UI")][SerializeField] private int minAmtOfPlayers = 2;
-    [Foldout("UI")][SerializeField] private int amtOfPlayers = 4;
+    [Foldout("Create Room")][SerializeField] private GameObject panel_CreateRoom;
+    [Header("Name")]
+    [Foldout("Create Room")][SerializeField] private TMP_InputField input_RoomName;
+    [Header("Private/Password")]
+    [Foldout("Create Room")][SerializeField] private CustomToggle toggle_Private;
+    [Foldout("Create Room")][SerializeField] private GameObject passwordGo;
+    [Foldout("Create Room")][SerializeField] private bool useRandomPassword = false;
+    [Foldout("Create Room")][ShowIf("useRandomPassword")][SerializeField] private int randomPasswordLenth = 4;
+    [Foldout("Create Room")] private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; //used for creating random password
+    [Foldout("Create Room")][SerializeField] private string defaultPassword = $"123";
+    [Foldout("Create Room")][SerializeField] private TMP_InputField input_Password;
+    [Header("Players")]
+    [Foldout("Create Room")][SerializeField] private TMP_Text text_AmtOfPlayers;
+    [Foldout("Create Room")][SerializeField] private int maxAmtOfPlayers = 4;
+    [Foldout("Create Room")][SerializeField] private int minAmtOfPlayers = 2;
+    [Foldout("Create Room")][SerializeField] private int amtOfPlayers = 4;
 
     [Header("Join Room")]
-    [Foldout("UI")][SerializeField] private GameObject panel_JoinRoom;
-    //Room Lising
-    [Foldout("UI")][SerializeField] private Transform roomListHolder;
-    [Foldout("UI")][SerializeField] private RoomListing roomListing;
-    [Foldout("UI")] private List<RoomInfo> roomList = new List<RoomInfo>();
+    [Foldout("Join Room")][SerializeField] private GameObject panel_JoinRoom;
+    [Header("Room Lising")]
+    [Foldout("Join Room")][SerializeField] private Transform roomListHolder;
+    [Foldout("Join Room")][SerializeField] private RoomListing roomListing;
+    [Foldout("Join Room")] private List<RoomInfo> roomList = new List<RoomInfo>();
 
-    [Header("In A Room")]
-    [Foldout("UI")][SerializeField] private GameObject panel_InARoom;
-    [Foldout("UI")][SerializeField] private TMP_Text text_RoomName;
-    //Player Listing
-    [Foldout("UI")][SerializeField] private Transform playerListHolder;
-    [Foldout("UI")][SerializeField] private PlayerListing playerListing;
-    [Foldout("UI")][SerializeField] private TMP_Text text_playerCount;
+    [Foldout("In A Room")][SerializeField] private GameObject panel_InARoom;
+    [Foldout("In A Room")][SerializeField] private TMP_Text text_RoomName;
+    [Header("Player Listing")]
+    [Foldout("In A Room")][SerializeField] private Transform playerListHolder;
+    [Foldout("In A Room")][SerializeField] private PlayerListing playerListing;
+    [Foldout("In A Room")][SerializeField] private TMP_Text text_playerCount;
+    [Header("Host Settings")]
+    [Foldout("In A Room")][SerializeField] private List<Button> host_Buttons = new List<Button>();
+    [Foldout("In A Room")][SerializeField] private List<Toggle> host_Toggles = new List<Toggle>();
+    [Foldout("In A Room")][SerializeField] private List<Slider> host_Sliders = new List<Slider>();
 
     void Start()
     {
@@ -241,6 +241,57 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         //set the room name
         text_RoomName.text = $"{PhotonNetwork.CurrentRoom.Name}'s Room";
+
+        // Clear existing UI player list
+        foreach (Transform child in playerListHolder)
+        {
+            Destroy(child.gameObject);
+        }
+        //get all of the players
+        Player[] players = PhotonNetwork.PlayerList;
+        //loop through all of the players
+        for (int i = 0; i < players.Count(); i++)
+        {
+            //spawn the player listing item
+            PlayerListing playerListItem = Instantiate(playerListing, playerListHolder);
+            //initialize the player listing
+            playerListItem.Initialize(players[i]);
+        }
+
+        ToggleHostSettings();
+    }
+
+    void ToggleHostSettings()
+    {
+        //Buttons
+        if (host_Buttons.Count > 0)
+        {
+            foreach (Button b in host_Buttons)
+            {
+                b.interactable = PhotonNetwork.IsMasterClient;
+            }
+        }
+        //Toggles
+        if (host_Toggles.Count > 0)
+        {
+            foreach (Toggle t in host_Toggles)
+            {
+                t.interactable = PhotonNetwork.IsMasterClient;
+            }
+        }
+        //Sliders
+        if (host_Sliders.Count > 0)
+        {
+            foreach (Slider s in host_Sliders)
+            {
+                s.interactable = PhotonNetwork.IsMasterClient;
+            }
+        }
+    }
+
+    public void Button_StartGame()
+    {
+        if (!PhotonNetwork.IsMasterClient) { return; }
     }
 
     public void Button_LeaveRoom()
@@ -356,22 +407,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         EnteredRoom();
         UpdatePlayerCount();
-
-        // Clear existing UI player list
-        foreach (Transform child in playerListHolder)
-        {
-            Destroy(child.gameObject);
-        }
-        //get all of the players
-        Player[] players = PhotonNetwork.PlayerList;
-        //loop through all of the players
-        for (int i = 0; i < players.Count(); i++)
-        {
-            //spawn the player listing item
-            PlayerListing playerListItem = Instantiate(playerListing, playerListHolder);
-            //initialize the player listing
-            playerListItem.Initialize(players[i]);
-        }
     }
 
     public override void OnLeftRoom()
@@ -423,6 +458,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         UpdatePlayerCount();
+        //the master may have left so make sure if you are the new master that you can use the host settings
+        ToggleHostSettings();
     }
 
     void UpdatePlayerCount()

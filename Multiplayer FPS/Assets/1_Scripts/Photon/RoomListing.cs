@@ -93,27 +93,13 @@ public class RoomListing : MonoBehaviour
             if (inputField_Password.text != roomPassword)
             {
                 if(photonManager != null)
-                {
                     photonManager.Error("Wrong Password! Try again");
-                }
                 else
-                {
                     Debug.LogError($"Wrong Password! Try again");
-                }
                 
                 return;
             }
-            else
-            {
-                Debug.LogError($"Correct Password");
-            }
         }
-        //public
-        else
-        {
-            Debug.LogError($"No Password needed");
-        }
-
 
         //has access to the photon manager
         if (photonManager != null)

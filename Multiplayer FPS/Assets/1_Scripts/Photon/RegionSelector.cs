@@ -221,8 +221,6 @@ public class RegionSelector : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.LogError("YOU JOINED THE LOBBY and your region is: " + PhotonNetwork.CloudRegion);
-
         DisplayCurrentRegion();
     }
 }
