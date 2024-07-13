@@ -4,9 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using NaughtyAttributes;
 using TMPro;
-using UnityEditor.PackageManager;
 using Photon.Realtime;
-using UnityEngine.UI;
 using System.Text;
 using UnityEngine.UIElements;
 
@@ -26,7 +24,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     [Header("Create Room")]
     [Foldout("UI")][SerializeField] private GameObject panel_CreateRoom;
+    //Name
     [Foldout("UI")][SerializeField] private TMP_InputField input_RoomName;
+    //Private/Password
     [Foldout("UI")][SerializeField] private CustomToggle toggle_Private;
     [Foldout("UI")][SerializeField] private GameObject passwordGo;
     [Foldout("UI")][SerializeField] private bool useRandomPassword = false;
@@ -34,6 +34,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [Foldout("UI")] private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     [Foldout("UI")][SerializeField] private string defaultPassword = $"123";
     [Foldout("UI")][SerializeField] private TMP_InputField input_Password;
+    //Players
+    [Foldout("UI")][SerializeField] private TMP_Text text_AmtOfPlayers;
+    [Foldout("UI")][SerializeField] private int maxAmtOfPlayers = 4;
+    [Foldout("UI")][SerializeField] private int minAmtOfPlayers = 2;
+    [Foldout("UI")][SerializeField] private int amtOfPlayers = 4;
 
     [Header("Join Room")]
     [Foldout("UI")][SerializeField] private GameObject panel_JoinRoom;
@@ -101,7 +106,32 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             };
         }
 
+        // Assign the custom properties to the room options
+        options.CustomRoomProperties = customRoomProperties;
+
+        // Define which custom properties should be visible in the lobby
+        options.CustomRoomPropertiesForLobby = new string[] { "password", "map" };
+
+        options.MaxPlayers = amtOfPlayers;
+        //options.IsPrivate = toggle_Private.toggle.isOn;
+        options.IsOpen = true;
+        options.IsVisible = true;
+
         PhotonNetwork.CreateRoom(input_RoomName.text);
+    }
+
+    public void Button_OpenCreateRoom()
+    {
+        SwapPanel(panel_CreateRoom);
+
+        //toggle private/public room stuff
+        Toggle_Private();
+
+        //if the amount of players deosnt match the text
+        if(int.Parse(text_AmtOfPlayers.text) != amtOfPlayers)
+        {
+            text_AmtOfPlayers.text = $"{amtOfPlayers}";
+        }
     }
 
     public void Toggle_Private()
@@ -146,6 +176,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         return result.ToString();
     }
+
+    public void Button_MorePlayers()
+    {
+        if (amtOfPlayers < maxAmtOfPlayers)
+        {
+            amtOfPlayers++;
+        }
+
+        text_AmtOfPlayers.text = $"{amtOfPlayers}";
+    }
+
+    public void Button_LessPlayers()
+    {
+        //2 is the minimum amount of players
+        if (amtOfPlayers > minAmtOfPlayers)
+        {
+            amtOfPlayers--;
+        }
+
+        text_AmtOfPlayers.text = $"{amtOfPlayers}";
+    }
     #endregion
 
     #region Join Room
@@ -162,6 +213,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             RoomListing roomListItem = Instantiate(roomListing, roomListHolder);
             roomListItem.SetRoomInfo(room);
+            roomListItem.photonManager = this;
         }
     }
     #endregion
@@ -203,12 +255,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         text_Loading.text = loadingMsg;
     }
 
-    void ClearError()
+    public void ClearError()
     {
         text_Error.text = string.Empty;
     }
 
-    void Error(string errorMsg)
+    public void Error(string errorMsg)
     {
         text_Error.text = errorMsg;
         Debug.LogError(errorMsg);

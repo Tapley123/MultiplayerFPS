@@ -9,6 +9,8 @@ using ExitGames.Client.Photon;
 
 public class RoomListing : MonoBehaviour
 {
+    [ReadOnly] public PhotonManager photonManager;
+
     [SerializeField] private TMP_Text text_RoomName;
     [SerializeField] private TMP_Text text_PlayerCount;
     [SerializeField] private TMP_InputField inputField_Password;
@@ -16,6 +18,26 @@ public class RoomListing : MonoBehaviour
 
     [SerializeField] private GameObject privateRoom;
     [SerializeField] private GameObject publicRoom;
+
+    [SerializeField] private List<UITweaker> uiTweakers = new List<UITweaker>();
+
+    private void Awake()
+    {
+        //if there are ui tweakers
+        if(uiTweakers.Count > 0)
+        {
+            //loop through all the ui tweakers
+            foreach(UITweaker t in uiTweakers)
+            {
+                //if the audio source is not set
+                if(t.audioSource == null)
+                {
+                    //find their audio source
+                    t.audioSource = UITweakerManager.Instance.audioSource;
+                }
+            }
+        }
+    }
 
     public void SetRoomInfo(RoomInfo info)
     {
@@ -63,12 +85,22 @@ public class RoomListing : MonoBehaviour
         //private
         if (customProperties.ContainsKey("password"))
         {
+            Debug.Log($"** Room Has Password **");
+
             string roomPassword = customProperties["password"].ToString();
 
             //wrong password
             if (inputField_Password.text != roomPassword)
             {
-                Debug.LogError($"Wrong Password! Try again");
+                if(photonManager != null)
+                {
+                    photonManager.Error("Wrong Password! Try again");
+                }
+                else
+                {
+                    Debug.LogError($"Wrong Password! Try again");
+                }
+                
                 return;
             }
             else
@@ -80,6 +112,11 @@ public class RoomListing : MonoBehaviour
         else
         {
             Debug.LogError($"No Password needed");
+        }
+
+        if (photonManager != null)
+        {
+            photonManager.ClearError();
         }
 
         Debug.Log($"Trying to join '{text_RoomName.text}' room...");
