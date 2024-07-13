@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 03ee8fc8969392d4aae01e962cc92d55
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - settings: {fileID: 11400000, guid: 80852972b0a21e545976d4a552ecf18a, type: 2}
+  - audioSource: {instanceID: 0}
+  - clickSound: {instanceID: 0}
+  - sfxMixerGroup: {instanceID: 0}
+  - customTriggers: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
