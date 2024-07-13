@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 public class PlayfabManager : MonoBehaviour
 {
-    [SerializeField] private Launcher launcher;
+    [SerializeField] private PhotonManager photonManager;
 
     [Foldout("UI")][SerializeField] private TMP_Text text_Error;
     private string username;
@@ -18,7 +18,6 @@ public class PlayfabManager : MonoBehaviour
 
     [Header("Panels")]
     [Foldout("UI")][SerializeField] private List<GameObject> mainPanels = new List<GameObject>();
-    [Foldout("UI")][SerializeField] private List<GameObject> subPanels = new List<GameObject>();
 
     [Header("Loading")]
     [Foldout("UI")][SerializeField] private GameObject panel_Loading;
@@ -96,18 +95,6 @@ public class PlayfabManager : MonoBehaviour
 
         //activate the one panel you want
         panelToActivate.SetActive(true);
-    }
-
-    void SwapSubPanel(GameObject subPanelToActivate)
-    {
-        //disable all of the panels
-        foreach (GameObject p in subPanels)
-        {
-            p.SetActive(false);
-        }
-
-        //activate the one panel you want
-        subPanelToActivate.SetActive(true);
     }
 
     // Regular expression pattern to validate an email
@@ -294,7 +281,7 @@ public class PlayfabManager : MonoBehaviour
                 SwapPanel(panel_LoggedIn);
 
                 //connect to photon network
-                launcher.ConnectToPhoton();
+                photonManager.ConnectToPhoton();
             }
 
             //result.AccountInfo.TitleInfo.DisplayName;
@@ -353,7 +340,7 @@ public class PlayfabManager : MonoBehaviour
             XMLManager.Instance.SaveItems(SaveType.Player);
 
             //connect to photon network
-            launcher.ConnectToPhoton();
+            photonManager.ConnectToPhoton();
         },
         error =>
         {
