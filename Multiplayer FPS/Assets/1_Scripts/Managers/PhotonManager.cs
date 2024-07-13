@@ -325,6 +325,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void Button_StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
+
+        //load the second scene in the build index folder
+        PhotonNetwork.LoadLevel(1);
     }
 
     public void Button_LeaveRoom()
@@ -394,6 +397,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Connected to Photon");
         ConnectedToPhoton();
+        //makes sure that all players move scene together
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.JoinLobby();
     }
 
