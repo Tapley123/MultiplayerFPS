@@ -20,13 +20,18 @@ public class PlayerController : MonoBehaviour
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        //online and not mine
+        if (PhotonNetwork.IsConnected && !pv.IsMine) 
+        {
+            //remove camera
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+            //remove rigidbody
+            Destroy(rb);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         //if you are online and you dont own this player do nothing!
@@ -39,6 +44,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //if you are online and you dont own this player do nothing!
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
         //move the player
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
     }
