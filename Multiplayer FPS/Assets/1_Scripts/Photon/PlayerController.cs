@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     [SerializeField] private PhotonView pv;
     [SerializeField] private Rigidbody rb;
@@ -29,17 +31,23 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Initialize();
+
         //online
         if (PhotonNetwork.IsConnected) 
         {
+            Debug.Log($"ONLINE");
+
             //online do for me
             if (pv.IsMine)
             {
-                InitializeMe();
+                Debug.Log($"ME");
             }
             //do for everyone but me
             else
             {
+                Debug.Log($"NOT ME");
+
                 //remove camera
                 Destroy(GetComponentInChildren<Camera>().gameObject);
                 //remove rigidbody
@@ -49,7 +57,7 @@ public class PlayerController : MonoBehaviour
         //offline
         else
         {
-            InitializeMe();
+            Debug.Log($"OFFLINE");
         }
     }
 
@@ -62,6 +70,7 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         SwapItemInput();
+        UseItemInput();
     }
 
     private void FixedUpdate()
@@ -73,9 +82,9 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
     }
 
-    void InitializeMe()
+    void Initialize()
     {
-        Debug.Log($"Initialize me");
+        Debug.Log($"Initialize");
         //Get the items here 
         //itemHolder;
 
@@ -147,6 +156,14 @@ public class PlayerController : MonoBehaviour
 
         //store this as the previous items index so when it is called again this can be rereferenced
         previousItemIndex = itemIndex;
+
+        //Online and mine
+        if(PhotonNetwork.IsConnected && pv.IsMine)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add("itemIndex", itemIndex);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
     }
 
     void SwapItemInput()
@@ -200,5 +217,32 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    void UseItemInput()
+    {
+        //if you click the mouse
+        if(Input.GetMouseButtonDown(0))
+        {
+            //use the current equipped item
+            items[itemIndex].Use();
+        }
+    }
     #endregion
+
+    #region PhotonCallbacks
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        //NOT MINE, this is the script belonging to the player who made a change
+        if(!pv.IsMine && targetPlayer == pv.Owner)
+        {
+            //Show this player equip the correct item accross the network no RPC needed
+            EquipItem((int)changedProps["itemIndex"]);
+        }
+    }
+    #endregion
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log($"Took {damage} Damage");
+    }
 }

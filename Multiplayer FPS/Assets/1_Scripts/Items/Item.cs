@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-public class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
-    [Expandable] public ItemInfo item;
+    [Expandable] public ItemInfo itemInfo;
     public GameObject itemGameobject;
+
+    public abstract void Use();
 }
