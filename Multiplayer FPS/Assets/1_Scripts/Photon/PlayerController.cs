@@ -15,20 +15,41 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float smoothTime;
     [SerializeField] private float maxLookUpDownAngle = 90f;
 
+    //moving locals
     float verticalLookRotation;
     bool grounded;
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
 
+    //items
+    [SerializeField] private Item[] items;
+    [SerializeField] private Transform itemHolder;
+    int itemIndex;
+    int previousItemIndex = -1;
+
     void Start()
     {
-        //online and not mine
-        if (PhotonNetwork.IsConnected && !pv.IsMine) 
+        //online
+        if (PhotonNetwork.IsConnected) 
         {
-            //remove camera
-            Destroy(GetComponentInChildren<Camera>().gameObject);
-            //remove rigidbody
-            Destroy(rb);
+            //online do for me
+            if (pv.IsMine)
+            {
+                InitializeMe();
+            }
+            //do for everyone but me
+            else
+            {
+                //remove camera
+                Destroy(GetComponentInChildren<Camera>().gameObject);
+                //remove rigidbody
+                Destroy(rb);
+            }
+        }
+        //offline
+        else
+        {
+            InitializeMe();
         }
     }
 
@@ -40,6 +61,22 @@ public class PlayerController : MonoBehaviour
         Look();
         Move();
         Jump();
+
+        //if there is at least 1 item
+        if (items.Length > 0)
+        {
+            //loop through all of the items
+            for (int i = 0; i < items.Length; i++)
+            {
+                //if I press a number key that corosponds to a speific item (item1 = numkey1, item2 = numkey2 etc.)
+                if (Input.GetKeyDown((i + 1).ToString()))
+                {
+                    //equip the item of the number you pressed
+                    EquipItem(i);
+                    break;
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -51,6 +88,27 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
     }
 
+    void InitializeMe()
+    {
+        Debug.Log($"Initialize me");
+        //Get the items here 
+        //itemHolder;
+
+        //if there is at least 1 item
+        if(items.Length > 0)
+        {
+            //disable all items
+            for (int i = 0; i < items.Length; i++)
+            {
+                items[i].itemGameobject.SetActive(false);
+            }
+
+            //equip the base item
+            EquipItem(0);
+        }
+    }
+
+    #region Movement + Looking
     private void Move()
     {
         //walk/sprint
@@ -82,4 +140,28 @@ public class PlayerController : MonoBehaviour
     {
         grounded = _grounded;
     }
+    #endregion
+
+    #region Items
+    void EquipItem(int _index)
+    {
+        //stop you from equiping what you have already equiped
+        if (_index == previousItemIndex) { return; }
+
+        //set the item index
+        itemIndex = _index;
+
+        //turn on this current items game object
+        items[itemIndex].itemGameobject.SetActive(true);
+
+        //has held an item before this one
+        if (previousItemIndex != -1)
+        {
+            items[previousItemIndex].itemGameobject.SetActive(false);
+        }
+
+        //store this as the previous items index so when it is called again this can be rereferenced
+        previousItemIndex = itemIndex;
+    }
+    #endregion
 }
