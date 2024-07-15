@@ -61,22 +61,7 @@ public class PlayerController : MonoBehaviour
         Look();
         Move();
         Jump();
-
-        //if there is at least 1 item
-        if (items.Length > 0)
-        {
-            //loop through all of the items
-            for (int i = 0; i < items.Length; i++)
-            {
-                //if I press a number key that corosponds to a speific item (item1 = numkey1, item2 = numkey2 etc.)
-                if (Input.GetKeyDown((i + 1).ToString()))
-                {
-                    //equip the item of the number you pressed
-                    EquipItem(i);
-                    break;
-                }
-            }
-        }
+        SwapItemInput();
     }
 
     private void FixedUpdate()
@@ -162,6 +147,58 @@ public class PlayerController : MonoBehaviour
 
         //store this as the previous items index so when it is called again this can be rereferenced
         previousItemIndex = itemIndex;
+    }
+
+    void SwapItemInput()
+    {
+        //if there is at least 1 item
+        if (items.Length > 0)
+        {
+            //loop through all of the items
+            for (int i = 0; i < items.Length; i++)
+            {
+                //if I press a number key that corosponds to a speific item (item1 = numkey1, item2 = numkey2 etc.)
+                if (Input.GetKeyDown((i + 1).ToString()))
+                {
+                    //equip the item of the number you pressed
+                    EquipItem(i);
+                    break;
+                }
+            }
+
+            //scroll up
+            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+            {
+                //on the last item
+                if (itemIndex >= items.Length - 1)
+                {
+                    //loop back to first item
+                    EquipItem(0);
+                }
+                //not on last item
+                else
+                {
+                    //go forward 1 item
+                    EquipItem(itemIndex + 1);
+                }
+            }
+            //scroll down
+            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+            {
+                //on the first item
+                if (itemIndex <= 0)
+                {
+                    //Equip the last item on the list
+                    EquipItem(items.Length - 1);
+                }
+                //not on the first item
+                else
+                {
+                    //Go back 1 item
+                    EquipItem(itemIndex - 1);
+                }
+            }
+        }
     }
     #endregion
 }
