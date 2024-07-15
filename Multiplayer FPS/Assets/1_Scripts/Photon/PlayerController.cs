@@ -7,6 +7,7 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
+    PlayerManager playerManager;
     [SerializeField] private PhotonView pv;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject cameraHolder;
@@ -28,6 +29,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private Transform itemHolder;
     int itemIndex;
     int previousItemIndex = -1;
+
+    //health
+    const float maxHealth = 100f;
+    float currentHealth = maxHealth;
+
+    void Awake()
+    {
+        if (!PhotonNetwork.IsConnected) { return; }
+
+        playerManager = PhotonView.Find((int)pv.InstantiationData[0]).GetComponent<PlayerManager>();
+    }
 
     void Start()
     {
@@ -241,8 +253,45 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     #endregion
 
+    #region Take Damage
     public void TakeDamage(float damage)
     {
-        Debug.Log($"Took {damage} Damage");
+        //Online
+        if(PhotonNetwork.IsConnected)
+        {
+            pv.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+        }
+        //Offline
+        else
+        {
+            RPC_TakeDamage(damage);
+        }
     }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
+        //only run if you own this
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        Debug.Log($"Took {damage} Damage");
+
+        //subtract the health
+        currentHealth -= damage;
+
+        //dead
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log($"Die");
+
+        if (!PhotonNetwork.IsConnected) { return; }
+        playerManager.Die();
+    }
+    #endregion
 }

@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PhotonView pv;
     [SerializeField] private GameObject prefab_PlayerController;
 
+    GameObject playerController;
+
     void Start()
     {
         if (!PhotonNetwork.IsConnected) { return; }
@@ -22,6 +24,14 @@ public class PlayerManager : MonoBehaviour
     void CreateController()
     {
         Debug.Log($"Instansiate the Player controller here");
-        GameObject playerController = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", $"{prefab_PlayerController.name}"), Vector3.zero, Quaternion.identity);
+        playerController = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", $"{prefab_PlayerController.name}"), Vector3.zero, Quaternion.identity, 0, new object[] { pv.ViewID});
+    }
+
+    public void Die()
+    {
+        //Destroy the player
+        PhotonNetwork.Destroy(playerController);
+        //Respawn
+        CreateController();
     }
 }
