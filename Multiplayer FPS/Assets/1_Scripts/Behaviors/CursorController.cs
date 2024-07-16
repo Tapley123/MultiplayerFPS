@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using NaughtyAttributes;
 
 public class CursorController : MonoBehaviour
 {
     public PhotonView pv;
+    [ReadOnly] public bool locked = false;
 
     void Start()
     {
@@ -37,11 +39,15 @@ public class CursorController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        locked = true;
     }
 
     private void UnlockAndShowCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        locked = false;
     }
 }

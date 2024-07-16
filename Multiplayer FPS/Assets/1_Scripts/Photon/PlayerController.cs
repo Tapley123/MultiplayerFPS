@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     PlayerManager playerManager;
     [SerializeField] private PhotonView pv;
+    [SerializeField] private CursorController cursorController;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject cameraHolder;
     [SerializeField] private float mouseSensitivity;
@@ -78,7 +79,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        Look();
+        if(cursorController.locked)
+            Look();
+
         Move();
         Jump();
         SwapItemInput();
