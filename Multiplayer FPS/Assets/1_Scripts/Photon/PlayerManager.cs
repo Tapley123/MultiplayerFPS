@@ -13,26 +13,42 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        if (!PhotonNetwork.IsConnected) { return; }
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        if(pv.IsMine)
-        {
-            CreateController();
-        }
+        CreateController();
     }
 
     void CreateController()
     {
+        Debug.Log($"Instansiate the Player controller here");
+
         Transform spawnPoint = SpawnManager.Instance.GetSpawnPoint();
 
-        Debug.Log($"Instansiate the Player controller here");
-        playerController = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", $"{prefab_PlayerController.name}"), spawnPoint.position, spawnPoint.rotation, 0, new object[] { pv.ViewID});
+        if(PhotonNetwork.IsConnected)
+        {
+            playerController = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", $"{prefab_PlayerController.name}"), spawnPoint.position, spawnPoint.rotation, 0, new object[] { pv.ViewID });
+        }
+        else
+        {
+            playerController = Instantiate(prefab_PlayerController, spawnPoint.position, spawnPoint.rotation);
+            //PlayerController script = playerController.GetComponent<PlayerController>();
+        }
     }
 
     public void Die()
     {
-        //Destroy the player
-        PhotonNetwork.Destroy(playerController);
+        //online
+        if(PhotonNetwork.IsConnected)
+        {
+            //Destroy the player
+            PhotonNetwork.Destroy(playerController);
+        }
+        else
+        {
+            //Destroy the player
+            Destroy(playerController);  
+        }
+
         //Respawn
         CreateController();
     }

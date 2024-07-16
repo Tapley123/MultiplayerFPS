@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
+using NaughtyAttributes;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private float jumpForce;
     [SerializeField] private float smoothTime;
     [SerializeField] private float maxLookUpDownAngle = 90f;
+
+    //Killbox
+    [SerializeField] [Tag] private string killboxTag;
 
     //moving locals
     float verticalLookRotation;
@@ -37,9 +41,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void Awake()
     {
-        if (!PhotonNetwork.IsConnected) { return; }
-
-        playerManager = PhotonView.Find((int)pv.InstantiationData[0]).GetComponent<PlayerManager>();
+        //online
+        if (PhotonNetwork.IsConnected)
+        {
+            playerManager = PhotonView.Find((int)pv.InstantiationData[0]).GetComponent<PlayerManager>();
+        }
+        //offline
+        else
+        {
+            playerManager = GameObject.FindObjectOfType<PlayerManager>();
+        }
     }
 
     void Start()
@@ -293,8 +304,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         Debug.Log($"Die");
 
-        if (!PhotonNetwork.IsConnected) { return; }
         playerManager.Die();
+    }
+    #endregion
+
+    #region Triggers
+    private void OnTriggerEnter(Collider other)
+    {
+        //if online and not mine
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        if (other.CompareTag(killboxTag))
+        {
+            Die();
+        }
     }
     #endregion
 }

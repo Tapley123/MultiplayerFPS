@@ -384,6 +384,7 @@ MonoBehaviour:
   jumpForce: 300
   smoothTime: 0.15
   maxLookUpDownAngle: 90
+  killboxTag: Killbox
   items:
   - {fileID: 1776514409219256094}
   - {fileID: 289863043089116809}
