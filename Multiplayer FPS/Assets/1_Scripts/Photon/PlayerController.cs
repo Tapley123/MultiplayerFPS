@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using NaughtyAttributes;
-using System.Runtime.CompilerServices;
+using TMPro;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -25,9 +23,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     //UI
     [SerializeField] private GameObject playerUI;
     [SerializeField] private Image image_HealthBar;
+    [SerializeField] private TMP_Text text_Username;
 
     //Killbox
-    [SerializeField] [Tag] private string killboxTag;
+    [SerializeField] [NaughtyAttributes.Tag] private string killboxTag;
 
     //moving locals
     float verticalLookRotation;
@@ -65,6 +64,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PhotonNetwork.IsConnected) 
         {
             Debug.Log($"ONLINE");
+
+            //set the username text to its owners username
+            text_Username.text = pv.Owner.NickName;
 
             //online do for me
             if (pv.IsMine)
@@ -134,6 +136,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             //equip the base item
             EquipItem(0);
         }
+
+        //disable my own username
+        Destroy(text_Username.transform.parent.gameObject);
     }
 
     #region Movement + Looking
