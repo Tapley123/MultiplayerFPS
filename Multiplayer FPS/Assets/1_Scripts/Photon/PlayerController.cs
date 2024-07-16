@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using NaughtyAttributes;
+using System.Runtime.CompilerServices;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -13,13 +15,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject cameraHolder;
-    [SerializeField] private GameObject playerUI;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float smoothTime;
     [SerializeField] private float maxLookUpDownAngle = 90f;
+
+    //UI
+    [SerializeField] private GameObject playerUI;
+    [SerializeField] private Image image_HealthBar;
 
     //Killbox
     [SerializeField] [Tag] private string killboxTag;
@@ -296,8 +301,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //subtract the health
         currentHealth -= damage;
 
+        //calculate the health between 0-1
+        float healthNormalized = Mathf.Clamp01(currentHealth / maxHealth);
+
+        image_HealthBar.fillAmount = healthNormalized;
+
         //dead
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
