@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject cameraHolder;
+    [SerializeField] private GameObject playerUI;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float walkSpeed;
@@ -75,6 +76,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 Destroy(GetComponentInChildren<Camera>().gameObject);
                 //remove rigidbody
                 Destroy(rb);
+                //remove the players UI
+                Destroy(playerUI);
             }
         }
         //offline
