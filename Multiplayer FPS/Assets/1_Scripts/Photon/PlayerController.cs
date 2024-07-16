@@ -44,8 +44,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void Start()
     {
-        Initialize();
-
         //online
         if (PhotonNetwork.IsConnected) 
         {
@@ -55,6 +53,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (pv.IsMine)
             {
                 Debug.Log($"ME");
+                Initialize();
             }
             //do for everyone but me
             else
@@ -71,6 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         else
         {
             Debug.Log($"OFFLINE");
+            Initialize();
         }
     }
 
