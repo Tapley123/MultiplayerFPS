@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Photon.Pun;
+using System.Linq;
+using Photon.Realtime;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private PhotonView pv;
+    public PhotonView pv;
     [SerializeField] private GameObject prefab_PlayerController;
 
     GameObject playerController;
+
+    int kills = 0;
+    int deaths = 0;
+    int assists = 0;
 
     void Start()
     {
@@ -51,5 +57,29 @@ public class PlayerManager : MonoBehaviour
 
         //Respawn
         CreateController();
+    }
+
+    public void GetKill()
+    {
+        pv.RPC(nameof(RPC_GetKill), pv.Owner);
+    }
+
+    [PunRPC]
+    public void RPC_GetKill()
+    {
+        //incriment kills by 1
+        kills++;
+
+        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable
+        {
+            { "kills", kills }
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    public static PlayerManager Find(Player player)
+    {
+        return FindObjectsOfType<PlayerManager>().SingleOrDefault(x => x.pv.Owner == player);
     }
 }

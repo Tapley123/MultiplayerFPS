@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
+using System.Linq;
 using NaughtyAttributes;
 using TMPro;
 
@@ -286,7 +287,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //Online
         if(PhotonNetwork.IsConnected)
         {
-            pv.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+            pv.RPC(nameof(RPC_TakeDamage), pv.Owner, damage);
         }
         //Offline
         else
@@ -296,11 +297,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     [PunRPC]
-    void RPC_TakeDamage(float damage)
+    void RPC_TakeDamage(float damage, PhotonMessageInfo info = new PhotonMessageInfo())
     {
-        //only run if you own this
-        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
-
         Debug.Log($"Took {damage} Damage");
 
         //subtract the health
@@ -315,6 +313,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (currentHealth <= 0)
         {
             Die();
+
+            //if you are online
+            if(PhotonNetwork.IsConnected)
+            {
+                //find the player manager that killed you and send them that killed you
+                PlayerManager.Find(info.Sender).GetKill();
+            }
         }
     }
 
