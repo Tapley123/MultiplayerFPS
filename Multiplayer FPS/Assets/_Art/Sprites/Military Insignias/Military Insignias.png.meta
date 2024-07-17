@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 341.33
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,18 +121,810 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Military Insignias_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1334
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d059ca9fc001f514994e1a464169509f
+      internalID: -1340792692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_1
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 1334
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c2c36fbce5523d4f9c6a571651701a8
+      internalID: 135798969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_2
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 1334
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94e71426c2186bb45889671845b2cb6b
+      internalID: 458286100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_3
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 1334
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0398b69edc00e804cb318bcad52a19f2
+      internalID: -821629764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_4
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 1334
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d103ad6c5e7581d40b3f75728c9a0d90
+      internalID: -1880824860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_5
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 1334
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93c12499f2ed06744b6ebd703471a6de
+      internalID: -1208653891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1068
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdd628e93d0104f438fd6f910884173e
+      internalID: -319192621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_7
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 1068
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64e5279132eeb5640b32159123bb99bc
+      internalID: -40707561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_8
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 1068
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acf35b12d684c5049a4444b6c3e26401
+      internalID: 2090222846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_9
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 1068
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21278a2ff1ab16840af57d2d1c983656
+      internalID: 565498716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_10
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 1068
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12391ae222fdb4040ae4aeef256ebe6c
+      internalID: -1838544811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_11
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 1068
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06971ee581ec94542bc6228d801e2dc6
+      internalID: 882023722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 802
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a8f0aeeb3dfa6a4292937066857f436
+      internalID: -1316856479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_13
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 802
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9def1f31ff72344b8c0e71fc72c2790
+      internalID: 1709886529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_14
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 802
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68f8ba95c2f07dd40ba4264513c76de7
+      internalID: -1075917197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_15
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 802
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5dccf37564bf3a4397383d6ac9bc98b
+      internalID: 810915843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_16
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 802
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a19fbb2c95166674b9ebf32aa375c8e1
+      internalID: -2009732162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_17
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 802
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65677fd6a80b43c468a7e9ebed878759
+      internalID: -365838460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 536
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca4859844f26628429a6e8cde817a719
+      internalID: -880318596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_19
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 536
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 417d353aeb85954479a1e564018d32db
+      internalID: -1118622927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_20
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 536
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba17ba2b87702754892d7d539fd3b080
+      internalID: 124158638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_21
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 536
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9920162792e52f4180deeec92630f00
+      internalID: -481158999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_22
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 536
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 623ad2eba1f772647802650aec33cde3
+      internalID: -2068180023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_23
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 536
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cf271c63da82b14d8abde366d6045a7
+      internalID: 143345753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b43b04b9084f0f94494e0540d3e5fa8f
+      internalID: -256793578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_25
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 270
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aed897e0da94f24c81eb82c38599fbd
+      internalID: 2019871428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_26
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 270
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5df70f40dca8827429af11fb119536a9
+      internalID: 61278327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_27
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 270
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6bfdad68c95b4a4aacc5636f3e8161e
+      internalID: 1710814212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_28
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 270
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14fe1646a20c9a044a6d8c697f7e347c
+      internalID: 1314293348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_29
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 270
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45cd73c1673261247bf1f548083f855d
+      internalID: 1474052121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a883aad4f2e3d0644944d99c54c6bdaa
+      internalID: 592560508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_31
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 4
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f53ae3d87fcd5254686181c70acbb987
+      internalID: -1086657782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_32
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 4
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce00ee7e4f7ca484ab5cf460559ab65a
+      internalID: -75391489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_33
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 4
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21d65816dbfdef447b893109d1a81b60
+      internalID: 282283441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_34
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 4
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31cebbd298789854e8bdfe5020d85314
+      internalID: 639002698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military Insignias_35
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 4
+        width: 266
+        height: 266
+      alignment: 9
+      pivot: {x: 100, y: 100}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69f742c6036e5014c9293acbab376b62
+      internalID: -1649449608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 70439b37506bb184a8a3af11341b0c0a
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Military Insignias_0: -1340792692
+      Military Insignias_1: 135798969
+      Military Insignias_10: -1838544811
+      Military Insignias_11: 882023722
+      Military Insignias_12: -1316856479
+      Military Insignias_13: 1709886529
+      Military Insignias_14: -1075917197
+      Military Insignias_15: 810915843
+      Military Insignias_16: -2009732162
+      Military Insignias_17: -365838460
+      Military Insignias_18: -880318596
+      Military Insignias_19: -1118622927
+      Military Insignias_2: 458286100
+      Military Insignias_20: 124158638
+      Military Insignias_21: -481158999
+      Military Insignias_22: -2068180023
+      Military Insignias_23: 143345753
+      Military Insignias_24: -256793578
+      Military Insignias_25: 2019871428
+      Military Insignias_26: 61278327
+      Military Insignias_27: 1710814212
+      Military Insignias_28: 1314293348
+      Military Insignias_29: 1474052121
+      Military Insignias_3: -821629764
+      Military Insignias_30: 592560508
+      Military Insignias_31: -1086657782
+      Military Insignias_32: -75391489
+      Military Insignias_33: 282283441
+      Military Insignias_34: 639002698
+      Military Insignias_35: -1649449608
+      Military Insignias_4: -1880824860
+      Military Insignias_5: -1208653891
+      Military Insignias_6: -319192621
+      Military Insignias_7: -40707561
+      Military Insignias_8: 2090222846
+      Military Insignias_9: 565498716
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
