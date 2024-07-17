@@ -49,13 +49,28 @@ public class ScoreboardItem : MonoBehaviourPunCallbacks
             //set the kills text to the amount of kills the player has
             text_Kills.text = kills.ToString();
         }
+
+        //if the deaths value exists in the players custom properties
+        if (player.CustomProperties.TryGetValue("deaths", out object deaths))
+        {
+            //set the deaths text to the amount of deaths the player has
+            text_Deaths.text = deaths.ToString();
+        }
+
+        //if the k/d value exists in the players custom properties
+        if (player.CustomProperties.TryGetValue("kd", out object kd))
+        {
+            //set the k/d text to the amount of deaths the player has
+            text_KDRatio.text = kd.ToString();
+        }
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if(targetPlayer == player)
         {
-            if(changedProps.ContainsKey("kills"))
+            //if the kills or deaths were updated
+            if (changedProps.ContainsKey("kills") || changedProps.ContainsKey("deaths"))
             {
                 UpdateStats();
             }

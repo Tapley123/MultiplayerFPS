@@ -269,23 +269,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     #endregion
 
-    #region PhotonCallbacks
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    {
-        //NOT MINE, this is the script belonging to the player who made a change
-        if(!pv.IsMine && targetPlayer == pv.Owner)
-        {
-            //Show this player equip the correct item accross the network no RPC needed
-            EquipItem((int)changedProps["itemIndex"]);
-        }
-    }
-    #endregion
-
     #region Take Damage
     public void TakeDamage(float damage)
     {
         //Online
-        if(PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected)
         {
             pv.RPC(nameof(RPC_TakeDamage), pv.Owner, damage);
         }
@@ -315,7 +303,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Die();
 
             //if you are online
-            if(PhotonNetwork.IsConnected)
+            if (PhotonNetwork.IsConnected)
             {
                 //find the player manager that killed you and send them that killed you
                 PlayerManager.Find(info.Sender).GetKill();
@@ -328,6 +316,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Debug.Log($"Die");
 
         playerManager.Die();
+    }
+    #endregion
+
+    #region PhotonCallbacks
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        //NOT MINE, this is the script belonging to the player who made a change
+        if(changedProps.ContainsKey("itemIndex") && !pv.IsMine && targetPlayer == pv.Owner)
+        {
+            //Show this player equip the correct item accross the network no RPC needed
+            EquipItem((int)changedProps["itemIndex"]);
+        }
     }
     #endregion
 

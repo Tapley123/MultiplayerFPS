@@ -48,7 +48,21 @@ public class PlayerManager : MonoBehaviour
         {
             //Destroy the player
             PhotonNetwork.Destroy(playerController);
+
+            //incriment kills by 1
+            deaths++;
+
+            //add deaths to hashtable
+            ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable
+            {
+                { "deaths", deaths },
+                { "kd", CalculateKDRatio(kills, deaths)}
+            };
+
+            //update your deaths across the network
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
+        //offline
         else
         {
             //Destroy the player
@@ -72,10 +86,39 @@ public class PlayerManager : MonoBehaviour
 
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable
         {
-            { "kills", kills }
+            { "kills", kills },
+            { "kd", CalculateKDRatio(kills, deaths)}
         };
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    /*
+    float CalculateKDRatio(int kills, int deaths)
+    {
+        if (deaths == 0)
+        {
+            if (kills == 0)
+            {
+                return 0f; // or return float.PositiveInfinity; if you want to show infinity
+            }
+            return kills;
+        }
+        return (float)kills / deaths;
+    }
+    */
+
+    string CalculateKDRatio(int kills, int deaths)
+    {
+        if (kills == 0 && deaths == 0)
+        {
+            return "0.00"; // COD BO2 behavior for 0 kills and 0 deaths
+        }
+        if (deaths == 0)
+        {
+            return kills.ToString("F2"); // Infinite K/D ratio if no deaths
+        }
+        return ((float)kills / deaths).ToString("F2");
     }
 
     public static PlayerManager Find(Player player)
