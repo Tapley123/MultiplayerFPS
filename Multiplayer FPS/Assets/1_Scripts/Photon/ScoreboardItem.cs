@@ -37,6 +37,18 @@ public class ScoreboardItem : MonoBehaviourPunCallbacks
         text_Username.text = player.NickName;
         //set the player
         this.player = player;
+        //check if local player
+        if(player.IsLocal)
+        {
+            //highlight this for you as you are this player
+            highlightMeGo.SetActive(true);
+        }
+        //you are not the local player
+        else
+        {
+            //Un-Highlight this for you as you are NOT this player
+            highlightMeGo.SetActive(false);
+        }
         //update the stats
         UpdateStats(); //called here if you join room late the stats will be updated for every player
     }

@@ -6,6 +6,8 @@ using Photon.Realtime;
 
 public class Scoreboard : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private bool offOnStart = true;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private ScoreboardItem scoreboardItem;
     [SerializeField] private Transform team1PlayerHolder;
     [SerializeField] private Transform team2PlayerHolder;
@@ -15,6 +17,10 @@ public class Scoreboard : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        //turn off on start
+        if (offOnStart && canvasGroup.alpha != 0)
+            canvasGroup.alpha = 0;
+
         //dont do anything below this if offline
         if (!PhotonNetwork.IsConnected) { return; }
 
@@ -23,7 +29,18 @@ public class Scoreboard : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            //If it is hidden show it
+            if (offOnStart && canvasGroup.alpha == 0)
+                canvasGroup.alpha = 1;
+        }
+        else if(Input.GetKeyUp(KeyCode.Tab))
+        {
+            //if it is on display hide it
+            if (offOnStart && canvasGroup.alpha != 0)
+                canvasGroup.alpha = 0;
+        }
     }
 
     private void Initialize()
