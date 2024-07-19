@@ -91,7 +91,7 @@ public class Scoreboard : MonoBehaviourPunCallbacks
 
     public void OrganizeScoreboardItems()
     {
-        Dictionary<Player, ScoreboardItem> dictionary = scoreboardItemsDict;ByScore);
+        Dictionary<Player, ScoreboardItem> dictionary = scoreboardItemsDict;
 
         // Extract the list of key-value pairs and sort them by their score in descending order
         List<KeyValuePair<Player, ScoreboardItem>> sortedList = new List<KeyValuePair<Player, ScoreboardItem>>(dictionary);
