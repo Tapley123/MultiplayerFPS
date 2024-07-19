@@ -13,7 +13,7 @@ public class Scoreboard : MonoBehaviourPunCallbacks
     [SerializeField] private Transform team2PlayerHolder;
 
     //store the players ref with its corosponding scoreboard item
-    Dictionary<Player, ScoreboardItem> scoreboardItemsDict = new Dictionary<Player, ScoreboardItem>();
+    public Dictionary<Player, ScoreboardItem> scoreboardItemsDict = new Dictionary<Player, ScoreboardItem>();
 
     void Start()
     {
@@ -70,10 +70,13 @@ public class Scoreboard : MonoBehaviourPunCallbacks
     void AddScoreboardItem(Player player)
     {
         ScoreboardItem item = Instantiate(scoreboardItem, team1PlayerHolder);
+        item.scoreboardScript = this;
         item.Initialize(player);
-
+        
         //add the player refrence to the dictionary
         scoreboardItemsDict[player] = item;
+
+        OrganizeScoreboardItems();
     }
 
     void RemoveScoreboardItem(Player player)
@@ -82,7 +85,71 @@ public class Scoreboard : MonoBehaviourPunCallbacks
         Destroy(scoreboardItemsDict[player].gameObject);
         //remove that players refrence from the dictionary
         scoreboardItemsDict.Remove(player);
+
+        OrganizeScoreboardItems();
     }
+
+    public void OrganizeScoreboardItems()
+    {
+        Dictionary<Player, ScoreboardItem> dictionary = scoreboardItemsDict;
+
+        //// Reorganize the dictionary by score
+        //Dictionary<Player, ScoreboardItem> organizedByScore = ReorganizeDictionaryByScore(scoreboardItemsDict);
+        ////position the scoreboard items to match the higest score at the top
+        //SetChildPositions(organizedByScore);
+
+        // Extract the list of key-value pairs and sort them by their score in descending order
+        List<KeyValuePair<Player, ScoreboardItem>> sortedList = new List<KeyValuePair<Player, ScoreboardItem>>(dictionary);
+        //sortedList.Sort((pair1, pair2) => pair2.Value.score.CompareTo(pair1.Value.score));
+        //sortedList.Sort((pair1, pair2) => pair2.Key.CustomProperties.TryGetValue("score", out object score2).CompareTo(pair1.Key.CustomProperties.TryGetValue("score", out object score1)));
+        sortedList.Sort((pair1, pair2) => pair2.Value.score.CompareTo(pair1.Value.score));
+        // Reorder the children based on the sorted list
+        for (int i = 0; i < sortedList.Count; i++)
+        {
+            sortedList[i].Value.transform.SetSiblingIndex(i);
+        }
+
+        Debug.Log($"Organizing the Scoreboard");
+        Debug.Log($"dictionary: {dictionary}");
+        Debug.Log($"sortedList: {sortedList}");
+    }
+
+    //void SetChildPositions(Dictionary<Player, ScoreboardItem> dictionary)
+    //{
+    //    int index = 0;
+    //    foreach (var pair in dictionary)
+    //    {
+    //        pair.Value.transform.SetSiblingIndex(index);
+    //        index++;
+    //    }
+    //}
+
+    //List<KeyValuePair<Player, ScoreboardItem>> GetSortedPlayerList(Dictionary<Player, ScoreboardItem> dictionary)
+    //{
+    //    // Convert the dictionary to a list and sort it by the score in descending order
+    //    List<KeyValuePair<Player, ScoreboardItem>> sortedList = new List<KeyValuePair<Player, ScoreboardItem>>(dictionary);
+        
+    //    sortedList.Sort((pair1, pair2) => pair2.Key.CustomProperties.TryGetValue("score", out object score2).CompareTo(pair1.Key.CustomProperties.TryGetValue("score", out object score1)));
+
+    //    return sortedList;
+    //}
+
+    //Dictionary<Player, ScoreboardItem> ReorganizeDictionaryByScore(Dictionary<Player, ScoreboardItem> dictionary)
+    //{
+    //    // Convert the dictionary to a list and sort it by the score in descending order
+    //    List<KeyValuePair<Player, ScoreboardItem>> sortedList = new List<KeyValuePair<Player, ScoreboardItem>>(dictionary);
+    //    //sortedList.Sort((pair1, pair2) => pair2.Value.score.CompareTo(pair1.Value.score));
+    //    sortedList.Sort((pair1, pair2) => pair2.Key.CustomProperties.TryGetValue("score", out object score2).CompareTo(pair1.Key.CustomProperties.TryGetValue("score", out object score1)));
+
+    //    // Create a new dictionary and add the sorted items
+    //    Dictionary<Player, ScoreboardItem> sortedDictionary = new Dictionary<Player, ScoreboardItem>();
+    //    foreach (var pair in sortedList)
+    //    {
+    //        sortedDictionary.Add(pair.Key, pair.Value);
+    //    }
+
+    //    return sortedDictionary;
+    //}
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {

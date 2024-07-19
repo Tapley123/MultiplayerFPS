@@ -13,9 +13,15 @@ public class PlayerManager : MonoBehaviour
 
     GameObject playerController;
 
+    float score = 0;
     int kills = 0;
     int deaths = 0;
     int assists = 0;
+
+    //score calculations
+    [Header("Score")]
+    [SerializeField] private float scorePerKill = 100;
+    [SerializeField] private float scorePerAssist = 50;
 
     void Start()
     {
@@ -73,6 +79,29 @@ public class PlayerManager : MonoBehaviour
         CreateController();
     }
 
+    public void GetAssist()
+    {
+        pv.RPC(nameof(RPC_GetKill), pv.Owner);
+    }
+
+    [PunRPC]
+    public void RPC_GetAssist()
+    {
+        //incriment kills by 1
+        assists++;
+
+        //increase the score
+        score += scorePerAssist;
+
+        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable
+        {
+            { "score", score },
+            { "assists", assists }
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
     public void GetKill()
     {
         pv.RPC(nameof(RPC_GetKill), pv.Owner);
@@ -84,29 +113,18 @@ public class PlayerManager : MonoBehaviour
         //incriment kills by 1
         kills++;
 
+        //increase the score
+        score += scorePerKill;
+
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable
         {
+            { "score", score },
             { "kills", kills },
             { "kd", CalculateKDRatio(kills, deaths)}
         };
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
-
-    /*
-    float CalculateKDRatio(int kills, int deaths)
-    {
-        if (deaths == 0)
-        {
-            if (kills == 0)
-            {
-                return 0f; // or return float.PositiveInfinity; if you want to show infinity
-            }
-            return kills;
-        }
-        return (float)kills / deaths;
-    }
-    */
 
     string CalculateKDRatio(int kills, int deaths)
     {
