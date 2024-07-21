@@ -286,7 +286,7 @@ MonoBehaviour:
   cam: {fileID: 8474568649788873286}
   canShootLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 59
   range: 100
 --- !u!114 &374605270823329625
 MonoBehaviour:
@@ -1228,7 +1228,7 @@ MonoBehaviour:
   cam: {fileID: 8474568649788873286}
   canShootLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 59
   range: 100
 --- !u!114 &5654338132595366391
 MonoBehaviour:
