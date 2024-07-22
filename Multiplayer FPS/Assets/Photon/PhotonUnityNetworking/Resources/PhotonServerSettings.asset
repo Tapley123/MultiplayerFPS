@@ -43,6 +43,7 @@ MonoBehaviour:
   - RPC_Shoot
   - RPC_GetKill
   - RPC_GetAssist
+  - RPC_SendCachedData
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

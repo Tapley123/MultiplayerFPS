@@ -5,11 +5,13 @@ using System.IO;
 using Photon.Pun;
 using System.Linq;
 using Photon.Realtime;
+using NaughtyAttributes;
 
 public class PlayerManager : MonoBehaviour
 {
     public PhotonView pv;
     [SerializeField] private GameObject prefab_PlayerController;
+    [ReadOnly] public CachedData cachedData;
 
     GameObject playerController;
 
@@ -25,9 +27,23 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+        //*** Dont do anything if online and not mine ***\\
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
+        //Get cached Data
+        if(cachedData == null && CachedData.Instance)
+        {
+            cachedData = CachedData.Instance;
+            pv.RPC(nameof(RPC_SendCachedData), RpcTarget.OthersBuffered, cachedData.testInt);
+        }
+
         CreateController();
+    }
+
+    [PunRPC]
+    void RPC_SendCachedData(int testInt)
+    {
+        Debug.Log($"Player {pv.Owner.NickName}:{pv.Owner.ActorNumber}'s testInt = {testInt}");
     }
 
     void CreateController()
