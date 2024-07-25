@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pv: {fileID: 485035116962325627}
-  prefab_PlayerController: {fileID: 2130121922135320796, guid: b8e0b629a17e360419c3c19eaf790f61, type: 3}
+  prefab_PlayerController: {fileID: 8215624916630093127, guid: 30621c51bd8aa4d47927c0893f748a85, type: 3}
   cachedData: {fileID: 0}
   scorePerKill: 100
   scorePerAssist: 50

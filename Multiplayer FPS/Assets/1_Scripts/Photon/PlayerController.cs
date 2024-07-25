@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject cameraHolder;
+    public Camera cam;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float walkSpeed;
