@@ -1153,6 +1153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3925867494090004241}
+  - component: {fileID: 2708155990337534349}
   m_Layer: 3
   m_Name: Rifle Object
   m_TagString: Untagged
@@ -1176,6 +1177,20 @@ Transform:
   - {fileID: 3461324473652578087}
   m_Father: {fileID: 817963656980665232}
   m_LocalEulerAnglesHint: {x: -1.907, y: 1.711, z: -1.21}
+--- !u!114 &2708155990337534349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981562906577805680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185c706c7be699b4b91589ef93f81585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smooth: 8
+  swayMultiplier: 2
 --- !u!1 &1982028742973361365
 GameObject:
   m_ObjectHideFlags: 0
@@ -4184,13 +4199,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3671213301579722053}
+  - component: {fileID: 8427408371537590548}
   m_Layer: 3
   m_Name: PistolObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3671213301579722053
 Transform:
   m_ObjectHideFlags: 0
@@ -4200,13 +4216,27 @@ Transform:
   m_GameObject: {fileID: 9138358247990706503}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.506, y: -0.211, z: 0.433}
+  m_LocalPosition: {x: 0.1, y: -0.154, z: 0.129}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2000366158266667289}
   m_Father: {fileID: 8871701903250834026}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8427408371537590548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9138358247990706503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185c706c7be699b4b91589ef93f81585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smooth: 8
+  swayMultiplier: 2
 --- !u!1 &9206978551207891164
 GameObject:
   m_ObjectHideFlags: 0
@@ -4253,15 +4283,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1786759125029253417, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1786759125029253417, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.045
+      value: -0.042
       objectReference: {fileID: 0}
     - target: {fileID: 1786759125029253417, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.04
+      value: 0.051
       objectReference: {fileID: 0}
     - target: {fileID: 1786759125029253417, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
       propertyPath: m_LocalRotation.w
