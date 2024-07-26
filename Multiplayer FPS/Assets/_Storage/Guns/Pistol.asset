@@ -18,6 +18,7 @@ MonoBehaviour:
   canShootLayers:
     serializedVersion: 2
     m_Bits: 25
+  adsSpeed: 10
   magSize: 12
   ammoCapacity: 120
   fireRate: 300

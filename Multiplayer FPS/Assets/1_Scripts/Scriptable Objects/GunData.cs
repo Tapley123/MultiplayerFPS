@@ -17,6 +17,8 @@ public class GunData : ScriptableObject
 
     //Adsing
     [BoxGroup("ADS")][Tooltip("Speed of the ADS transition")] public float adsSpeed = 5f; 
+    [BoxGroup("ADS")][Tooltip("Adjust this value to change snapping sensitivity for position")] public float positionSnapTolerance = 0.001f;
+    [BoxGroup("ADS")][Tooltip("Adjust this value to change snapping sensitivity for rotation")] public float rotationSnapTolerance = 0.01f;
 
     //Reloading
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets in each magasine")] public int magSize;

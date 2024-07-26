@@ -111,16 +111,35 @@ public class GunController : MonoBehaviour
 
     void ADS()
     {
-        // Smoothly move the gun to the target position
+        //Aiming
         if (playerController.playerInput.isAiming)
         {
+            // Smoothly move the gun to the the ads position
             this.transform.position = Vector3.Lerp(this.transform.position, adsPos.position, Time.deltaTime * gunData.adsSpeed);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, adsPos.rotation, Time.deltaTime * gunData.adsSpeed);
+
+            //smoothly zoom the camera in
+            playerController.cam.fieldOfView = Mathf.Lerp(playerController.cam.fieldOfView, 50f, Time.deltaTime * gunData.adsSpeed);
         }
+        //Hip Firing
         else
         {
+            // Smoothly move the gun to the hip fire position
             this.transform.position = Vector3.Lerp(this.transform.position, hipFirePos.position, Time.deltaTime * gunData.adsSpeed);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, hipFirePos.rotation, Time.deltaTime * gunData.adsSpeed);
+
+            //smoothly zoom the camera out
+            playerController.cam.fieldOfView = Mathf.Lerp(playerController.cam.fieldOfView, 60f, Time.deltaTime * gunData.adsSpeed);
+        }
+
+        // Snapping to position to avoid overshooting
+        if (Vector3.Distance(this.transform.position, playerController.playerInput.isAiming ? adsPos.position : hipFirePos.position) < gunData.positionSnapTolerance)
+        {
+            this.transform.position = playerController.playerInput.isAiming ? adsPos.position : hipFirePos.position;
+        }
+        if (Quaternion.Angle(this.transform.rotation, playerController.playerInput.isAiming ? adsPos.rotation : hipFirePos.rotation) < gunData.rotationSnapTolerance)
+        {
+            this.transform.rotation = playerController.playerInput.isAiming ? adsPos.rotation : hipFirePos.rotation;
         }
     }
 
