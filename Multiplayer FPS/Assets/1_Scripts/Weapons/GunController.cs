@@ -26,6 +26,8 @@ public class GunController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
         PlayerInput.shootInput += Shoot;
         PlayerInput.reloadInput += StartReload;
         
@@ -34,6 +36,8 @@ public class GunController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
         PlayerInput.shootInput -= Shoot;
         PlayerInput.reloadInput -= StartReload;
     }
@@ -41,6 +45,8 @@ public class GunController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
         timeSinceLastShot += Time.deltaTime;
 
 
