@@ -908,7 +908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bf3686569076c42aaff96ccf475836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  full: 0
   bulletHolder: {fileID: 831835443242631739}
 --- !u!1 &881064714909703418
 GameObject:
@@ -6062,7 +6061,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5452667660771411295}
   m_Layer: 0
-  m_Name: Grip 1
+  m_Name: Grip Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6076,8 +6075,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5724167742701975138}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4978791, y: 0.46898717, z: -0.4898783, w: 0.5405429}
-  m_LocalPosition: {x: -0.0298, y: 0.1014, z: 0.2621}
+  m_LocalRotation: {x: -0.49787918, y: 0.46898708, z: -0.48987836, w: 0.5405429}
+  m_LocalPosition: {x: -0.029800104, y: 0.10140002, z: 0.26209986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9427,7 +9426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 661053441252370328}
   m_Layer: 0
-  m_Name: Grip 2
+  m_Name: Grip Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9441,8 +9440,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8821561742908474758}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.312079, y: 0.4337986, z: -0.65513134, w: -0.53406787}
-  m_LocalPosition: {x: 0.068, y: 0.119, z: -0.0771}
+  m_LocalRotation: {x: 0.312079, y: 0.43379852, z: -0.65513134, w: -0.53406787}
+  m_LocalPosition: {x: 0.06800001, y: 0.11899994, z: -0.07710006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

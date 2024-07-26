@@ -1810,7 +1810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6534480671072889386}
   m_Layer: 3
-  m_Name: AmmoAway
+  m_Name: Magazine Dump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2377,9 +2377,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 01f425ee27c5a004b9c14d376ccc4442, type: 2}
   gunAnimator: {fileID: 1466712949745530417}
+  gunT: {fileID: 889374597184523576}
   hipFirePos: {fileID: 6260486024542723895}
   adsPos: {fileID: 1718938157246418911}
   magazine: {fileID: 3595421144417555550}
+  grabPointLeft: {fileID: 6346103927552794862}
+  grabPointRight: {fileID: 4212826901427837316}
   playerController: {fileID: 0}
   pv: {fileID: 0}
   currentMagAmmo: 0
@@ -4084,6 +4087,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 3961846088357432912}
+  handTransitioner: {fileID: 8452408833051173323}
+  magazineDump: {fileID: 6534480671072889386}
   pv: {fileID: 3429381931005563959}
   cursorController: {fileID: 4546005682185165212}
   rb: {fileID: 7133048412428323616}
@@ -4140,8 +4145,10 @@ MonoBehaviour:
   moveLeftHandToTarget: 0
   previousLeftTarget: {fileID: 0}
   newLeftTarget: {fileID: 0}
-  targetMag: {fileID: 840703160665486719}
-  targetMagDisposal: {fileID: 6534480671072889386}
+  transitionDurationRight: 1
+  moveRightHandToTarget: 0
+  previousRightTarget: {fileID: 0}
+  newRightTarget: {fileID: 0}
 --- !u!114 &3429381931005563959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4584,9 +4591,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 4386900c29c553c4eb68407a0c75567a, type: 2}
   gunAnimator: {fileID: 1286623253118303177}
+  gunT: {fileID: 7717539054295434977}
   hipFirePos: {fileID: 3477644853284819935}
   adsPos: {fileID: 392976344371773244}
   magazine: {fileID: 302822071279787566}
+  grabPointLeft: {fileID: 3520034836165936083}
+  grabPointRight: {fileID: 8241272633203892500}
   playerController: {fileID: 0}
   pv: {fileID: 0}
   currentMagAmmo: 0
@@ -4880,11 +4890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bf3686569076c42aaff96ccf475836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &840703160665486719 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3629868866832552244, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
-  m_PrefabInstance: {fileID: 4176285541166113867}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3520034836165936083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 661053441252370328, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
@@ -4893,6 +4898,11 @@ Transform:
 --- !u!4 &5076505948720851405 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9189167128507813254, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
+  m_PrefabInstance: {fileID: 4176285541166113867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7717539054295434977 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5976014419630858922, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
   m_PrefabInstance: {fileID: 4176285541166113867}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8241272633203892500 stripped
@@ -5683,11 +5693,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4636160917263005585, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0094
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636160917263005585, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.039
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636160917263005585, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1397
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+--- !u!4 &889374597184523576 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8536490692948714285, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+  m_PrefabInstance: {fileID: 8800038574533799445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3595421144417555550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5459915319965235787, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
@@ -5699,6 +5726,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bf3686569076c42aaff96ccf475836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4212826901427837316 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4636160917263005585, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+  m_PrefabInstance: {fileID: 8800038574533799445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6346103927552794862 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2464005091199061755, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+  m_PrefabInstance: {fileID: 8800038574533799445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7128023383536312124 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1786759125029253417, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}

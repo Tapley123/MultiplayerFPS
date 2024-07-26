@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     PlayerManager playerManager;
     public PlayerInput playerInput;
+    public HandTransitioner handTransitioner;
+    public Transform magazineDump;
     [SerializeField] private PhotonView pv;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Rigidbody rb;
@@ -201,6 +203,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Hashtable hash = new Hashtable();
             hash.Add("itemIndex", index);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
+
+        //Weapoin has a gun controller
+        if(weapons[index].GetComponent<GunController>())
+        {
+            GunController gunC = weapons[index].GetComponent<GunController>();
+            
+            //move the left hand to its grab point
+            handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
+
+            //move the right hand to its grab point
+            handTransitioner.SetRightHandTarget(gunC.grabPointRight);
         }
     }
 

@@ -12,9 +12,12 @@ public class GunController : MonoBehaviour
 
     //connected components
     [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
+    [Foldout("Connected Components")][SerializeField] private Transform gunT;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
     [Foldout("Connected Components")][SerializeField] Magazine magazine;
+    [Foldout("Connected Components")]public Transform grabPointLeft;
+    [Foldout("Connected Components")]public Transform grabPointRight;
     
 
     //GOT VALUES
@@ -74,8 +77,8 @@ public class GunController : MonoBehaviour
 
     public void StartReload()
     {
-        //not already reloading and have ammo to reload with
-        if(!reloading && currentOverallAmmo > 0)
+        //not already reloading; have ammo to reload with; Less than a full mag
+        if(!reloading && currentOverallAmmo > 0 && currentMagAmmo < gunData.magSize)
         {
             //reload
             StartCoroutine(Reload());
@@ -86,8 +89,31 @@ public class GunController : MonoBehaviour
     {
         reloading = true;
 
-        yield return new WaitForSeconds(gunData.reloadTime);
+        //move the hand to the magazine
+        playerController.handTransitioner.SetLeftHandTarget(magazine.transform, gunData.reloadTime / 3);
+        //wait
+        yield return new WaitForSeconds(gunData.reloadTime / 3);
 
+        //set the parent of the magazine to be the players intermediate hand target
+        //magazine.transform.parent = playerController.handTransitioner.leftIntermediateT;
+
+        //move magazine to dump
+        playerController.handTransitioner.SetLeftHandTarget(playerController.magazineDump, gunData.reloadTime / 3);
+        //wait
+        yield return new WaitForSeconds(gunData.reloadTime/3);
+
+        //move magazine to gun
+        playerController.handTransitioner.SetLeftHandTarget(magazine.transform, gunData.reloadTime / 3);
+        //wait
+        yield return new WaitForSeconds(gunData.reloadTime/3);
+
+        //move hand to grip
+        playerController.handTransitioner.SetLeftHandTarget(grabPointLeft, gunData.reloadTime / 3);
+
+        //set the parent of the magazine back to the gun
+        //magazine.transform.parent = gunT;
+
+        //finished reloading
         reloading = false;
 
         //get the amount of bullets missing from your current magazine

@@ -824,8 +824,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4636160917263005585}
   - {fileID: 8536490692948714285}
+  - {fileID: 4636160917263005585}
+  - {fileID: 2464005091199061755}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3899073714259699312
@@ -994,6 +995,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5094313178615664756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2464005091199061755}
+  m_Layer: 3
+  m_Name: Grab Point Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2464005091199061755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5094313178615664756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2530785, y: 0.47921365, z: -0.68010426, w: -0.4937244}
+  m_LocalPosition: {x: 0.2962697, y: -0.20240007, z: 0.008467965}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1786759125029253417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5623298893390383465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4636160917263005585}
   m_Layer: 0
-  m_Name: Grip
+  m_Name: Grab Point Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
