@@ -15,6 +15,9 @@ public class GunData : ScriptableObject
     [BoxGroup("Shooting")][Tooltip("Maximum Distance the bullets can reach")] public float maxDistance;
     [BoxGroup("Shooting")][Tooltip("The Layers The gun can hit")] public LayerMask canShootLayers;
 
+    //Adsing
+    [BoxGroup("ADS")][Tooltip("Speed of the ADS transition")] public float adsSpeed = 5f; 
+
     //Reloading
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets in each magasine")] public int magSize;
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets you have period.")] public int ammoCapacity;

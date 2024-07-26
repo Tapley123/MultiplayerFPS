@@ -7,14 +7,20 @@ using Photon.Pun;
 
 public class GunController : MonoBehaviour
 {
-    [ReadOnly] [SerializeField] private PlayerController playerController;
-    [ReadOnly] [SerializeField] private PhotonView pv;
+    //Settings
     [Expandable][SerializeField] GunData gunData;
 
-    [ReadOnly][SerializeField] private int currentMagAmmo;
-    [ReadOnly][SerializeField] private int currentOverallAmmo;
-    [ReadOnly][SerializeField] private bool reloading = false;
-    [ReadOnly][SerializeField] private float timeSinceLastShot;
+    //connected components
+    [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
+    [Foldout("Connected Components")][SerializeField] private Transform adsPos;
+
+    //GOT VALUES
+    [Foldout("Got Values")][ReadOnly][SerializeField] private PlayerController playerController;
+    [Foldout("Got Values")][ReadOnly][SerializeField] private PhotonView pv;
+    [Foldout("Got Values")][ReadOnly][SerializeField] private int currentMagAmmo;
+    [Foldout("Got Values")][ReadOnly][SerializeField] private int currentOverallAmmo;
+    [Foldout("Got Values")][ReadOnly][SerializeField] private bool reloading = false;
+    [Foldout("Got Values")][ReadOnly][SerializeField] private float timeSinceLastShot;
 
     private void Awake()
     {
@@ -47,8 +53,9 @@ public class GunController : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        timeSinceLastShot += Time.deltaTime;
+        ADS();
 
+        timeSinceLastShot += Time.deltaTime;
 
         //Debugging gunshot
         if(Input.GetMouseButtonDown(0))
@@ -100,6 +107,21 @@ public class GunController : MonoBehaviour
         }
 
         DisplayAmmo();
+    }
+
+    void ADS()
+    {
+        // Smoothly move the gun to the target position
+        if (playerController.playerInput.isAiming)
+        {
+            this.transform.position = Vector3.Lerp(this.transform.position, adsPos.position, Time.deltaTime * gunData.adsSpeed);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, adsPos.rotation, Time.deltaTime * gunData.adsSpeed);
+        }
+        else
+        {
+            this.transform.position = Vector3.Lerp(this.transform.position, hipFirePos.position, Time.deltaTime * gunData.adsSpeed);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, hipFirePos.rotation, Time.deltaTime * gunData.adsSpeed);
+        }
     }
 
     bool CanShoot() => !reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);

@@ -11,10 +11,12 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     PlayerManager playerManager;
+    public PlayerInput playerInput;
     [SerializeField] private PhotonView pv;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject cameraHolder;
+    [SerializeField] private Transform headBone;
     public Camera cam;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
@@ -51,12 +53,23 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //online
         if (PhotonNetwork.IsConnected)
         {
+            //get the player manager
             playerManager = PhotonView.Find((int)pv.InstantiationData[0]).GetComponent<PlayerManager>();
+
+            //only do this if the player belongs to me
+            if(pv.IsMine)
+            {
+                //scale the head down making it invisible for the local player
+                headBone.localScale = Vector3.zero;
+            }
         }
         //offline
         else
         {
+            //get the player manager
             playerManager = GameObject.FindObjectOfType<PlayerManager>();
+            //scale the head down making it invisible for the local player
+            headBone.localScale = Vector3.zero;
         }
     }
 
