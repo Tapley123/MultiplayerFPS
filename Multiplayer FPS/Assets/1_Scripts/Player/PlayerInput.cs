@@ -26,6 +26,10 @@ public class PlayerInput : MonoBehaviour
     public static Action swapWeapon;
     [SerializeField] private KeyCode swapWeaponKey = KeyCode.Alpha1;
 
+    // Get mouse input
+    [ReadOnly] public float mouseX;
+    [ReadOnly] public float mouseY;
+
 
     private void Awake()
     {
@@ -38,8 +42,12 @@ public class PlayerInput : MonoBehaviour
         //online and does not belong to me so do nothing
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
+        //MousePositions
+        mouseX = Input.GetAxisRaw("Mouse X");
+        mouseY = Input.GetAxisRaw("Mouse Y");
+
         //SHOOTING
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             shootInput?.Invoke();
         }

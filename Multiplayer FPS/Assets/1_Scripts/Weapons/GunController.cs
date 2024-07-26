@@ -8,14 +8,16 @@ using Photon.Pun;
 public class GunController : MonoBehaviour
 {
     //Settings
-    [Expandable][SerializeField] GunData gunData;
+    [Expandable] public GunData gunData;
 
     //connected components
+    [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
+    
 
     //GOT VALUES
-    [Foldout("Got Values")][ReadOnly][SerializeField] private PlayerController playerController;
+    [Foldout("Got Values")][ReadOnly] public PlayerController playerController;
     [Foldout("Got Values")][ReadOnly][SerializeField] private PhotonView pv;
     [Foldout("Got Values")][ReadOnly][SerializeField] private int currentMagAmmo;
     [Foldout("Got Values")][ReadOnly][SerializeField] private int currentOverallAmmo;
@@ -192,6 +194,7 @@ public class GunController : MonoBehaviour
     private void OnGunShot()
     {
         DisplayAmmo();
+        gunAnimator.ApplyRecoil();
     }
 
     [PunRPC]

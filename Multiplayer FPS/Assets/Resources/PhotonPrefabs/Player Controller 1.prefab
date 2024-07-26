@@ -2241,7 +2241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2025892140588189714}
   - component: {fileID: 2740526527846089724}
-  - component: {fileID: 5146767449475420415}
+  - component: {fileID: 1466712949745530417}
   - component: {fileID: 4936420117200340263}
   m_Layer: 3
   m_Name: Pistol
@@ -2279,6 +2279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 01f425ee27c5a004b9c14d376ccc4442, type: 2}
+  gunAnimator: {fileID: 1466712949745530417}
   hipFirePos: {fileID: 6260486024542723895}
   adsPos: {fileID: 1718938157246418911}
   playerController: {fileID: 0}
@@ -2287,7 +2288,7 @@ MonoBehaviour:
   currentOverallAmmo: 0
   reloading: 0
   timeSinceLastShot: 0
---- !u!114 &5146767449475420415
+--- !u!114 &1466712949745530417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2296,11 +2297,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4543329955230963612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185c706c7be699b4b91589ef93f81585, type: 3}
+  m_Script: {fileID: 11500000, guid: e13b78999f9f5834d8bec854bd56b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smooth: 8
-  swayMultiplier: 2
+  description: Animates the Gun Sway and recoil
+  gunController: {fileID: 2740526527846089724}
 --- !u!114 &4936420117200340263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3969,6 +3970,8 @@ MonoBehaviour:
   reloadKey: 114
   isAiming: 0
   swapWeaponKey: 49
+  mouseX: 0
+  mouseY: 0
 --- !u!114 &8699759206528019452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3981,9 +3984,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92d1b519eda14e4f803052b839fecb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 3961846088357432912}
   pv: {fileID: 3429381931005563959}
   cursorController: {fileID: 4546005682185165212}
-  playerInput: {fileID: 3961846088357432912}
   rb: {fileID: 7133048412428323616}
   cameraHolder: {fileID: 4823749753736133598}
   headBone: {fileID: 2705039591436228489}
@@ -4337,7 +4340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3500972371367385113}
   - component: {fileID: 4198763709197095379}
-  - component: {fileID: 4165623090443395564}
+  - component: {fileID: 1286623253118303177}
   - component: {fileID: 8644804274486022845}
   m_Layer: 3
   m_Name: Rifle
@@ -4375,6 +4378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 4386900c29c553c4eb68407a0c75567a, type: 2}
+  gunAnimator: {fileID: 1286623253118303177}
   hipFirePos: {fileID: 3477644853284819935}
   adsPos: {fileID: 392976344371773244}
   playerController: {fileID: 0}
@@ -4383,7 +4387,7 @@ MonoBehaviour:
   currentOverallAmmo: 0
   reloading: 0
   timeSinceLastShot: 0
---- !u!114 &4165623090443395564
+--- !u!114 &1286623253118303177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4392,11 +4396,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8848459270118336821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185c706c7be699b4b91589ef93f81585, type: 3}
+  m_Script: {fileID: 11500000, guid: e13b78999f9f5834d8bec854bd56b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smooth: 8
-  swayMultiplier: 2
+  description: Animates the Gun Sway and recoil
+  gunController: {fileID: 4198763709197095379}
 --- !u!114 &8644804274486022845
 MonoBehaviour:
   m_ObjectHideFlags: 0
