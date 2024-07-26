@@ -6,6 +6,7 @@ using Photon.Realtime;
 using System.Linq;
 using NaughtyAttributes;
 using TMPro;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -26,9 +27,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private GameObject playerUI;
     [SerializeField] private Image image_HealthBar;
     [SerializeField] private TMP_Text text_Username;
+    public TMP_Text text_AmmoCount;
 
     //Killbox
-    [SerializeField] [NaughtyAttributes.Tag] private string killboxTag;
+    [SerializeField][NaughtyAttributes.Tag] private string killboxTag;
 
     //moving locals
     float verticalLookRotation;
@@ -36,11 +38,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
 
-    //items
-    [SerializeField] private Item[] items;
-    [SerializeField] private Transform itemHolder;
-    int itemIndex;
-    int previousItemIndex = -1;
+    //weapons
+    [ReadOnly][SerializeField] private int currentWeaponIndex = -1;
+    [SerializeField] private List<GameObject> weapons = new List<GameObject>();
 
     //health
     const float maxHealth = 100f;
@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void Start()
     {
+        PlayerInput.swapWeapon += NextWeapon;
+        NextWeapon();
+
         //online
         if (PhotonNetwork.IsConnected) 
         {
@@ -107,8 +110,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Move();
         Jump();
-        SwapItemInput();
-        UseItemInput();
+
+        //SwapItemInput();
+        //UseItemInput();
     }
 
     private void FixedUpdate()
@@ -126,21 +130,65 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //Get the items here 
         //itemHolder;
 
-        //if there is at least 1 item
-        if(items.Length > 0)
-        {
-            //disable all items
-            for (int i = 0; i < items.Length; i++)
-            {
-                items[i].itemGameobject.SetActive(false);
-            }
+        ////if there is at least 1 item
+        //if(items.Length > 0)
+        //{
+        //    //disable all items
+        //    for (int i = 0; i < items.Length; i++)
+        //    {
+        //        items[i].itemGameobject.SetActive(false);
+        //    }
 
-            //equip the base item
-            EquipItem(0);
-        }
+        //    //equip the base item
+        //    EquipItem(0);
+        //}
 
         //disable my own username
         Destroy(text_Username.transform.parent.gameObject);
+    }
+
+    public void NextWeapon()
+    {
+        //can go up
+        if(currentWeaponIndex < weapons.Count -1)
+            currentWeaponIndex++;
+        //go back to start
+        else
+            currentWeaponIndex = 0;
+
+        EquipWeapon(currentWeaponIndex);
+    }
+
+    public void PreviousWeapon()
+    {
+        //can go up
+        if (currentWeaponIndex > 0)
+            currentWeaponIndex--;
+        //go back to start
+        else
+            currentWeaponIndex = weapons.Count-1;
+
+        EquipWeapon(currentWeaponIndex);
+    }
+
+    void EquipWeapon(int index)
+    {
+        //disable all the weapons
+        foreach (GameObject go in weapons)
+        {
+            go.SetActive(false);
+        }
+
+        //turn on specific weapon
+        weapons[index].SetActive(true);
+
+        //Online and mine
+        if (PhotonNetwork.IsConnected && pv.IsMine)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add("itemIndex", index);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
     }
 
     #region Movement + Looking
@@ -174,99 +222,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void SetGroundedState(bool _grounded)
     {
         grounded = _grounded;
-    }
-    #endregion
-
-    #region Items
-    void EquipItem(int _index)
-    {
-        //stop you from equiping what you have already equiped
-        if (_index == previousItemIndex) { return; }
-
-        //set the item index
-        itemIndex = _index;
-
-        //turn on this current items game object
-        items[itemIndex].itemGameobject.SetActive(true);
-
-        //has held an item before this one
-        if (previousItemIndex != -1)
-        {
-            items[previousItemIndex].itemGameobject.SetActive(false);
-        }
-
-        //store this as the previous items index so when it is called again this can be rereferenced
-        previousItemIndex = itemIndex;
-
-        //Online and mine
-        if(PhotonNetwork.IsConnected && pv.IsMine)
-        {
-            Hashtable hash = new Hashtable();
-            hash.Add("itemIndex", itemIndex);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }
-    }
-
-    void SwapItemInput()
-    {
-        //if there is at least 1 item
-        if (items.Length > 0)
-        {
-            //loop through all of the items
-            for (int i = 0; i < items.Length; i++)
-            {
-                //if I press a number key that corosponds to a speific item (item1 = numkey1, item2 = numkey2 etc.)
-                if (Input.GetKeyDown((i + 1).ToString()))
-                {
-                    //equip the item of the number you pressed
-                    EquipItem(i);
-                    break;
-                }
-            }
-
-            //scroll up
-            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
-            {
-                //on the last item
-                if (itemIndex >= items.Length - 1)
-                {
-                    //loop back to first item
-                    EquipItem(0);
-                }
-                //not on last item
-                else
-                {
-                    //go forward 1 item
-                    EquipItem(itemIndex + 1);
-                }
-            }
-            //scroll down
-            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
-            {
-                //on the first item
-                if (itemIndex <= 0)
-                {
-                    //Equip the last item on the list
-                    EquipItem(items.Length - 1);
-                }
-                //not on the first item
-                else
-                {
-                    //Go back 1 item
-                    EquipItem(itemIndex - 1);
-                }
-            }
-        }
-    }
-
-    void UseItemInput()
-    {
-        //if you click the mouse
-        if(Input.GetMouseButtonDown(0))
-        {
-            //use the current equipped item
-            items[itemIndex].Use();
-        }
     }
     #endregion
 
@@ -327,7 +282,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if(changedProps.ContainsKey("itemIndex") && !pv.IsMine && targetPlayer == pv.Owner)
         {
             //Show this player equip the correct item accross the network no RPC needed
-            EquipItem((int)changedProps["itemIndex"]);
+            EquipWeapon((int)changedProps["itemIndex"]);
         }
     }
     #endregion

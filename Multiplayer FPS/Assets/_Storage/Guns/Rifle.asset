@@ -19,5 +19,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 25
   magSize: 31
+  ammoCapacity: 310
   fireRate: 600
   reloadTime: 1.6
+  bulletImpactPrefab: {fileID: 2755941183293180457, guid: d7cf80be336c57948b29b9d2c2606d23, type: 3}

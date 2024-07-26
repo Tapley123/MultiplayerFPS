@@ -17,6 +17,10 @@ public class GunData : ScriptableObject
 
     //Reloading
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets in each magasine")] public int magSize;
+    [BoxGroup("Reloading")][Tooltip("Ammount of bullets you have period.")] public int ammoCapacity;
     [BoxGroup("Reloading")][Tooltip("Rounds Per Minute")]public float fireRate;
     [BoxGroup("Reloading")][Tooltip("Time to reload in Seconds")]public float reloadTime;
+
+    //effects
+    [BoxGroup("Effects")][Tooltip("Spawned in at the point that was shot")] public GameObject bulletImpactPrefab;
 }

@@ -40,7 +40,7 @@ public class SingleShotGun : Gun
             //Debug.Log($"Hit ({hit.collider.gameObject.name})");
 
             //if what you hit has a damageable component on it then take damage
-            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+            //hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
 
             //online
             if (PhotonNetwork.IsConnected)
