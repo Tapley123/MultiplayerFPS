@@ -14,6 +14,7 @@ public class GunController : MonoBehaviour
     [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
+    [Foldout("Connected Components")][SerializeField] Magazine magazine;
     
 
     //GOT VALUES
