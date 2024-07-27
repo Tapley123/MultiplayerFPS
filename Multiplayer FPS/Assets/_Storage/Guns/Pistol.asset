@@ -19,8 +19,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 25
   adsSpeed: 10
+  positionSnapTolerance: 0.001
+  rotationSnapTolerance: 0.01
+  smooth: 8
+  swayMultiplier: 2
+  recoilAmount: 5
+  recoilSmooth: 5
+  recoilReturnSpeed: 10
   magSize: 12
   ammoCapacity: 120
   fireRate: 300
   reloadTime: 1
   bulletImpactPrefab: {fileID: 2755941183293180457, guid: d7cf80be336c57948b29b9d2c2606d23, type: 3}
+  shotSound: {fileID: 8300000, guid: 5b1025012e057704687ea913e8304892, type: 3}
+  emptySound: {fileID: 8300000, guid: fcb89618f7b621b468e5b2e1705d460e, type: 3}
+  removeMagSound: {fileID: 8300000, guid: 0a73c9e45208cc746a4fc15a03d584a0, type: 3}
+  insertMagSound: {fileID: 8300000, guid: d10c2167907786f499cdf93912d96a83, type: 3}

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     PlayerManager playerManager;
     public PlayerInput playerInput;
     public HandTransitioner handTransitioner;
+    public SoundEffectPlayer soundEffectPlayer;
     public Transform magazineDump;
     [SerializeField] private PhotonView pv;
     [SerializeField] private CursorController cursorController;

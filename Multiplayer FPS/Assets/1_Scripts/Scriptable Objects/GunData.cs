@@ -44,4 +44,11 @@ public class GunData : ScriptableObject
     //effects
     [Header("Effects")]
     [BoxGroup("Effects")][Tooltip("Spawned in at the point that was shot")] public GameObject bulletImpactPrefab;
+
+    //Audio
+    [Header("Audio")]
+    [BoxGroup("Audio")][Tooltip("the audio clip that is played when the gun shoots a bullet")] public AudioClip shotSound;
+    [BoxGroup("Audio")][Tooltip("the audio clip that is played if you try shoot with no bullets")] public AudioClip emptySound;
+    [BoxGroup("Audio")][Tooltip("the audio clip that is played if you try shoot with no bullets")] public AudioClip removeMagSound;
+    [BoxGroup("Audio")][Tooltip("the audio clip that is played if you try shoot with no bullets")] public AudioClip insertMagSound;
 }

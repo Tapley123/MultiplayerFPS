@@ -94,6 +94,9 @@ public class GunController : MonoBehaviour
         //wait
         yield return new WaitForSeconds(gunData.reloadTime / 3);
 
+        //play removeMag sound
+        playerController.soundEffectPlayer.Play(gunData.removeMagSound);
+
         //set the parent of the magazine to be the players intermediate hand target
         //magazine.transform.parent = playerController.handTransitioner.leftIntermediateT;
 
@@ -107,8 +110,11 @@ public class GunController : MonoBehaviour
         //wait
         yield return new WaitForSeconds(gunData.reloadTime/3);
 
+        //play insert mag sound
+        playerController.soundEffectPlayer.Play(gunData.insertMagSound);
+
         //move hand to grip
-        playerController.handTransitioner.SetLeftHandTarget(grabPointLeft, gunData.reloadTime / 3);
+        playerController.handTransitioner.SetLeftHandTarget(grabPointLeft);
 
         //set the parent of the magazine back to the gun
         //magazine.transform.parent = gunT;
@@ -176,7 +182,7 @@ public class GunController : MonoBehaviour
     
     public void Shoot()
     {
-        if (currentMagAmmo <= 0) { Debug.LogError("No Ammo in Mag!"); return; }
+        if (currentMagAmmo <= 0) { Debug.LogError("No Ammo in Mag!"); playerController.soundEffectPlayer.Play(gunData.emptySound); return; }
         if (!CanShoot()) { Debug.LogError("Shooting Criteria has not been met!"); return; }
 
         Debug.Log($"Shoot {gunData.name}!");
@@ -220,8 +226,12 @@ public class GunController : MonoBehaviour
 
     private void OnGunShot()
     {
+        //update ammo count on ui
         DisplayAmmo();
+        //make gun show recoil
         gunAnimator.ApplyRecoil();
+        //play gunshot noise
+        playerController.soundEffectPlayer.Play(gunData.shotSound);
     }
 
     [PunRPC]
