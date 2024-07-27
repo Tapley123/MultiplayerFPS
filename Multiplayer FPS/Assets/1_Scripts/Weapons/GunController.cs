@@ -14,7 +14,7 @@ public class GunController : MonoBehaviour
     [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
     [Foldout("Connected Components")][SerializeField] private Transform gunT;
     [Foldout("Connected Components")][SerializeField] private Transform endOfBarrel;
-    [Foldout("Connected Components")][SerializeField] private ParticleSystem particle_MuzzleFlash;
+    [Foldout("Connected Components")][SerializeField] private GameObject muzzleFlash;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
     [Foldout("Connected Components")][SerializeField] private Magazine magazine;
@@ -36,6 +36,10 @@ public class GunController : MonoBehaviour
         pv = this.GetComponent<PhotonView>();
         currentMagAmmo = gunData.magSize;
         currentOverallAmmo = gunData.ammoCapacity;
+
+        //turn off muzzle flash
+        if (muzzleFlash != null)
+            muzzleFlash.SetActive(false);
     }
 
     private void OnEnable()
@@ -256,8 +260,26 @@ public class GunController : MonoBehaviour
         //play gunshot noise
         playerController.soundEffectPlayer.Play(gunData.shotSound);
         //show muzzleflash
-        if (particle_MuzzleFlash != null)
-            particle_MuzzleFlash.Play();
+        if (muzzleFlash != null)
+            StartCoroutine(MuzzleFlash());
+    }
+
+    IEnumerator MuzzleFlash()
+    {
+        // Get the current Euler angles
+        Vector3 eulerAngles = muzzleFlash.transform.rotation.eulerAngles;
+        // Set a random Z rotation
+        eulerAngles.z = UnityEngine.Random.Range(0f, 360f);
+        // Apply the new rotation
+        muzzleFlash.transform.rotation = Quaternion.Euler(eulerAngles);
+
+        //Turn on The muzzle flash
+        muzzleFlash.SetActive(true);
+
+        yield return new WaitForSeconds(0.05f);
+
+        //Turn off the muzzle flash
+        muzzleFlash.SetActive(false);
     }
 
     private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)

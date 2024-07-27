@@ -2380,8 +2380,7 @@ MonoBehaviour:
   gunT: {fileID: 889374597184523576}
   endOfBarrel: {fileID: 8900642802738355732}
   particle_MuzzleFlash: {fileID: 0}
-  particle_Impact: {fileID: 0}
-  bulletTrail: {fileID: 0}
+  muzzleFlash: {fileID: 2119021514862937477}
   hipFirePos: {fileID: 6260486024542723895}
   adsPos: {fileID: 1718938157246418911}
   magazine: {fileID: 3595421144417555550}
@@ -4744,8 +4743,7 @@ MonoBehaviour:
   gunT: {fileID: 7717539054295434977}
   endOfBarrel: {fileID: 5457382089130514536}
   particle_MuzzleFlash: {fileID: 0}
-  particle_Impact: {fileID: 0}
-  bulletTrail: {fileID: 239463848475958088, guid: a5fa1365993f50648af0f606e833dafa, type: 3}
+  muzzleFlash: {fileID: 4338451008082532687}
   hipFirePos: {fileID: 3477644853284819935}
   adsPos: {fileID: 392976344371773244}
   magazine: {fileID: 302822071279787566}
@@ -5047,6 +5045,11 @@ MonoBehaviour:
 --- !u!4 &3520034836165936083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 661053441252370328, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
+  m_PrefabInstance: {fileID: 4176285541166113867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4338451008082532687 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 414440730568670468, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
   m_PrefabInstance: {fileID: 4176285541166113867}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5076505948720851405 stripped
@@ -5872,6 +5875,11 @@ PrefabInstance:
 --- !u!4 &889374597184523576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8536490692948714285, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
+  m_PrefabInstance: {fileID: 8800038574533799445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2119021514862937477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7442271648922905488, guid: 24293e33d3322f84bb98b6c032ce2dc9, type: 3}
   m_PrefabInstance: {fileID: 8800038574533799445}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3595421144417555550 stripped
