@@ -28,10 +28,14 @@ MonoBehaviour:
   recoilAmount: 5
   recoilSmooth: 5
   recoilReturnSpeed: 10
+  addBulletSpread: 0
+  bulletSpreadVarience: {x: 0.1, y: 0.1, z: 0.1}
   magSize: 12
   ammoCapacity: 120
   reloadTime: 1
   bulletImpactPrefab: {fileID: 2755941183293180457, guid: d7cf80be336c57948b29b9d2c2606d23, type: 3}
+  particle_Impact: {fileID: 0}
+  bulletTrail: {fileID: 239463848475958088, guid: a5fa1365993f50648af0f606e833dafa, type: 3}
   shotSound: {fileID: 8300000, guid: 5b1025012e057704687ea913e8304892, type: 3}
   emptySound: {fileID: 8300000, guid: fcb89618f7b621b468e5b2e1705d460e, type: 3}
   removeMagSound: {fileID: 8300000, guid: 0a73c9e45208cc746a4fc15a03d584a0, type: 3}

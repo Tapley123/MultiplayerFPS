@@ -36,6 +36,11 @@ public class GunData : ScriptableObject
     [BoxGroup("Recoil")] public float recoilSmooth = 5f;
     [BoxGroup("Recoil")] public float recoilReturnSpeed = 10f;
 
+    //Spread
+    [Header("Spread")]
+    [BoxGroup("Spread")] public bool addBulletSpread;
+    [BoxGroup("Spread")] [ShowIf("addBulletSpread")] public Vector3 bulletSpreadVarience = new Vector3(0.1f, 0.1f, 0.1f);
+
     //Reloading
     [Header("Reloading")]
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets in each magasine")] public int magSize;
@@ -45,6 +50,8 @@ public class GunData : ScriptableObject
     //effects
     [Header("Effects")]
     [BoxGroup("Effects")][Tooltip("Spawned in at the point that was shot")] public GameObject bulletImpactPrefab;
+    [BoxGroup("Effects")][Tooltip("Particle system that is spawned where the bullet hits")] public ParticleSystem particle_Impact;
+    [BoxGroup("Effects")][Tooltip("Trail renderer that traces the bullet")] public TrailRenderer bulletTrail;
 
     //Audio
     [Header("Audio")]

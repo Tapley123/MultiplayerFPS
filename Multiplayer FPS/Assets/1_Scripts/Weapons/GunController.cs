@@ -14,9 +14,10 @@ public class GunController : MonoBehaviour
     [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
     [Foldout("Connected Components")][SerializeField] private Transform gunT;
     [Foldout("Connected Components")][SerializeField] private Transform endOfBarrel;
+    [Foldout("Connected Components")][SerializeField] private ParticleSystem particle_MuzzleFlash;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
-    [Foldout("Connected Components")][SerializeField] Magazine magazine;
+    [Foldout("Connected Components")][SerializeField] private Magazine magazine;
     [Foldout("Connected Components")]public Transform grabPointLeft;
     [Foldout("Connected Components")]public Transform grabPointRight;
     
@@ -213,6 +214,19 @@ public class GunController : MonoBehaviour
             //if what you hit has a damageable component on it then take damage
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(gunData.damage);
 
+            //bullet trail
+            if(gunData.bulletTrail != null)
+            {
+                TrailRenderer trail = Instantiate(gunData.bulletTrail, endOfBarrel.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(trail, hit));
+            }
+            //no bullet trail but there is an impact particle
+            else if(gunData.particle_Impact != null)
+            {
+                //spawn the impact particle
+                Instantiate(gunData.particle_Impact, hit.point, Quaternion.LookRotation(hit.normal));
+            }
+
             //online
             if (PhotonNetwork.IsConnected)
             {
@@ -241,6 +255,35 @@ public class GunController : MonoBehaviour
         gunAnimator.ApplyRecoil();
         //play gunshot noise
         playerController.soundEffectPlayer.Play(gunData.shotSound);
+        //show muzzleflash
+        if (particle_MuzzleFlash != null)
+            particle_MuzzleFlash.Play();
+    }
+
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        //store the start position of the trail
+        Vector3 startPos = trail.transform.position;
+
+        while(time < 1)
+        {
+            //smoothly move the trail to the hit point
+            trail.transform.position = Vector3.Lerp(startPos, hit.point, time);
+            time += Time.deltaTime / trail.time;
+
+            yield return null;
+        }
+
+        //make sure the trail is at the hit point
+        trail.transform.position = hit.point;
+
+        //spawn the impact particle
+        if(gunData.particle_Impact != null)
+            Instantiate(gunData.particle_Impact, hit.point, Quaternion.LookRotation(hit.normal));
+
+        //destroy the trail after it has faded out
+        Destroy(trail.gameObject, trail.time);
     }
 
     [PunRPC]

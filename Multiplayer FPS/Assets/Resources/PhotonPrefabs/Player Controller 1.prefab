@@ -2379,6 +2379,9 @@ MonoBehaviour:
   gunAnimator: {fileID: 1466712949745530417}
   gunT: {fileID: 889374597184523576}
   endOfBarrel: {fileID: 8900642802738355732}
+  particle_MuzzleFlash: {fileID: 0}
+  particle_Impact: {fileID: 0}
+  bulletTrail: {fileID: 0}
   hipFirePos: {fileID: 6260486024542723895}
   adsPos: {fileID: 1718938157246418911}
   magazine: {fileID: 3595421144417555550}
@@ -4740,6 +4743,9 @@ MonoBehaviour:
   gunAnimator: {fileID: 1286623253118303177}
   gunT: {fileID: 7717539054295434977}
   endOfBarrel: {fileID: 5457382089130514536}
+  particle_MuzzleFlash: {fileID: 0}
+  particle_Impact: {fileID: 0}
+  bulletTrail: {fileID: 239463848475958088, guid: a5fa1365993f50648af0f606e833dafa, type: 3}
   hipFirePos: {fileID: 3477644853284819935}
   adsPos: {fileID: 392976344371773244}
   magazine: {fileID: 302822071279787566}
