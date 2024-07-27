@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   name: Rifle
+  automatic: 1
   damage: 22
   maxDistance: 200
   canShootLayers:

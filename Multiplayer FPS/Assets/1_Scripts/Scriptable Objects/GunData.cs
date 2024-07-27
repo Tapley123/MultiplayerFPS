@@ -13,7 +13,9 @@ public class GunData : ScriptableObject
 
     //Shooting
     [Header("Shooting")]
+    [BoxGroup("Shooting")][Tooltip("Damage dealt per shot landing")] public bool automatic;
     [BoxGroup("Shooting")][Tooltip("Damage dealt per shot landing")] public float damage;
+    [BoxGroup("Shooting")][Tooltip("Rounds Per Minute")] public float fireRate;
     [BoxGroup("Shooting")][Tooltip("Maximum Distance the bullets can reach")] public float maxDistance;
     [BoxGroup("Shooting")][Tooltip("The Layers The gun can hit")] public LayerMask canShootLayers;
 
@@ -38,7 +40,6 @@ public class GunData : ScriptableObject
     [Header("Reloading")]
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets in each magasine")] public int magSize;
     [BoxGroup("Reloading")][Tooltip("Ammount of bullets you have period.")] public int ammoCapacity;
-    [BoxGroup("Reloading")][Tooltip("Rounds Per Minute")]public float fireRate;
     [BoxGroup("Reloading")][Tooltip("Time to reload in Seconds")]public float reloadTime;
 
     //effects

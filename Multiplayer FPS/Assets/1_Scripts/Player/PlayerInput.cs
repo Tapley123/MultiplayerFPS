@@ -14,7 +14,8 @@ public class PlayerInput : MonoBehaviour
 
     //shooting
     public static Action shootInput;
-
+    [ReadOnly] public bool holdingShootButton = false;
+    
     //reloading
     public static Action reloadInput;
     [SerializeField] private KeyCode reloadKey = KeyCode.R;
@@ -50,10 +51,15 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             shootInput?.Invoke();
+            holdingShootButton = true;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            holdingShootButton = false;
         }
 
         //RELOADING
-        if(Input.GetKeyDown(reloadKey))
+        if (Input.GetKeyDown(reloadKey))
         {
             reloadInput?.Invoke();
         }

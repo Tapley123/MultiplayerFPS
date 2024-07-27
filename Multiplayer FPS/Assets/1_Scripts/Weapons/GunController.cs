@@ -13,6 +13,7 @@ public class GunController : MonoBehaviour
     //connected components
     [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
     [Foldout("Connected Components")][SerializeField] private Transform gunT;
+    [Foldout("Connected Components")][SerializeField] private Transform endOfBarrel;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
     [Foldout("Connected Components")][SerializeField] Magazine magazine;
@@ -61,9 +62,16 @@ public class GunController : MonoBehaviour
 
         ADS();
 
+        //auto shooting
+        if (gunData.automatic && CanShoot() && playerController.playerInput.holdingShootButton && currentMagAmmo > 0)
+        {
+            Shoot();
+        }
+
         timeSinceLastShot += Time.deltaTime;
 
         //Debugging gunshot
+        /*
         if(Input.GetMouseButtonDown(0))
         {
             //shoot a ray from the middle of my screen
@@ -73,6 +81,7 @@ public class GunController : MonoBehaviour
             // Draw the debug ray for visualization
             Debug.DrawRay(ray.origin, ray.direction * gunData.maxDistance, Color.red, gunData.maxDistance);
         }
+        */
     }
 
     public void StartReload()
