@@ -50,7 +50,7 @@ public class GunData : ScriptableObject
     //effects
     [Header("Effects")]
     [BoxGroup("Effects")][Tooltip("Spawned in at the point that was shot")] public GameObject bulletImpactPrefab;
-    [BoxGroup("Effects")][Tooltip("Particle system that is spawned where the bullet hits")] public ParticleSystem particle_Impact;
+    //[BoxGroup("Effects")][Tooltip("Particle system that is spawned where the bullet hits")] public ParticleSystem particle_Impact;
     [BoxGroup("Effects")][Tooltip("Trail renderer that traces the bullet")] public TrailRenderer bulletTrail;
 
     //Audio

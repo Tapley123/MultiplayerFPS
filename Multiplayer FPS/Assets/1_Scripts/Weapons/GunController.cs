@@ -221,14 +221,11 @@ public class GunController : MonoBehaviour
             //bullet trail
             if(gunData.bulletTrail != null)
             {
-                TrailRenderer trail = Instantiate(gunData.bulletTrail, endOfBarrel.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, hit));
-            }
-            //no bullet trail but there is an impact particle
-            else if(gunData.particle_Impact != null)
-            {
-                //spawn the impact particle
-                Instantiate(gunData.particle_Impact, hit.point, Quaternion.LookRotation(hit.normal));
+                //TrailRenderer trail = Instantiate(gunData.bulletTrail, endOfBarrel.position, Quaternion.identity);
+                GameObject trailGo = ObjectPoolManager.Instance.TakeFromPool(QueueType.BulletTrail, gunData.bulletTrail.gameObject, ObjectPoolManager.Instance.bulletTrailHolder);
+                trailGo.transform.position = endOfBarrel.position;
+                //trailGo.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                StartCoroutine(SpawnTrail(trailGo.GetComponent<TrailRenderer>(), hit));
             }
 
             //online
@@ -300,12 +297,10 @@ public class GunController : MonoBehaviour
         //make sure the trail is at the hit point
         trail.transform.position = hit.point;
 
-        //spawn the impact particle
-        if(gunData.particle_Impact != null)
-            Instantiate(gunData.particle_Impact, hit.point, Quaternion.LookRotation(hit.normal));
-
         //destroy the trail after it has faded out
-        Destroy(trail.gameObject, trail.time);
+        //Destroy(trail.gameObject, trail.time);
+        yield return new WaitForSeconds(trail.time);
+        ObjectPoolManager.Instance.ReturnToPool(QueueType.BulletTrail, trail.gameObject);
     }
 
     [PunRPC]
@@ -322,13 +317,17 @@ public class GunController : MonoBehaviour
             Quaternion spawnRot = Quaternion.LookRotation(hitNormal, Vector3.up) * gunData.bulletImpactPrefab.transform.rotation;
 
             //spawn the impact prefab
-            GameObject bulletImpactObject = Instantiate(gunData.bulletImpactPrefab, spawnPos, spawnRot);
+            //GameObject bulletImpactObject = Instantiate(gunData.bulletImpactPrefab, spawnPos, spawnRot);
+            GameObject bulletImpactObject = ObjectPoolManager.Instance.TakeFromPool(QueueType.BulletImpact, gunData.bulletImpactPrefab, ObjectPoolManager.Instance.bulletImpactHolder);
+            bulletImpactObject.transform.position = spawnPos;
+            bulletImpactObject.transform.rotation = spawnRot;
 
             //parent the impact prefab to the collider it hit (for example hit players collider now is child of player)
-            bulletImpactObject.transform.SetParent(colliders[0].transform);
+            //bulletImpactObject.transform.SetParent(colliders[0].transform);
 
             //delete the bullet impact after 10 seconds
-            Destroy(bulletImpactObject, 10f);
+            //Destroy(bulletImpactObject, 10f);
+            StartCoroutine(ObjectPoolManager.Instance.ReturnToPoolWithDelay(QueueType.BulletImpact, bulletImpactObject, 10f));
         }
     }
 }
