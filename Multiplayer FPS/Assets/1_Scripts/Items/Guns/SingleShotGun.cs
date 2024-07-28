@@ -27,7 +27,7 @@ public class SingleShotGun : Gun
 
     void Shoot()
     {
-        Debug.Log($"Shooting ({itemInfo.itemName})");
+        //Debug.Log($"Shooting ({itemInfo.itemName})");
 
         //shoot a ray from the middle of my screen
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
@@ -37,10 +37,10 @@ public class SingleShotGun : Gun
         //Check if the raycast hit
         if(Physics.Raycast(ray, out RaycastHit hit, range, canShootLayers))
         {
-            Debug.Log($"Hit ({hit.collider.gameObject.name})");
+            //Debug.Log($"Hit ({hit.collider.gameObject.name})");
 
             //if what you hit has a damageable component on it then take damage
-            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+            //hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
 
             //online
             if (PhotonNetwork.IsConnected)

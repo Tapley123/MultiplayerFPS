@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4a357d1aa478544ac163ee5026830f, type: 3}
+  m_Name: Rifle
+  m_EditorClassIdentifier: 
+  name: Rifle
+  automatic: 1
+  damage: 22
+  fireRate: 600
+  maxDistance: 200
+  canShootLayers:
+    serializedVersion: 2
+    m_Bits: 25
+  adsSpeed: 8
+  positionSnapTolerance: 0.001
+  rotationSnapTolerance: 0.01
+  smooth: 8
+  swayMultiplier: 2
+  recoilAmount: 5
+  recoilSmooth: 5
+  recoilReturnSpeed: 10
+  addBulletSpread: 0
+  bulletSpreadVarience: {x: 0.1, y: 0.1, z: 0.1}
+  magSize: 31
+  ammoCapacity: 310
+  reloadTime: 1.6
+  bulletImpactPrefab: {fileID: 2755941183293180457, guid: d7cf80be336c57948b29b9d2c2606d23, type: 3}
+  particle_Impact: {fileID: 0}
+  bulletTrail: {fileID: 239463848475958088, guid: a5fa1365993f50648af0f606e833dafa, type: 3}
+  shotSound: {fileID: 8300000, guid: 5b1025012e057704687ea913e8304892, type: 3}
+  emptySound: {fileID: 8300000, guid: fcb89618f7b621b468e5b2e1705d460e, type: 3}
+  removeMagSound: {fileID: 8300000, guid: 0a73c9e45208cc746a4fc15a03d584a0, type: 3}
+  insertMagSound: {fileID: 8300000, guid: d10c2167907786f499cdf93912d96a83, type: 3}
