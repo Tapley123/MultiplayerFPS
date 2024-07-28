@@ -14,13 +14,11 @@ public class PauseManager : MonoBehaviour
     [ReadOnly] public PlayerRefrences playerRefrences;
     [SerializeField] private GameObject pauseMenuGo;
 
-    void Awake()
+    void Start()
     {
         //Make sure you unpause on start
         paused = true;
         TogglePause();
-
-
     }
 
     void Update()
@@ -54,15 +52,30 @@ public class PauseManager : MonoBehaviour
     {
         Debug.Log($"Pause");
 
-        //Unlock the players cursor so they can use the pause menu
-        playerRefrences.cursorController.UnlockAndShowCursor();
+        if(playerRefrences != null)
+        {
+            //Unlock the players cursor so they can use the pause menu
+            playerRefrences.cursorController.UnlockAndShowCursor();
+        }
+        else
+        {
+            Debug.LogError($"Player Refrences {playerRefrences} is not assigned");
+        }
     }
 
     private void UnPause()
     {
         Debug.Log($"UnPause");
 
-        //Lock and hide the players cursor
-        playerRefrences.cursorController.LockAndHideCursor();
+        
+        if (playerRefrences != null)
+        {
+            //Lock and hide the players cursor
+            playerRefrences.cursorController.LockAndHideCursor();
+        }
+        else
+        {
+            Debug.LogError($"Player Refrences {playerRefrences} is not assigned");
+        }
     }
 }

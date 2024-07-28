@@ -12,28 +12,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     PlayerManager playerManager;
     public PlayerRefrences playerRefrences;
-    public PlayerInput playerInput;
-    public HandTransitioner handTransitioner;
-    public SoundEffectPlayer soundEffectPlayer;
-    public Transform magazineDump;
     [SerializeField] private PhotonView pv;
-    [SerializeField] private CursorController cursorController;
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private GameObject cameraHolder;
     [SerializeField] private Transform headBone;
-    public Camera cam;
+    
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float smoothTime;
     [SerializeField] private float maxLookUpDownAngle = 90f;
-
-    //UI
-    [SerializeField] private GameObject playerUI;
-    [SerializeField] private Image image_HealthBar;
-    [SerializeField] private TMP_Text text_Username;
-    public TMP_Text text_AmmoCount;
 
     //Killbox
     [SerializeField][NaughtyAttributes.Tag] private string killboxTag;
@@ -88,7 +75,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Debug.Log($"ONLINE");
 
             //set the username text to its owners username
-            text_Username.text = pv.Owner.NickName;
+            playerRefrences.text_Username.text = pv.Owner.NickName;
 
             //online do for me
             if (pv.IsMine)
@@ -104,9 +91,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 //remove camera
                 Destroy(GetComponentInChildren<Camera>().gameObject);
                 //remove rigidbody
-                Destroy(rb);
+                Destroy(playerRefrences.rb);
                 //remove the players UI
-                Destroy(playerUI);
+                Destroy(playerRefrences.playerUI);
             }
         }
         //offline
@@ -122,7 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        if(cursorController.locked)
+        if(!PauseManager.Instance.paused)
             Look();
 
         Move();
@@ -138,7 +125,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
         //move the player
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
+        playerRefrences.rb.MovePosition(playerRefrences.rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
     }
 
     void Initialize()
@@ -161,7 +148,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //}
 
         //disable my own username
-        Destroy(text_Username.transform.parent.gameObject);
+        Destroy(playerRefrences.text_Username.transform.parent.gameObject);
     }
 
     public void NextWeapon()
@@ -213,10 +200,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             GunController gunC = weapons[index].GetComponent<GunController>();
             
             //move the left hand to its grab point
-            handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
+            playerRefrences.handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
 
             //move the right hand to its grab point
-            handTransitioner.SetRightHandTarget(gunC.grabPointRight);
+            playerRefrences.handTransitioner.SetRightHandTarget(gunC.grabPointRight);
         }
     }
 
@@ -233,7 +220,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //jumping
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            rb.AddForce(transform.up * jumpForce);
+            playerRefrences.rb.AddForce(transform.up * jumpForce);
         }
     }
 
@@ -245,7 +232,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //look up and down
         verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -maxLookUpDownAngle, maxLookUpDownAngle);
-        cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
+        playerRefrences.cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
     }
 
     public void SetGroundedState(bool _grounded)
@@ -280,7 +267,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //calculate the health between 0-1
         float healthNormalized = Mathf.Clamp01(currentHealth / maxHealth);
 
-        image_HealthBar.fillAmount = healthNormalized;
+        playerRefrences.image_HealthBar.fillAmount = healthNormalized;
 
         //dead
         if (currentHealth <= 0)

@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
@@ -15,7 +16,12 @@ public class PlayerRefrences : MonoBehaviour
     public SoundEffectPlayer soundEffectPlayer;
     public PhotonView pv;
     public Camera cam;
+    public GameObject cameraHolder;
     public Transform magazineDump;
+    public Rigidbody rb;
+    public GameObject playerUI;
+    public Image image_HealthBar;
+    public TMP_Text text_Username;
     public TMP_Text text_AmmoCount;
 
     private void Awake()
@@ -28,6 +34,9 @@ public class PlayerRefrences : MonoBehaviour
         {
             //Connect the player to the pause menu
             PauseManager.Instance.playerRefrences = this;
+
+            //PauseManager.Instance.paused = true;
+            //PauseManager.Instance.TogglePause();
         }
         //no pause menu in the scene
         else

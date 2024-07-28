@@ -4079,7 +4079,12 @@ MonoBehaviour:
   soundEffectPlayer: {fileID: 7741498859913924995}
   pv: {fileID: 3429381931005563959}
   cam: {fileID: 1586700152267795774}
+  cameraHolder: {fileID: 4823749753736133598}
   magazineDump: {fileID: 6534480671072889386}
+  rb: {fileID: 7133048412428323616}
+  playerUI: {fileID: 2311039147855758503}
+  image_HealthBar: {fileID: 3268932043114831872}
+  text_Username: {fileID: 305103234349738277}
   text_AmmoCount: {fileID: 3803545278208518521}
 --- !u!114 &3961846088357432912
 MonoBehaviour:
@@ -4116,16 +4121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRefrences: {fileID: 4034262962435419001}
-  playerInput: {fileID: 3961846088357432912}
-  handTransitioner: {fileID: 8452408833051173323}
-  soundEffectPlayer: {fileID: 7741498859913924995}
-  magazineDump: {fileID: 6534480671072889386}
   pv: {fileID: 3429381931005563959}
-  cursorController: {fileID: 4546005682185165212}
-  rb: {fileID: 7133048412428323616}
-  cameraHolder: {fileID: 4823749753736133598}
   headBone: {fileID: 2705039591436228489}
-  cam: {fileID: 1586700152267795774}
   mouseSensitivity: 3
   sprintSpeed: 6
   walkSpeed: 3
