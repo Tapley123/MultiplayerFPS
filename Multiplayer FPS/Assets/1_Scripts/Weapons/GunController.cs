@@ -20,10 +20,10 @@ public class GunController : MonoBehaviour
     [Foldout("Connected Components")][SerializeField] private Magazine magazine;
     [Foldout("Connected Components")]public Transform grabPointLeft;
     [Foldout("Connected Components")]public Transform grabPointRight;
-    
+
 
     //GOT VALUES
-    [Foldout("Got Values")][ReadOnly] public PlayerController playerController;
+    [Foldout("Got Values")][ReadOnly] public PlayerRefrences playerRefrences;
     [Foldout("Got Values")][ReadOnly][SerializeField] private PhotonView pv;
     [Foldout("Got Values")][ReadOnly][SerializeField] private int currentMagAmmo;
     [Foldout("Got Values")][ReadOnly][SerializeField] private int currentOverallAmmo;
@@ -32,7 +32,7 @@ public class GunController : MonoBehaviour
 
     private void Awake()
     {
-        playerController = this.transform.root.GetComponent<PlayerController>();
+        playerRefrences = this.transform.root.GetComponent<PlayerRefrences>();
         pv = this.GetComponent<PhotonView>();
         currentMagAmmo = gunData.magSize;
         currentOverallAmmo = gunData.ammoCapacity;
@@ -68,7 +68,7 @@ public class GunController : MonoBehaviour
         ADS();
 
         //auto shooting
-        if (gunData.automatic && CanShoot() && playerController.playerInput.holdingShootButton && currentMagAmmo > 0)
+        if (gunData.automatic && CanShoot() && playerRefrences.playerInput.holdingShootButton && currentMagAmmo > 0)
         {
             Shoot();
         }
@@ -80,9 +80,9 @@ public class GunController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             //shoot a ray from the middle of my screen
-            Ray ray = playerController.cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+            Ray ray = playerRefrences.cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
             //set the origin of the shot to the cameras position
-            ray.origin = playerController.cam.transform.position;
+            ray.origin = playerRefrences.cam.transform.position;
             // Draw the debug ray for visualization
             Debug.DrawRay(ray.origin, ray.direction * gunData.maxDistance, Color.red, gunData.maxDistance);
         }
@@ -104,31 +104,31 @@ public class GunController : MonoBehaviour
         reloading = true;
 
         //move the hand to the magazine
-        playerController.handTransitioner.SetLeftHandTarget(magazine.transform, gunData.reloadTime / 3);
+        playerRefrences.handTransitioner.SetLeftHandTarget(magazine.transform, gunData.reloadTime / 3);
         //wait
         yield return new WaitForSeconds(gunData.reloadTime / 3);
 
         //play removeMag sound
-        playerController.soundEffectPlayer.Play(gunData.removeMagSound);
+        playerRefrences.soundEffectPlayer.Play(gunData.removeMagSound);
 
         //set the parent of the magazine to be the players intermediate hand target
         //magazine.transform.parent = playerController.handTransitioner.leftIntermediateT;
 
         //move magazine to dump
-        playerController.handTransitioner.SetLeftHandTarget(playerController.magazineDump, gunData.reloadTime / 3);
+        playerRefrences.handTransitioner.SetLeftHandTarget(playerRefrences.magazineDump, gunData.reloadTime / 3);
         //wait
         yield return new WaitForSeconds(gunData.reloadTime/3);
 
         //move magazine to gun
-        playerController.handTransitioner.SetLeftHandTarget(magazine.transform, gunData.reloadTime / 3);
+        playerRefrences.handTransitioner.SetLeftHandTarget(magazine.transform, gunData.reloadTime / 3);
         //wait
         yield return new WaitForSeconds(gunData.reloadTime/3);
 
         //play insert mag sound
-        playerController.soundEffectPlayer.Play(gunData.insertMagSound);
+        playerRefrences.soundEffectPlayer.Play(gunData.insertMagSound);
 
         //move hand to grip
-        playerController.handTransitioner.SetLeftHandTarget(grabPointLeft);
+        playerRefrences.handTransitioner.SetLeftHandTarget(grabPointLeft);
 
         //set the parent of the magazine back to the gun
         //magazine.transform.parent = gunT;
@@ -161,14 +161,14 @@ public class GunController : MonoBehaviour
     void ADS()
     {
         //Aiming
-        if (playerController.playerInput.isAiming)
+        if (playerRefrences.playerInput.isAiming)
         {
             // Smoothly move the gun to the the ads position
             this.transform.position = Vector3.Lerp(this.transform.position, adsPos.position, Time.deltaTime * gunData.adsSpeed);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, adsPos.rotation, Time.deltaTime * gunData.adsSpeed);
 
             //smoothly zoom the camera in
-            playerController.cam.fieldOfView = Mathf.Lerp(playerController.cam.fieldOfView, 50f, Time.deltaTime * gunData.adsSpeed);
+            playerRefrences.cam.fieldOfView = Mathf.Lerp(playerRefrences.cam.fieldOfView, 50f, Time.deltaTime * gunData.adsSpeed);
         }
         //Hip Firing
         else
@@ -178,17 +178,17 @@ public class GunController : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, hipFirePos.rotation, Time.deltaTime * gunData.adsSpeed);
 
             //smoothly zoom the camera out
-            playerController.cam.fieldOfView = Mathf.Lerp(playerController.cam.fieldOfView, 60f, Time.deltaTime * gunData.adsSpeed);
+            playerRefrences.cam.fieldOfView = Mathf.Lerp(playerRefrences.cam.fieldOfView, 60f, Time.deltaTime * gunData.adsSpeed);
         }
 
         // Snapping to position to avoid overshooting
-        if (Vector3.Distance(this.transform.position, playerController.playerInput.isAiming ? adsPos.position : hipFirePos.position) < gunData.positionSnapTolerance)
+        if (Vector3.Distance(this.transform.position, playerRefrences.playerInput.isAiming ? adsPos.position : hipFirePos.position) < gunData.positionSnapTolerance)
         {
-            this.transform.position = playerController.playerInput.isAiming ? adsPos.position : hipFirePos.position;
+            this.transform.position = playerRefrences.playerInput.isAiming ? adsPos.position : hipFirePos.position;
         }
-        if (Quaternion.Angle(this.transform.rotation, playerController.playerInput.isAiming ? adsPos.rotation : hipFirePos.rotation) < gunData.rotationSnapTolerance)
+        if (Quaternion.Angle(this.transform.rotation, playerRefrences.playerInput.isAiming ? adsPos.rotation : hipFirePos.rotation) < gunData.rotationSnapTolerance)
         {
-            this.transform.rotation = playerController.playerInput.isAiming ? adsPos.rotation : hipFirePos.rotation;
+            this.transform.rotation = playerRefrences.playerInput.isAiming ? adsPos.rotation : hipFirePos.rotation;
         }
     }
 
@@ -196,7 +196,7 @@ public class GunController : MonoBehaviour
     
     public void Shoot()
     {
-        if (currentMagAmmo <= 0) { Debug.LogError("No Ammo in Mag!"); playerController.soundEffectPlayer.Play(gunData.emptySound); return; }
+        if (currentMagAmmo <= 0) { Debug.LogError("No Ammo in Mag!"); playerRefrences.soundEffectPlayer.Play(gunData.emptySound); return; }
         if (!CanShoot()) { Debug.LogError("Shooting Criteria has not been met!"); return; }
 
         Debug.Log($"Shoot {gunData.name}!");
@@ -206,9 +206,9 @@ public class GunController : MonoBehaviour
         OnGunShot();
 
         //shoot a ray from the middle of my screen
-        Ray ray = playerController.cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+        Ray ray = playerRefrences.cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         //set the origin of the shot to the cameras position
-        ray.origin = playerController.cam.transform.position;
+        ray.origin = playerRefrences.cam.transform.position;
 
         //Check if the raycast hit
         if (Physics.Raycast(ray, out RaycastHit hit, gunData.maxDistance, gunData.canShootLayers))
@@ -248,7 +248,7 @@ public class GunController : MonoBehaviour
 
     void DisplayAmmo()
     {
-        playerController.text_AmmoCount.text = $"{currentMagAmmo}/{gunData.magSize}\n{currentOverallAmmo}";
+        playerRefrences.text_AmmoCount.text = $"{currentMagAmmo}/{gunData.magSize}\n{currentOverallAmmo}";
     }
 
     private void OnGunShot()
@@ -258,7 +258,7 @@ public class GunController : MonoBehaviour
         //make gun show recoil
         gunAnimator.ApplyRecoil();
         //play gunshot noise
-        playerController.soundEffectPlayer.Play(gunData.shotSound);
+        playerRefrences.soundEffectPlayer.Play(gunData.shotSound);
         //show muzzleflash
         if (muzzleFlash != null)
             StartCoroutine(MuzzleFlash());

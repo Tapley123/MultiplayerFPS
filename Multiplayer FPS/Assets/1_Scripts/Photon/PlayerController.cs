@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     PlayerManager playerManager;
+    public PlayerRefrences playerRefrences;
     public PlayerInput playerInput;
     public HandTransitioner handTransitioner;
     public SoundEffectPlayer soundEffectPlayer;
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void Start()
     {
-        PlayerInput.swapWeapon += NextWeapon;
+        PlayerInput.swapWeaponInput += NextWeapon;
         NextWeapon();
 
         //online

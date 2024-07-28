@@ -18,6 +18,7 @@ public class CursorController : MonoBehaviour
         LockAndHideCursor();
     }
 
+    /*
     void Update()
     {
         //if online and not mine
@@ -34,8 +35,9 @@ public class CursorController : MonoBehaviour
             LockAndHideCursor();
         }
     }
+    */
 
-    private void LockAndHideCursor()
+    public void LockAndHideCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -43,7 +45,7 @@ public class CursorController : MonoBehaviour
         locked = true;
     }
 
-    private void UnlockAndShowCursor()
+    public void UnlockAndShowCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

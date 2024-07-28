@@ -12,6 +12,11 @@ public class PlayerInput : MonoBehaviour
     public PlayerController playerContoller;
     public PhotonView pv;
 
+    //Pause
+    //public static Action pauseInput;
+    [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+    [SerializeField] private KeyCode altPauseKey = KeyCode.P;
+
     //shooting
     public static Action shootInput;
     [ReadOnly] public bool holdingShootButton = false;
@@ -24,7 +29,7 @@ public class PlayerInput : MonoBehaviour
     [ReadOnly] public bool isAiming = false;
 
     //weapon swapping
-    public static Action swapWeapon;
+    public static Action swapWeaponInput;
     [SerializeField] private KeyCode swapWeaponKey = KeyCode.Alpha1;
 
     // Get mouse input
@@ -42,6 +47,16 @@ public class PlayerInput : MonoBehaviour
     {
         //online and does not belong to me so do nothing
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        //PAUSE
+        if(Input.GetKeyDown(pauseKey) || Input.GetKeyDown(altPauseKey))
+        {
+            //pauseInput?.Invoke();
+            PauseManager.Instance.TogglePause();
+        }
+
+        //if you are paused then dont read inputs below this
+        if (PauseManager.Instance && PauseManager.Instance.paused) { return; }
 
         //MousePositions
         mouseX = Input.GetAxisRaw("Mouse X");
@@ -79,7 +94,7 @@ public class PlayerInput : MonoBehaviour
         //Button
         if (Input.GetKeyDown(swapWeaponKey))
         {
-            swapWeapon?.Invoke();
+            swapWeaponInput?.Invoke();
         }
         //scroll up
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)

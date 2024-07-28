@@ -61,6 +61,9 @@ public class PlayerManager : MonoBehaviour
             playerController = Instantiate(prefab_PlayerController, spawnPoint.position, spawnPoint.rotation);
             //PlayerController script = playerController.GetComponent<PlayerController>();
         }
+
+        //set the player manager in the player refrences
+        playerController.GetComponent<PlayerRefrences>().playerManager = this;
     }
 
     public void Die()

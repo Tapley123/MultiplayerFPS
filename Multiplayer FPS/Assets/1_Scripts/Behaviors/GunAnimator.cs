@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using Photon.Pun;
 
 public class GunAnimator : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class GunAnimator : MonoBehaviour
 
     void Update()
     {
+        //online and not mine
+        if (PhotonNetwork.IsConnected && !gunController.playerRefrences.pv.IsMine) { return; }
+        //if paused then dont sway
+        if (PauseManager.Instance.paused) { return; }
+
         HandleSway();
         HandleRecoil();
     }
@@ -25,8 +31,8 @@ public class GunAnimator : MonoBehaviour
     private void HandleSway()
     {
         // Get mouse input
-        float mouseX = gunController.playerController.playerInput.mouseX * gunController.gunData.swayMultiplier;
-        float mouseY = gunController.playerController.playerInput.mouseY * gunController.gunData.swayMultiplier;
+        float mouseX = gunController.playerRefrences.playerInput.mouseX * gunController.gunData.swayMultiplier;
+        float mouseY = gunController.playerRefrences.playerInput.mouseY * gunController.gunData.swayMultiplier;
 
         // Calculate target rotation
         Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);

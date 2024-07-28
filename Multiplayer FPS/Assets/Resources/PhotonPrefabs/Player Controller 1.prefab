@@ -2379,14 +2379,13 @@ MonoBehaviour:
   gunAnimator: {fileID: 1466712949745530417}
   gunT: {fileID: 889374597184523576}
   endOfBarrel: {fileID: 8900642802738355732}
-  particle_MuzzleFlash: {fileID: 0}
   muzzleFlash: {fileID: 2119021514862937477}
   hipFirePos: {fileID: 6260486024542723895}
   adsPos: {fileID: 1718938157246418911}
   magazine: {fileID: 3595421144417555550}
   grabPointLeft: {fileID: 6346103927552794862}
   grabPointRight: {fileID: 4212826901427837316}
-  playerController: {fileID: 0}
+  playerRefrences: {fileID: 0}
   pv: {fileID: 0}
   currentMagAmmo: 0
   currentOverallAmmo: 0
@@ -3995,6 +3994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7867843952190738002}
   - component: {fileID: 7133048412428323616}
+  - component: {fileID: 4034262962435419001}
   - component: {fileID: 3961846088357432912}
   - component: {fileID: 8699759206528019452}
   - component: {fileID: 4546005682185165212}
@@ -4059,6 +4059,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &4034262962435419001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215624916630093127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc86c04b8aaedf43bd6c818c16c6e4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  playerController: {fileID: 8699759206528019452}
+  playerInput: {fileID: 3961846088357432912}
+  cursorController: {fileID: 4546005682185165212}
+  handTransitioner: {fileID: 8452408833051173323}
+  soundEffectPlayer: {fileID: 7741498859913924995}
+  pv: {fileID: 3429381931005563959}
+  cam: {fileID: 1586700152267795774}
+  magazineDump: {fileID: 6534480671072889386}
+  text_AmmoCount: {fileID: 3803545278208518521}
 --- !u!114 &3961846088357432912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4073,6 +4095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerContoller: {fileID: 8699759206528019452}
   pv: {fileID: 3429381931005563959}
+  pauseKey: 27
+  altPauseKey: 112
   holdingShootButton: 0
   reloadKey: 114
   isAiming: 0
@@ -4091,6 +4115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92d1b519eda14e4f803052b839fecb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRefrences: {fileID: 4034262962435419001}
   playerInput: {fileID: 3961846088357432912}
   handTransitioner: {fileID: 8452408833051173323}
   soundEffectPlayer: {fileID: 7741498859913924995}
@@ -4742,14 +4767,13 @@ MonoBehaviour:
   gunAnimator: {fileID: 1286623253118303177}
   gunT: {fileID: 7717539054295434977}
   endOfBarrel: {fileID: 5457382089130514536}
-  particle_MuzzleFlash: {fileID: 0}
   muzzleFlash: {fileID: 4338451008082532687}
   hipFirePos: {fileID: 3477644853284819935}
   adsPos: {fileID: 392976344371773244}
   magazine: {fileID: 302822071279787566}
   grabPointLeft: {fileID: 3520034836165936083}
   grabPointRight: {fileID: 8241272633203892500}
-  playerController: {fileID: 0}
+  playerRefrences: {fileID: 0}
   pv: {fileID: 0}
   currentMagAmmo: 0
   currentOverallAmmo: 0
