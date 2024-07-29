@@ -4129,10 +4129,6 @@ MonoBehaviour:
   jumpForce: 300
   smoothTime: 0.15
   maxLookUpDownAngle: 63
-  playerUI: {fileID: 2311039147855758503}
-  image_HealthBar: {fileID: 3268932043114831872}
-  text_Username: {fileID: 305103234349738277}
-  text_AmmoCount: {fileID: 3803545278208518521}
   killboxTag: Killbox
   currentWeaponIndex: -1
   weapons:

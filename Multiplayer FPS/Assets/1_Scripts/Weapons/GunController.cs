@@ -224,6 +224,7 @@ public class GunController : MonoBehaviour
                 //TrailRenderer trail = Instantiate(gunData.bulletTrail, endOfBarrel.position, Quaternion.identity);
                 GameObject trailGo = ObjectPoolManager.Instance.TakeFromPool(QueueType.BulletTrail, gunData.bulletTrail.gameObject, ObjectPoolManager.Instance.bulletTrailHolder);
                 trailGo.transform.position = endOfBarrel.position;
+                trailGo.transform.rotation = endOfBarrel.rotation;
                 //trailGo.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 StartCoroutine(SpawnTrail(trailGo.GetComponent<TrailRenderer>(), hit));
             }
