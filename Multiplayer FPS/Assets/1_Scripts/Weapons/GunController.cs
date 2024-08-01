@@ -107,7 +107,6 @@ public class GunController : MonoBehaviour
         hipFireRecoilNorm = Mathf.Clamp01(currentSpreadAngle / gunData.maxSpreadAngle);
     }
 
-    public float maxMoveCrosshair = 2f;
     //moves the crosshairs based on the recoil
     private void UpdateCrosshairs()
     {
@@ -116,7 +115,7 @@ public class GunController : MonoBehaviour
         {
             //move them based off the hip fire normalized
             //c.rectTransform.localPosition = Vector3.Lerp(c.startPosition, Vector3.up * maxMoveCrosshair, hipFireRecoilNorm);
-            c.rectTransform.localPosition = Vector3.Lerp(c.startPosition, c.startPosition + c.rectTransform.up * maxMoveCrosshair, hipFireRecoilNorm);
+            c.rectTransform.localPosition = Vector3.Lerp(c.startPosition, c.startPosition + c.rectTransform.up * 20, hipFireRecoilNorm);
         }
     }
 

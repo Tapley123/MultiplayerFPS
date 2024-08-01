@@ -2397,7 +2397,6 @@ MonoBehaviour:
   hipFireRecoilNorm: 0
   timeSinceLastShot: 0
   lastShotTime: 0
-  maxMoveCrosshair: 2
 --- !u!114 &1466712949745530417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4796,7 +4795,6 @@ MonoBehaviour:
   hipFireRecoilNorm: 0
   timeSinceLastShot: 0
   lastShotTime: 0
-  maxMoveCrosshair: 2
 --- !u!114 &1286623253118303177
 MonoBehaviour:
   m_ObjectHideFlags: 0
