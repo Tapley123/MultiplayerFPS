@@ -2376,12 +2376,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 01f425ee27c5a004b9c14d376ccc4442, type: 2}
+  debugging: 0
   gunAnimator: {fileID: 1466712949745530417}
   gunT: {fileID: 889374597184523576}
   endOfBarrel: {fileID: 8900642802738355732}
   muzzleFlash: {fileID: 2119021514862937477}
   hipFirePos: {fileID: 6260486024542723895}
   adsPos: {fileID: 1718938157246418911}
+  adsShootOrigin: {fileID: 0}
   magazine: {fileID: 3595421144417555550}
   grabPointLeft: {fileID: 6346103927552794862}
   grabPointRight: {fileID: 4212826901427837316}
@@ -2390,7 +2392,12 @@ MonoBehaviour:
   currentMagAmmo: 0
   currentOverallAmmo: 0
   reloading: 0
+  ads: 0
+  currentSpreadAngle: 0
+  hipFireRecoilNorm: 0
   timeSinceLastShot: 0
+  lastShotTime: 0
+  maxMoveCrosshair: 2
 --- !u!114 &1466712949745530417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2405,6 +2412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Animates the Gun Sway and recoil
   gunController: {fileID: 2740526527846089724}
+  recoilRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &4936420117200340263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,13 +2866,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5152101775573036923}
-  m_LocalRotation: {x: -0.000000013893097, y: -0.000000105528535, z: 0.70710605, w: -0.7071075}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8194265642470686069}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -24.603895, y: 0}
@@ -3765,13 +3773,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8089792911077324399}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8194265642470686069}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -24.902}
@@ -4082,10 +4090,20 @@ MonoBehaviour:
   cameraHolder: {fileID: 4823749753736133598}
   magazineDump: {fileID: 6534480671072889386}
   rb: {fileID: 7133048412428323616}
-  playerUI: {fileID: 2311039147855758503}
   image_HealthBar: {fileID: 3268932043114831872}
   text_Username: {fileID: 305103234349738277}
   text_AmmoCount: {fileID: 3803545278208518521}
+  playerUI: {fileID: 2311039147855758503}
+  crossHairGo: {fileID: 1475902016932824140}
+  movingCrosshairParts:
+  - rectTransform: {fileID: 5528641766019264811}
+    startPosition: {x: 0, y: 0, z: 0}
+  - rectTransform: {fileID: 4423282945843440046}
+    startPosition: {x: 0, y: 0, z: 0}
+  - rectTransform: {fileID: 1559049277872923572}
+    startPosition: {x: 0, y: 0, z: 0}
+  - rectTransform: {fileID: 733860901475865124}
+    startPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &3961846088357432912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4757,12 +4775,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 4386900c29c553c4eb68407a0c75567a, type: 2}
+  debugging: 0
   gunAnimator: {fileID: 1286623253118303177}
   gunT: {fileID: 7717539054295434977}
   endOfBarrel: {fileID: 5457382089130514536}
   muzzleFlash: {fileID: 4338451008082532687}
   hipFirePos: {fileID: 3477644853284819935}
   adsPos: {fileID: 392976344371773244}
+  adsShootOrigin: {fileID: 4861643754204818205}
   magazine: {fileID: 302822071279787566}
   grabPointLeft: {fileID: 3520034836165936083}
   grabPointRight: {fileID: 8241272633203892500}
@@ -4771,7 +4791,12 @@ MonoBehaviour:
   currentMagAmmo: 0
   currentOverallAmmo: 0
   reloading: 0
+  ads: 0
+  currentSpreadAngle: 0
+  hipFireRecoilNorm: 0
   timeSinceLastShot: 0
+  lastShotTime: 0
+  maxMoveCrosshair: 2
 --- !u!114 &1286623253118303177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4786,6 +4811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Animates the Gun Sway and recoil
   gunController: {fileID: 4198763709197095379}
+  recoilRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &8644804274486022845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5067,6 +5093,11 @@ Transform:
 --- !u!1 &4338451008082532687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 414440730568670468, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
+  m_PrefabInstance: {fileID: 4176285541166113867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4861643754204818205 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8830752575601086294, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
   m_PrefabInstance: {fileID: 4176285541166113867}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5076505948720851405 stripped

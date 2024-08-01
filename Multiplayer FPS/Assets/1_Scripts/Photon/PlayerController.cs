@@ -199,11 +199,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             GunController gunC = weapons[index].GetComponent<GunController>();
             
-            //move the left hand to its grab point
-            playerRefrences.handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
+            if(playerRefrences.handTransitioner != null)
+            {
+                //move the left hand to its grab point
+                playerRefrences.handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
 
-            //move the right hand to its grab point
-            playerRefrences.handTransitioner.SetRightHandTarget(gunC.grabPointRight);
+                //move the right hand to its grab point
+                playerRefrences.handTransitioner.SetRightHandTarget(gunC.grabPointRight);
+            }
         }
     }
 

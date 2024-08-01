@@ -31,15 +31,15 @@ public class GunData : ScriptableObject
     [BoxGroup("Sway")] public float swayMultiplier = 2;
 
     //Recoil
-    [Header("Recoil")]
-    [BoxGroup("Recoil")] public float recoilAmount = 5f;
+    [Header("ADS Recoil")]
+    [BoxGroup("Recoil")] public float recoilAmountVertical = 5f;
+    [BoxGroup("Recoil")] public float recoilAmountHorizontal = 5f;
     [BoxGroup("Recoil")] public float recoilSmooth = 5f;
     [BoxGroup("Recoil")] public float recoilReturnSpeed = 10f;
-
-    //Spread
-    [Header("Spread")]
-    [BoxGroup("Spread")] public bool addBulletSpread;
-    [BoxGroup("Spread")] [ShowIf("addBulletSpread")] public Vector3 bulletSpreadVarience = new Vector3(0.1f, 0.1f, 0.1f);
+    [Header("Hip Fire Recoil")]
+    [BoxGroup("Recoil")] [Tooltip("Maximum angle for the bullet spread")] public float maxSpreadAngle = 10f; 
+    [BoxGroup("Recoil")] [Tooltip("Rate at which spread increases with rapid fire")] public float spreadIncreaseRate = 1f; 
+    [BoxGroup("Recoil")] [Tooltip("Rate at which spread decreases over time")] public float spreadDecreaseRate = 1f; 
 
     //Reloading
     [Header("Reloading")]

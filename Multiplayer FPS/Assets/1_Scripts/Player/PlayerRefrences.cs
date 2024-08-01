@@ -19,10 +19,13 @@ public class PlayerRefrences : MonoBehaviour
     public GameObject cameraHolder;
     public Transform magazineDump;
     public Rigidbody rb;
-    public GameObject playerUI;
     public Image image_HealthBar;
     public TMP_Text text_Username;
     public TMP_Text text_AmmoCount;
+
+    [BoxGroup("UI")] public GameObject playerUI;
+    [BoxGroup("UI")] public GameObject crossHairGo;
+    [BoxGroup("UI")] public List<CrosshairPart> movingCrosshairParts = new List<CrosshairPart>();
 
     private void Awake()
     {
@@ -44,4 +47,26 @@ public class PlayerRefrences : MonoBehaviour
             Debug.LogError($"No Pause Manager Found in the scene");
         }
     }
+
+    private void Start()
+    {
+        //if there is at leas 1 crosshair part to move
+        if(movingCrosshairParts.Count > 0)
+        {
+            // Initialize start and furthest forward positions
+            foreach (CrosshairPart rectTransformMovement in movingCrosshairParts)
+            {
+                rectTransformMovement.startPosition = rectTransformMovement.rectTransform.localPosition;
+            }
+        }
+        else
+            Debug.LogError($"No Crosshair parts to move");
+    }
+}
+
+[System.Serializable]
+public class CrosshairPart
+{
+    public RectTransform rectTransform;
+    public Vector3 startPosition;
 }
