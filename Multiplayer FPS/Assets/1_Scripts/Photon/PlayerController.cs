@@ -142,18 +142,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        Jump();
         Animate();
-
-        if (moveToNewCrouchPos)
-            MoveCrouch();
 
         //dont do anything below this if you are paused
         if (PauseManager.Instance.paused) { return; }
 
         Look();
         Move();
-        
+        Jump();
+
+        if (moveToNewCrouchPos)
+            MoveCrouch();
 
         //SwapItemInput();
         //UseItemInput();
@@ -163,6 +162,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        //dont do anything below this if you are paused
+        if (PauseManager.Instance.paused) { return; }
 
         //move the player
         playerRefrences.rb.MovePosition(playerRefrences.rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
@@ -246,29 +248,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // Determine speed
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         currentSpeed = isRunning ? sprintSpeed : walkSpeed;
-
-        //moving
-        if (moveDirection != Vector3.zero)
-        {
-            moving = true;
-
-            //moving backwards
-            if (Input.GetAxisRaw("Vertical") < 0)
-            {
-                movingBackwards = true;
-            }
-            //moving forwards
-            else
-            {
-                movingBackwards = false;
-            }
-        }
-        //not moving
-        else
-        {
-            moving = false;
-            movingBackwards = false;
-        }
     }
 
     void Jump()
@@ -344,6 +323,29 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     #region Animation
     void Animate()
     {
+        //moving
+        if (moveDirection != Vector3.zero)
+        {
+            moving = true;
+
+            //moving backwards
+            if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                movingBackwards = true;
+            }
+            //moving forwards
+            else
+            {
+                movingBackwards = false;
+            }
+        }
+        //not moving
+        else
+        {
+            moving = false;
+            movingBackwards = false;
+        }
+
         // Set animation parameters
         playerAnimator.SetFloat(anim_Speed, moveDirection.magnitude * currentSpeed);
         playerAnimator.SetFloat(anim_Direction, Vector3.SignedAngle(transform.forward, moveDirection, Vector3.up));
