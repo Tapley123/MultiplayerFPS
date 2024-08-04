@@ -32,7 +32,12 @@ public class PlayerInput : MonoBehaviour
     public static Action swapWeaponInput;
     [SerializeField] private KeyCode swapWeaponKey = KeyCode.Alpha1;
 
-    // Get mouse input
+    //crouch
+    [Tooltip("When true you will uncrouch when you let go of the crouch button")] public bool holdCrouch = false;
+    public static Action toggleCrouchInput;
+    [SerializeField] private KeyCode toggleCrouchKey = KeyCode.LeftControl;
+
+    //get mouse input
     [ReadOnly] public float mouseX;
     [ReadOnly] public float mouseY;
 
@@ -105,6 +110,16 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
             playerContoller.PreviousWeapon();
+        }
+
+        //crouch
+        if(Input.GetKeyDown(toggleCrouchKey))
+        {
+            toggleCrouchInput?.Invoke();
+        }
+        if(holdCrouch && Input.GetKeyUp(toggleCrouchKey))
+        {
+            toggleCrouchInput?.Invoke();
         }
     }
 }

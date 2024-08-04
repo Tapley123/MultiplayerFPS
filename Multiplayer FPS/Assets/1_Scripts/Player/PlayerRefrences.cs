@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
+using RootMotion.FinalIK;
 
 public class PlayerRefrences : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class PlayerRefrences : MonoBehaviour
     [BoxGroup("UI")] public GameObject playerUI;
     [BoxGroup("UI")] public GameObject crossHairGo;
     [BoxGroup("UI")] public List<CrosshairPart> movingCrosshairParts = new List<CrosshairPart>();
+
+    [BoxGroup("Ik Refrences")] public Transform bodyIkTarget; //the players body will follow the position of this (used for crouching)
+    [BoxGroup("Ik Refrences")] public FullBodyBipedIK ik;
+    [BoxGroup("Ik Refrences")] public Transform standingIkRef;
+    [BoxGroup("Ik Refrences")] public Transform crouchingIkRef;
 
     private void Awake()
     {

@@ -39,6 +39,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     const float maxHealth = 100f;
     float currentHealth = maxHealth;
 
+
+    private void OnEnable()
+    {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        PlayerInput.toggleCrouchInput += ToggleCrouch;
+    }
+
+    private void OnDisable()
+    {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        PlayerInput.toggleCrouchInput -= ToggleCrouch;
+    }
+
     void Awake()
     {
         //online
@@ -115,6 +130,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Move();
         Jump();
 
+        if(moveToNewCrouchPos)
+            MoveCrouch();
+
         //SwapItemInput();
         //UseItemInput();
     }
@@ -151,6 +169,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(playerRefrences.text_Username.transform.parent.gameObject);
     }
 
+    #region Weapons
     public void NextWeapon()
     {
         //can go up
@@ -209,6 +228,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
         }
     }
+    #endregion
 
     #region Movement + Looking
     private void Move()
@@ -224,6 +244,60 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             playerRefrences.rb.AddForce(transform.up * jumpForce);
+        }
+    }
+
+    public bool crouching = false;
+    private bool moveToNewCrouchPos = false;
+    public Transform currentBodyTarget;
+    public float speed = 5f; // The speed at which to move
+    public float stopDistance = 0.1f; // The distance at which to stop
+    void ToggleCrouch()
+    {
+        //Uncrouch
+        if (crouching)
+        {
+            Debug.Log("Un-Crouch");
+            //set the ik target to be standing
+            currentBodyTarget = playerRefrences.standingIkRef;
+        }
+        //Crouch
+        else
+        {
+            Debug.Log("Crouch");
+            //set the ik target to be crouching
+            currentBodyTarget = playerRefrences.crouchingIkRef;
+        }
+
+        // start lerping to the new crouch position
+        moveToNewCrouchPos = true;
+
+        //swap the current crouching state
+        crouching = !crouching;
+    }
+
+    void MoveCrouch()
+    {
+        // Calculate the distance to the target
+        //float distance = Vector3.Distance(transform.position, target.position);
+        float distance = Vector3.Distance(playerRefrences.bodyIkTarget.position, currentBodyTarget.position);
+        //float distance = Mathf.Abs(playerRefrences.bodyIkTarget.position.y - currentBodyTarget.position.y);
+
+        // Check if the transform is near the target
+        if (distance > stopDistance)
+        {
+            // Move towards the target
+            //transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
+            playerRefrences.bodyIkTarget.position = Vector3.Lerp(playerRefrences.bodyIkTarget.position, currentBodyTarget.position, speed * Time.deltaTime);
+
+            // Lerp only the y position
+            //float newY = Mathf.Lerp(playerRefrences.bodyIkTarget.position.y, currentBodyTarget.position.y, speed * Time.deltaTime);
+            //transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        }
+        else
+        {
+            // Stop lerping
+            moveToNewCrouchPos = false;
         }
     }
 
