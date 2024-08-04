@@ -39,6 +39,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     const float maxHealth = 100f;
     float currentHealth = maxHealth;
 
+    //crouching
+    [ReadOnly] public bool crouching = false;
+    private bool moveToNewCrouchPos = false;
+    private Transform currentBodyTarget;
+    public float crouchSpeed = 5f; // The speed at which to move
+
 
     private void OnEnable()
     {
@@ -149,22 +155,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void Initialize()
     {
         Debug.Log($"Initialize");
-        //Get the items here 
-        //itemHolder;
-
-        ////if there is at least 1 item
-        //if(items.Length > 0)
-        //{
-        //    //disable all items
-        //    for (int i = 0; i < items.Length; i++)
-        //    {
-        //        items[i].itemGameobject.SetActive(false);
-        //    }
-
-        //    //equip the base item
-        //    EquipItem(0);
-        //}
-
         //disable my own username
         Destroy(playerRefrences.text_Username.transform.parent.gameObject);
     }
@@ -247,11 +237,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    public bool crouching = false;
-    private bool moveToNewCrouchPos = false;
-    public Transform currentBodyTarget;
-    public float speed = 5f; // The speed at which to move
-    public float stopDistance = 0.1f; // The distance at which to stop
     void ToggleCrouch()
     {
         //Uncrouch
@@ -279,20 +264,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void MoveCrouch()
     {
         // Calculate the distance to the target
-        //float distance = Vector3.Distance(transform.position, target.position);
         float distance = Vector3.Distance(playerRefrences.bodyIkTarget.position, currentBodyTarget.position);
-        //float distance = Mathf.Abs(playerRefrences.bodyIkTarget.position.y - currentBodyTarget.position.y);
 
         // Check if the transform is near the target
-        if (distance > stopDistance)
+        if (distance > 0.1f)
         {
             // Move towards the target
-            //transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
-            playerRefrences.bodyIkTarget.position = Vector3.Lerp(playerRefrences.bodyIkTarget.position, currentBodyTarget.position, speed * Time.deltaTime);
-
-            // Lerp only the y position
-            //float newY = Mathf.Lerp(playerRefrences.bodyIkTarget.position.y, currentBodyTarget.position.y, speed * Time.deltaTime);
-            //transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            playerRefrences.bodyIkTarget.position = Vector3.Lerp(playerRefrences.bodyIkTarget.position, currentBodyTarget.position, crouchSpeed * Time.deltaTime);
         }
         else
         {
