@@ -44,6 +44,7 @@ MonoBehaviour:
   - RPC_GetKill
   - RPC_GetAssist
   - RPC_SendCachedData
+  - SetGroundState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
