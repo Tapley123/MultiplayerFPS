@@ -1840,6 +1840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8956341439402775285}
+  - component: {fileID: 7396568752252842410}
   m_Layer: 3
   m_Name: BodyTarget
   m_TagString: Untagged
@@ -1863,6 +1864,22 @@ Transform:
   - {fileID: 6504470944815381513}
   m_Father: {fileID: 7867843952190738002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7396568752252842410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3336477232884428736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3420546022805704433
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,6 +4227,7 @@ MonoBehaviour:
   anim_Speed: Speed
   anim_Moving: Moving
   anim_MovingBackwards: Moving Backwards
+  anim_Grounded: Grounded
   moveDirection: {x: 0, y: 0, z: 0}
   currentSpeed: 0
   moving: 0
@@ -4313,7 +4331,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
-  m_Height: 2
+  m_Height: 1.81
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8335908201949516390
@@ -4814,7 +4832,7 @@ Transform:
   m_GameObject: {fileID: 8810280885047470582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.424, z: 0}
+  m_LocalPosition: {x: 0.187, y: 1.493, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5395,6 +5413,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 83230eba1de6f38408097e6ae8811cd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2789293455675954955}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 83230eba1de6f38408097e6ae8811cd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2003663077918698881}
   m_SourcePrefab: {fileID: 100100000, guid: 83230eba1de6f38408097e6ae8811cd2, type: 3}
 --- !u!4 &14411130415149704 stripped
 Transform:
@@ -5940,6 +5961,41 @@ MonoBehaviour:
     spineStiffness: 0.5
     pullBodyVertical: 0.5
     pullBodyHorizontal: 0
+--- !u!114 &2003663077918698881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942972250067369245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: Moving
+  - Type: 4
+    SynchronizeType: 1
+    Name: Moving Backwards
+  - Type: 1
+    SynchronizeType: 1
+    Name: Speed
+  - Type: 1
+    SynchronizeType: 0
+    Name: Direction
+  - Type: 4
+    SynchronizeType: 1
+    Name: Grounded
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
+  - SynchronizeType: 2
+    LayerIndex: 1
 --- !u!4 &7505597196011211565 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8884984920518210719, guid: 83230eba1de6f38408097e6ae8811cd2, type: 3}

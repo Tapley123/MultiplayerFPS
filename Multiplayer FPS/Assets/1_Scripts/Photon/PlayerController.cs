@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [AnimatorParam("playerAnimator")] public string anim_Speed;
     [AnimatorParam("playerAnimator")] public string anim_Moving;
     [AnimatorParam("playerAnimator")] public string anim_MovingBackwards;
+    [AnimatorParam("playerAnimator")] public string anim_Grounded;
     [ReadOnly] [SerializeField] private Vector3 moveDirection;
     [ReadOnly] [SerializeField] private float currentSpeed;
     [ReadOnly] [SerializeField] private bool moving;
@@ -141,15 +142,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        if(!PauseManager.Instance.paused)
-            Look();
-
-        Move();
         Jump();
         Animate();
 
         if (moveToNewCrouchPos)
             MoveCrouch();
+
+        //dont do anything below this if you are paused
+        if (PauseManager.Instance.paused) { return; }
+
+        Look();
+        Move();
+        
 
         //SwapItemInput();
         //UseItemInput();
@@ -273,6 +277,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             playerRefrences.rb.AddForce(transform.up * jumpForce);
+            grounded = false;
+            playerAnimator.SetBool(anim_Grounded, grounded);
         }
     }
 
@@ -343,6 +349,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         playerAnimator.SetFloat(anim_Direction, Vector3.SignedAngle(transform.forward, moveDirection, Vector3.up));
         playerAnimator.SetBool(anim_Moving, moving);
         playerAnimator.SetBool(anim_MovingBackwards, movingBackwards);
+        playerAnimator.SetBool(anim_Grounded, grounded);
     }
     #endregion
 
