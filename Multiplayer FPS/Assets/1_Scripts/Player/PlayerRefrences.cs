@@ -12,6 +12,7 @@ public class PlayerRefrences : MonoBehaviour
     [ReadOnly] public PlayerManager playerManager; //only for online
     public PlayerController playerController;
     public PlayerInput playerInput;
+    public Animator playerAnimator;
     public CursorController cursorController;
     public HandTransitioner handTransitioner;
     public SoundEffectPlayer soundEffectPlayer;

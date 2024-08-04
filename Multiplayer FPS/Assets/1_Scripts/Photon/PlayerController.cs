@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public PlayerRefrences playerRefrences;
     [SerializeField] private PhotonView pv;
     [SerializeField] private Transform headBone;
-    
+
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float walkSpeed;
@@ -44,6 +44,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private bool moveToNewCrouchPos = false;
     private Transform currentBodyTarget;
     public float crouchSpeed = 5f; // The speed at which to move
+
+    //Animation
+    public Animator playerAnimator;
+    [AnimatorParam("playerAnimator")] public string anim_Direction;
+    [AnimatorParam("playerAnimator")] public string anim_Speed;
+    [AnimatorParam("playerAnimator")] public string anim_Moving;
+    [AnimatorParam("playerAnimator")] public string anim_MovingBackwards;
+    [ReadOnly] [SerializeField] private Vector3 moveDirection;
+    [ReadOnly] [SerializeField] private float currentSpeed;
+    [ReadOnly] [SerializeField] private bool moving;
+    [ReadOnly] [SerializeField] private bool movingBackwards;
 
 
     private void OnEnable()
@@ -135,8 +146,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Move();
         Jump();
+        Animate();
 
-        if(moveToNewCrouchPos)
+        if (moveToNewCrouchPos)
             MoveCrouch();
 
         //SwapItemInput();
@@ -224,8 +236,35 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void Move()
     {
         //walk/sprint
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDirection * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+
+        // Determine speed
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        currentSpeed = isRunning ? sprintSpeed : walkSpeed;
+
+        //moving
+        if (moveDirection != Vector3.zero)
+        {
+            moving = true;
+
+            //moving backwards
+            if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                movingBackwards = true;
+            }
+            //moving forwards
+            else
+            {
+                movingBackwards = false;
+            }
+        }
+        //not moving
+        else
+        {
+            moving = false;
+            movingBackwards = false;
+        }
     }
 
     void Jump()
@@ -293,6 +332,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void SetGroundedState(bool _grounded)
     {
         grounded = _grounded;
+    }
+    #endregion
+
+    #region Animation
+    void Animate()
+    {
+        // Set animation parameters
+        playerAnimator.SetFloat(anim_Speed, moveDirection.magnitude * currentSpeed);
+        playerAnimator.SetFloat(anim_Direction, Vector3.SignedAngle(transform.forward, moveDirection, Vector3.up));
+        playerAnimator.SetBool(anim_Moving, moving);
+        playerAnimator.SetBool(anim_MovingBackwards, movingBackwards);
     }
     #endregion
 
