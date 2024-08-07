@@ -14,27 +14,32 @@ public class PlayerInput : MonoBehaviour
 
     //Pause
     //public static Action pauseInput;
-    [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
-    [SerializeField] private KeyCode altPauseKey = KeyCode.P;
+    [BoxGroup("Pause")][SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+    [BoxGroup("Pause")][SerializeField] private KeyCode altPauseKey = KeyCode.P;
 
     //shooting
-    public static Action shootInput;
-    [ReadOnly] public bool holdingShootButton = false;
-    
+    [BoxGroup("Shooting")] public static Action shootInput;
+    [BoxGroup("Shooting")][ReadOnly] public bool holdingShootButton = false;
+
     //reloading
-    public static Action reloadInput;
-    [SerializeField] private KeyCode reloadKey = KeyCode.R;
+    [BoxGroup("Reloading")] public static Action reloadInput;
+    [BoxGroup("Reloading")][SerializeField] private KeyCode reloadKey = KeyCode.R;
 
     //aiming
-    [ReadOnly] public bool isAiming = false;
+    [BoxGroup("Aiming")][ReadOnly] public bool isAiming = false;
 
     //weapon swapping
-    public static Action swapWeaponInput;
-    [SerializeField] private KeyCode swapWeaponKey = KeyCode.Alpha1;
+    [BoxGroup("Weapon Swapping")] public static Action swapWeaponInput;
+    [BoxGroup("Weapon Swapping")][SerializeField] private KeyCode swapWeaponKey = KeyCode.Alpha1;
 
-    // Get mouse input
-    [ReadOnly] public float mouseX;
-    [ReadOnly] public float mouseY;
+    //crouch
+    [BoxGroup("Crouch")][Tooltip("When true you will uncrouch when you let go of the crouch button")] public bool holdCrouch = false;
+    [BoxGroup("Crouch")] public static Action toggleCrouchInput;
+    [BoxGroup("Crouch")][SerializeField] private KeyCode toggleCrouchKey = KeyCode.LeftControl;
+
+    //get mouse input
+    [BoxGroup("Mouse Input")][ReadOnly] public float mouseX;
+    [BoxGroup("Mouse Input")][ReadOnly] public float mouseY;
 
 
     private void Awake()
@@ -105,6 +110,16 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
             playerContoller.PreviousWeapon();
+        }
+
+        //crouch
+        if(Input.GetKeyDown(toggleCrouchKey))
+        {
+            toggleCrouchInput?.Invoke();
+        }
+        if(holdCrouch && Input.GetKeyUp(toggleCrouchKey))
+        {
+            toggleCrouchInput?.Invoke();
         }
     }
 }

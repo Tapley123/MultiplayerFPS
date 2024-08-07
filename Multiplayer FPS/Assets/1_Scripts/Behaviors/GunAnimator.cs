@@ -10,7 +10,7 @@ public class GunAnimator : MonoBehaviour
     public GunController gunController;
 
     private Quaternion originalRotation;
-    private Quaternion recoilRotation;
+    [ReadOnly] public Quaternion recoilRotation;
 
     void Start()
     {
@@ -54,6 +54,6 @@ public class GunAnimator : MonoBehaviour
     public void ApplyRecoil()
     {
         // Add recoil
-        recoilRotation *= Quaternion.Euler(-gunController.gunData.recoilAmount, Random.Range(-gunController.gunData.recoilAmount, gunController.gunData.recoilAmount), 0);
+        recoilRotation *= Quaternion.Euler(-gunController.gunData.recoilAmountVertical, Random.Range(-gunController.gunData.recoilAmountHorizontal, gunController.gunData.recoilAmountHorizontal), 0);
     }
 }

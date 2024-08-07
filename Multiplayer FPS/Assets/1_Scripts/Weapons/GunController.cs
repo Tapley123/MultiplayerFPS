@@ -10,6 +10,8 @@ public class GunController : MonoBehaviour
     //Settings
     [Expandable] public GunData gunData;
 
+    public bool debugging = false;
+
     //connected components
     [Foldout("Connected Components")][SerializeField] private GunAnimator gunAnimator;
     [Foldout("Connected Components")][SerializeField] private Transform gunT;
@@ -17,6 +19,7 @@ public class GunController : MonoBehaviour
     [Foldout("Connected Components")][SerializeField] private GameObject muzzleFlash;
     [Foldout("Connected Components")][SerializeField] private Transform hipFirePos;
     [Foldout("Connected Components")][SerializeField] private Transform adsPos;
+    [Foldout("Connected Components")][SerializeField] private Transform adsShootOrigin;
     [Foldout("Connected Components")][SerializeField] private Magazine magazine;
     [Foldout("Connected Components")]public Transform grabPointLeft;
     [Foldout("Connected Components")]public Transform grabPointRight;
@@ -28,10 +31,20 @@ public class GunController : MonoBehaviour
     [Foldout("Got Values")][ReadOnly][SerializeField] private int currentMagAmmo;
     [Foldout("Got Values")][ReadOnly][SerializeField] private int currentOverallAmmo;
     [Foldout("Got Values")][ReadOnly][SerializeField] private bool reloading = false;
-    [Foldout("Got Values")][ReadOnly][SerializeField] private float timeSinceLastShot;
+    [Foldout("Got Values")][ReadOnly][SerializeField] private bool ads = false;
+    [Foldout("Got Values")][ReadOnly] public float currentSpreadAngle = 0f;
+    [Foldout("Got Values")][ReadOnly] [Range(0f, 1f)] public float hipFireRecoilNorm = 0f;
+    [Foldout("Got Values")][ReadOnly] [SerializeField] private float timeSinceLastShot;
+    [Foldout("Got Values")][ReadOnly] [SerializeField] private float lastShotTime = 0f;
 
     private void Awake()
     {
+        //Ensure debugging is off on a build
+#if !UNITY_EDITOR
+        if (debugging)
+            debugging = false;
+#endif
+
         playerRefrences = this.transform.root.GetComponent<PlayerRefrences>();
         pv = this.GetComponent<PhotonView>();
         currentMagAmmo = gunData.magSize;
@@ -66,27 +79,44 @@ public class GunController : MonoBehaviour
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
         ADS();
+        UpdateCalculataions();
+
+        //Update Crosshairs
+        if (playerRefrences.movingCrosshairParts.Count != 0)
+            UpdateCrosshairs();
 
         //auto shooting
         if (gunData.automatic && CanShoot() && playerRefrences.playerInput.holdingShootButton && currentMagAmmo > 0)
         {
             Shoot();
         }
+    }
 
-        timeSinceLastShot += Time.deltaTime;
+    void UpdateCalculataions()
+    {
+        //calculate the time since the last bullet was shot
+        timeSinceLastShot += Time.deltaTime; //(Set to 0 again on shot!)
 
-        //Debugging gunshot
-        /*
-        if(Input.GetMouseButtonDown(0))
+        // Decrease the spread over time when not shooting
+        if (Time.time - lastShotTime > gunData.recoilReturnSpeed * Time.deltaTime)
         {
-            //shoot a ray from the middle of my screen
-            Ray ray = playerRefrences.cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-            //set the origin of the shot to the cameras position
-            ray.origin = playerRefrences.cam.transform.position;
-            // Draw the debug ray for visualization
-            Debug.DrawRay(ray.origin, ray.direction * gunData.maxDistance, Color.red, gunData.maxDistance);
+            currentSpreadAngle = Mathf.Lerp(currentSpreadAngle, 0f, gunData.spreadDecreaseRate * Time.deltaTime);
         }
-        */
+
+        //calculate the hip fire recoil normal value
+        hipFireRecoilNorm = Mathf.Clamp01(currentSpreadAngle / gunData.maxSpreadAngle);
+    }
+
+    //moves the crosshairs based on the recoil
+    private void UpdateCrosshairs()
+    {
+        //loop through all of the crosshair parts
+        foreach(CrosshairPart c in playerRefrences.movingCrosshairParts)
+        {
+            //move them based off the hip fire normalized
+            //c.rectTransform.localPosition = Vector3.Lerp(c.startPosition, Vector3.up * maxMoveCrosshair, hipFireRecoilNorm);
+            c.rectTransform.localPosition = Vector3.Lerp(c.startPosition, c.startPosition + c.rectTransform.up * 20, hipFireRecoilNorm);
+        }
     }
 
     public void StartReload()
@@ -158,6 +188,8 @@ public class GunController : MonoBehaviour
         DisplayAmmo();
     }
 
+    #region Aiming
+    bool settingADS = false;
     void ADS()
     {
         //Aiming
@@ -169,6 +201,13 @@ public class GunController : MonoBehaviour
 
             //smoothly zoom the camera in
             playerRefrences.cam.fieldOfView = Mathf.Lerp(playerRefrences.cam.fieldOfView, 50f, Time.deltaTime * gunData.adsSpeed);
+
+            //set ads
+            if(!settingADS && !ads)
+            {
+                settingADS = true;
+                Invoke(nameof(SetADS), 3 / gunData.adsSpeed);
+            } 
         }
         //Hip Firing
         else
@@ -179,6 +218,17 @@ public class GunController : MonoBehaviour
 
             //smoothly zoom the camera out
             playerRefrences.cam.fieldOfView = Mathf.Lerp(playerRefrences.cam.fieldOfView, 60f, Time.deltaTime * gunData.adsSpeed);
+
+            //set ads
+            settingADS = false;
+            ads = false;
+            //if there is a crosshair and it is not active
+            if (playerRefrences.crossHairGo != null && !playerRefrences.crossHairGo.activeInHierarchy)
+            {
+                //turn it on
+                playerRefrences.crossHairGo.SetActive(true);
+            }
+            CancelInvoke(nameof(SetADS));
         }
 
         // Snapping to position to avoid overshooting
@@ -192,28 +242,63 @@ public class GunController : MonoBehaviour
         }
     }
 
+
+    void SetADS()
+    {
+        ads = true;
+
+        //if there is a crosshair and it is active
+        if(playerRefrences.crossHairGo != null && playerRefrences.crossHairGo.activeInHierarchy)
+        {
+            //turn it off
+            playerRefrences.crossHairGo.SetActive(false);
+        }
+    }
+    #endregion
+
     bool CanShoot() => !reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
-    
+
+   
     public void Shoot()
     {
-        if (currentMagAmmo <= 0) { Debug.LogError("No Ammo in Mag!"); playerRefrences.soundEffectPlayer.Play(gunData.emptySound); return; }
-        if (!CanShoot()) { Debug.LogError("Shooting Criteria has not been met!"); return; }
+        if (currentMagAmmo <= 0) { if(debugging) Debug.LogError("No Ammo in Mag!"); playerRefrences.soundEffectPlayer.Play(gunData.emptySound); return; }
+        if (!CanShoot()) { if (debugging) Debug.LogError("Shooting Criteria has not been met!"); return; }
 
-        Debug.Log($"Shoot {gunData.name}!");
+        if (debugging)
+            Debug.Log($"Shoot {gunData.name}!");
 
         currentMagAmmo--;
-        timeSinceLastShot = 0;
         OnGunShot();
 
-        //shoot a ray from the middle of my screen
-        Ray ray = playerRefrences.cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        //set the origin of the shot to the cameras position
-        ray.origin = playerRefrences.cam.transform.position;
+        //Setting up Ray
+        Ray ray;
+        //Aiming down sights
+        if (ads)
+        {
+            //shoot a ray from the crosshairs (*Coming from the gun transform so already has recoil applied*)
+            ray = new Ray(adsShootOrigin.position, adsShootOrigin.forward);
+        }
+        //hip fire
+        else
+        {
+            //add to the spread
+            currentSpreadAngle += gunData.spreadIncreaseRate / (timeSinceLastShot + 1);
+            //make sure that the spread is clamped
+            currentSpreadAngle = Mathf.Clamp(currentSpreadAngle, 0, gunData.maxSpreadAngle);
+            // Adjust the ray direction based on the current spread angle
+            Vector3 spreadDirection = GetSpreadDirection();
+            ray = new Ray(playerRefrences.cam.transform.position, spreadDirection);
+        }
+
+        // Debug The Ray
+        if (debugging)
+            Debug.DrawRay(ray.origin, ray.direction * gunData.maxDistance, Color.red);
 
         //Check if the raycast hit
         if (Physics.Raycast(ray, out RaycastHit hit, gunData.maxDistance, gunData.canShootLayers))
         {
-            Debug.Log($"*Hit: {hit.transform.name}");
+            if (debugging)
+                Debug.Log($"*Hit: {hit.transform.name}");
 
             //if what you hit has a damageable component on it then take damage
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(gunData.damage);
@@ -221,14 +306,12 @@ public class GunController : MonoBehaviour
             //bullet trail
             if(gunData.bulletTrail != null)
             {
-                TrailRenderer trail = Instantiate(gunData.bulletTrail, endOfBarrel.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, hit));
-            }
-            //no bullet trail but there is an impact particle
-            else if(gunData.particle_Impact != null)
-            {
-                //spawn the impact particle
-                Instantiate(gunData.particle_Impact, hit.point, Quaternion.LookRotation(hit.normal));
+                //TrailRenderer trail = Instantiate(gunData.bulletTrail, endOfBarrel.position, Quaternion.identity);
+                GameObject trailGo = ObjectPoolManager.Instance.TakeFromPool(QueueType.BulletTrail, gunData.bulletTrail.gameObject, ObjectPoolManager.Instance.bulletTrailHolder);
+                trailGo.transform.position = endOfBarrel.position;
+                trailGo.transform.rotation = endOfBarrel.rotation;
+                //trailGo.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                StartCoroutine(SpawnTrail(trailGo.GetComponent<TrailRenderer>(), hit));
             }
 
             //online
@@ -244,6 +327,21 @@ public class GunController : MonoBehaviour
                 RPC_Shoot(hit.point, hit.normal);
             }
         }
+
+        lastShotTime = Time.time;
+        timeSinceLastShot = 0;
+    }
+
+    Vector3 GetSpreadDirection()
+    {
+        // Calculate a random direction within the current spread angle
+        float angle = UnityEngine.Random.Range(0f, currentSpreadAngle);
+        float radius = Mathf.Sin(angle * Mathf.Deg2Rad);
+        float x = radius * Mathf.Cos(UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad);
+        float y = radius * Mathf.Sin(UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad);
+
+        Vector3 direction = playerRefrences.cam.transform.forward + new Vector3(x, y, 0);
+        return direction.normalized;
     }
 
     void DisplayAmmo()
@@ -300,12 +398,10 @@ public class GunController : MonoBehaviour
         //make sure the trail is at the hit point
         trail.transform.position = hit.point;
 
-        //spawn the impact particle
-        if(gunData.particle_Impact != null)
-            Instantiate(gunData.particle_Impact, hit.point, Quaternion.LookRotation(hit.normal));
-
         //destroy the trail after it has faded out
-        Destroy(trail.gameObject, trail.time);
+        //Destroy(trail.gameObject, trail.time);
+        yield return new WaitForSeconds(trail.time);
+        ObjectPoolManager.Instance.ReturnToPool(QueueType.BulletTrail, trail.gameObject);
     }
 
     [PunRPC]
@@ -322,13 +418,17 @@ public class GunController : MonoBehaviour
             Quaternion spawnRot = Quaternion.LookRotation(hitNormal, Vector3.up) * gunData.bulletImpactPrefab.transform.rotation;
 
             //spawn the impact prefab
-            GameObject bulletImpactObject = Instantiate(gunData.bulletImpactPrefab, spawnPos, spawnRot);
+            //GameObject bulletImpactObject = Instantiate(gunData.bulletImpactPrefab, spawnPos, spawnRot);
+            GameObject bulletImpactObject = ObjectPoolManager.Instance.TakeFromPool(QueueType.BulletImpact, gunData.bulletImpactPrefab, ObjectPoolManager.Instance.bulletImpactHolder);
+            bulletImpactObject.transform.position = spawnPos;
+            bulletImpactObject.transform.rotation = spawnRot;
 
             //parent the impact prefab to the collider it hit (for example hit players collider now is child of player)
-            bulletImpactObject.transform.SetParent(colliders[0].transform);
+            //bulletImpactObject.transform.SetParent(colliders[0].transform);
 
             //delete the bullet impact after 10 seconds
-            Destroy(bulletImpactObject, 10f);
+            //Destroy(bulletImpactObject, 10f);
+            StartCoroutine(ObjectPoolManager.Instance.ReturnToPoolWithDelay(QueueType.BulletImpact, bulletImpactObject, 10f));
         }
     }
 }

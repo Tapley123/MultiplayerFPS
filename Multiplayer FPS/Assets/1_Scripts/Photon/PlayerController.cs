@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public PlayerRefrences playerRefrences;
     [SerializeField] private PhotonView pv;
     [SerializeField] private Transform headBone;
-    
+
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float walkSpeed;
@@ -38,6 +38,39 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     //health
     const float maxHealth = 100f;
     float currentHealth = maxHealth;
+
+    //crouching
+    [ReadOnly] public bool crouching = false;
+    private bool moveToNewCrouchPos = false;
+    private Transform currentBodyTarget;
+    public float crouchSpeed = 5f; // The speed at which to move
+
+    //Animation
+    public Animator playerAnimator;
+    [AnimatorParam("playerAnimator")] public string anim_Direction;
+    [AnimatorParam("playerAnimator")] public string anim_Speed;
+    [AnimatorParam("playerAnimator")] public string anim_Moving;
+    [AnimatorParam("playerAnimator")] public string anim_MovingBackwards;
+    [AnimatorParam("playerAnimator")] public string anim_Grounded;
+    [ReadOnly] [SerializeField] private Vector3 moveDirection;
+    [ReadOnly] [SerializeField] private float currentSpeed;
+    [ReadOnly] [SerializeField] private bool moving;
+    [ReadOnly] [SerializeField] private bool movingBackwards;
+
+
+    private void OnEnable()
+    {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        PlayerInput.toggleCrouchInput += ToggleCrouch;
+    }
+
+    private void OnDisable()
+    {
+        if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
+
+        PlayerInput.toggleCrouchInput -= ToggleCrouch;
+    }
 
     void Awake()
     {
@@ -109,11 +142,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
-        if(!PauseManager.Instance.paused)
-            Look();
+        Animate();
 
+        //dont do anything below this if you are paused
+        if (PauseManager.Instance.paused) { return; }
+
+        Look();
         Move();
         Jump();
+
+        if (moveToNewCrouchPos)
+            MoveCrouch();
 
         //SwapItemInput();
         //UseItemInput();
@@ -124,6 +163,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if you are online and you dont own this player do nothing!
         if (PhotonNetwork.IsConnected && !pv.IsMine) { return; }
 
+        //dont do anything below this if you are paused
+        if (PauseManager.Instance.paused) { return; }
+
         //move the player
         playerRefrences.rb.MovePosition(playerRefrences.rb.position + transform.TransformDirection(moveAmount * Time.fixedDeltaTime));
     }
@@ -131,26 +173,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void Initialize()
     {
         Debug.Log($"Initialize");
-        //Get the items here 
-        //itemHolder;
-
-        ////if there is at least 1 item
-        //if(items.Length > 0)
-        //{
-        //    //disable all items
-        //    for (int i = 0; i < items.Length; i++)
-        //    {
-        //        items[i].itemGameobject.SetActive(false);
-        //    }
-
-        //    //equip the base item
-        //    EquipItem(0);
-        //}
-
         //disable my own username
         Destroy(playerRefrences.text_Username.transform.parent.gameObject);
     }
 
+    #region Weapons
     public void NextWeapon()
     {
         //can go up
@@ -199,20 +226,28 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             GunController gunC = weapons[index].GetComponent<GunController>();
             
-            //move the left hand to its grab point
-            playerRefrences.handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
+            if(playerRefrences.handTransitioner != null)
+            {
+                //move the left hand to its grab point
+                playerRefrences.handTransitioner.SetLeftHandTarget(gunC.grabPointLeft);
 
-            //move the right hand to its grab point
-            playerRefrences.handTransitioner.SetRightHandTarget(gunC.grabPointRight);
+                //move the right hand to its grab point
+                playerRefrences.handTransitioner.SetRightHandTarget(gunC.grabPointRight);
+            }
         }
     }
+    #endregion
 
     #region Movement + Looking
     private void Move()
     {
         //walk/sprint
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDirection * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+
+        // Determine speed
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        currentSpeed = isRunning ? sprintSpeed : walkSpeed;
     }
 
     void Jump()
@@ -221,6 +256,50 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             playerRefrences.rb.AddForce(transform.up * jumpForce);
+            grounded = false;
+            playerAnimator.SetBool(anim_Grounded, grounded);
+        }
+    }
+
+    void ToggleCrouch()
+    {
+        //Uncrouch
+        if (crouching)
+        {
+            Debug.Log("Un-Crouch");
+            //set the ik target to be standing
+            currentBodyTarget = playerRefrences.standingIkRef;
+        }
+        //Crouch
+        else
+        {
+            Debug.Log("Crouch");
+            //set the ik target to be crouching
+            currentBodyTarget = playerRefrences.crouchingIkRef;
+        }
+
+        // start lerping to the new crouch position
+        moveToNewCrouchPos = true;
+
+        //swap the current crouching state
+        crouching = !crouching;
+    }
+
+    void MoveCrouch()
+    {
+        // Calculate the distance to the target
+        float distance = Vector3.Distance(playerRefrences.bodyIkTarget.position, currentBodyTarget.position);
+
+        // Check if the transform is near the target
+        if (distance > 0.1f)
+        {
+            // Move towards the target
+            playerRefrences.bodyIkTarget.position = Vector3.Lerp(playerRefrences.bodyIkTarget.position, currentBodyTarget.position, crouchSpeed * Time.deltaTime);
+        }
+        else
+        {
+            // Stop lerping
+            moveToNewCrouchPos = false;
         }
     }
 
@@ -238,6 +317,41 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void SetGroundedState(bool _grounded)
     {
         grounded = _grounded;
+    }
+    #endregion
+
+    #region Animation
+    void Animate()
+    {
+        //moving
+        if (moveDirection != Vector3.zero)
+        {
+            moving = true;
+
+            //moving backwards
+            if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                movingBackwards = true;
+            }
+            //moving forwards
+            else
+            {
+                movingBackwards = false;
+            }
+        }
+        //not moving
+        else
+        {
+            moving = false;
+            movingBackwards = false;
+        }
+
+        // Set animation parameters
+        playerAnimator.SetFloat(anim_Speed, moveDirection.magnitude * currentSpeed);
+        playerAnimator.SetFloat(anim_Direction, Vector3.SignedAngle(transform.forward, moveDirection, Vector3.up));
+        playerAnimator.SetBool(anim_Moving, moving);
+        playerAnimator.SetBool(anim_MovingBackwards, movingBackwards);
+        playerAnimator.SetBool(anim_Grounded, grounded);
     }
     #endregion
 

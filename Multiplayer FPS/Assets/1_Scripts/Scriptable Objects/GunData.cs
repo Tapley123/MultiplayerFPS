@@ -31,15 +31,15 @@ public class GunData : ScriptableObject
     [BoxGroup("Sway")] public float swayMultiplier = 2;
 
     //Recoil
-    [Header("Recoil")]
-    [BoxGroup("Recoil")] public float recoilAmount = 5f;
+    [Header("ADS Recoil")]
+    [BoxGroup("Recoil")] public float recoilAmountVertical = 5f;
+    [BoxGroup("Recoil")] public float recoilAmountHorizontal = 5f;
     [BoxGroup("Recoil")] public float recoilSmooth = 5f;
     [BoxGroup("Recoil")] public float recoilReturnSpeed = 10f;
-
-    //Spread
-    [Header("Spread")]
-    [BoxGroup("Spread")] public bool addBulletSpread;
-    [BoxGroup("Spread")] [ShowIf("addBulletSpread")] public Vector3 bulletSpreadVarience = new Vector3(0.1f, 0.1f, 0.1f);
+    [Header("Hip Fire Recoil")]
+    [BoxGroup("Recoil")] [Tooltip("Maximum angle for the bullet spread")] public float maxSpreadAngle = 10f; 
+    [BoxGroup("Recoil")] [Tooltip("Rate at which spread increases with rapid fire")] public float spreadIncreaseRate = 1f; 
+    [BoxGroup("Recoil")] [Tooltip("Rate at which spread decreases over time")] public float spreadDecreaseRate = 1f; 
 
     //Reloading
     [Header("Reloading")]
@@ -50,7 +50,7 @@ public class GunData : ScriptableObject
     //effects
     [Header("Effects")]
     [BoxGroup("Effects")][Tooltip("Spawned in at the point that was shot")] public GameObject bulletImpactPrefab;
-    [BoxGroup("Effects")][Tooltip("Particle system that is spawned where the bullet hits")] public ParticleSystem particle_Impact;
+    //[BoxGroup("Effects")][Tooltip("Particle system that is spawned where the bullet hits")] public ParticleSystem particle_Impact;
     [BoxGroup("Effects")][Tooltip("Trail renderer that traces the bullet")] public TrailRenderer bulletTrail;
 
     //Audio
